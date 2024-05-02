@@ -8,6 +8,10 @@
 import Foundation
 
 class DepositViewModel: ObservableObject {
-    @Published var depositAmount: Int = 0
+    @Published var depositAmount: Double = 0
     @Published var showDepositConfirmationView: Bool = false
+    
+    func depositMoney(depositAmount: Double) {
+        // Add to current account balance in database
+    }
 }

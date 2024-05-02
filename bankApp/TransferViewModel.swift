@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+class TransferViewModel: ObservableObject {
+    @Published var transferAmount: Double = 0
+    @Published var showTransferConfirmationView: Bool = false
+    
+    func transferMoney(transferAmount: Double) {
+        // Add to current account balance in database
+    }
+}

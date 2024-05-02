@@ -12,8 +12,8 @@ import Combine
 
 struct DepositView: View {
     @StateObject var viewModel: DepositViewModel
-    @State var depositAmount: Int = 0
-    let depositSuggestions = [10, 50, 100]
+    @State var depositAmount: Double = 0
+    let depositSuggestions = [10.0, 50.0, 100.0]
     
     var body: some View {
         VStack {
@@ -44,6 +44,7 @@ struct DepositView: View {
                 }
             }
             Button(action: {
+                viewModel.depositMoney(depositAmount: depositAmount)
                 viewModel.showDepositConfirmationView = true
             }) {
                 Text("Submit")

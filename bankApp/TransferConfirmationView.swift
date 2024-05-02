@@ -1,5 +1,5 @@
 //
-//  DepositConfirmationView.swift
+//  TransferConfirmationView.swift
 //  bankApp
 //
 //  Created by Brandon Jury on 2/5/2024.
@@ -7,16 +7,17 @@
 
 import SwiftUI
 
-struct DepositConfirmationView: View {
-    @StateObject var viewModel: DepositViewModel
-    var depositAmount: Double
+struct TransferConfirmationView: View {
+    @StateObject var viewModel: TransferViewModel
+    var transferAmount: Double
+    var transferRecipient: String
     
     var body: some View {
         VStack {
             HStack {
                 Text("✅")
                     .font(.largeTitle)
-                Text("\nDeposited\n$\(depositAmount) !")
+                Text("\nTransferred\n$\(transferAmount)\nto \(transferRecipient) !")
                     .font(.largeTitle)
                     .bold()
                     .padding(10)
@@ -39,5 +40,5 @@ struct DepositConfirmationView: View {
 }
 
 #Preview {
-    DepositConfirmationView(viewModel: DepositViewModel(), depositAmount: 100)
+    TransferConfirmationView(viewModel: TransferViewModel(), transferAmount: 100, transferRecipient: "User")
 }
