@@ -9,15 +9,39 @@ import SwiftUI
 
 struct PayView: View {
     var body: some View {
-        ZStack {
-            VStack {
-                Text("Deposit or transfer")
-                    .font(.largeTitle)
-                RoundedRectangle(cornerRadius: 100)
-                    .frame(width: 300, height: 100)
-                RoundedRectangle(cornerRadius: 100)
-                    .frame(width: 300, height: 100)
-                                    
+        NavigationView {
+            ZStack {
+                VStack {
+                        Text("Would you like to")
+                            .font(.title)
+                    NavigationLink(
+                        destination: DepositView(),
+                        label: {
+                            Text("Deposit")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity)
+                                .frame(width: 300, height: 80)
+                                .background(Color.cyan)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .padding()
+                                .foregroundColor(.white)
+                        })
+                    Text("or")
+                        .font(.title)
+                    NavigationLink(
+                        destination: TransferView(),
+                        label: {
+                            Text("Transfer")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity)
+                                .frame(width: 300, height: 80)
+                                .background(Color.cyan)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .padding()
+                                .foregroundColor(.white)
+                        })
+                                        
+                }
             }
         }
     }
