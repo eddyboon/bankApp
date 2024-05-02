@@ -11,8 +11,9 @@ struct User: Identifiable, Codable {
     let id: String
     let name: String
     let email: String
+    let totalAmount: String
 }
 
 extension User {
-    static var MOCK_USER = User(id: NSUUID().uuidString, name: "Edward Ong", email: "test@gmail.com")
+    static var MOCK_USER = User(id: NSUUID().uuidString, name: "Edward Ong", email: "test@gmail.com", totalAmount: "0.00")
 }
