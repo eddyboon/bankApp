@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+class DepositViewModel: ObservableObject {
+    @Published var depositAmount: Int = 0
+    @Published var showDepositConfirmationView: Bool = false
+}

@@ -17,6 +17,8 @@
 		D4711F1D2BE095A400090091 /* DepositViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4711F1C2BE095A400090091 /* DepositViewModel.swift */; };
 		D4711F1F2BE095B300090091 /* TransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4711F1E2BE095B300090091 /* TransferView.swift */; };
 		D4711F212BE095BC00090091 /* TransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4711F202BE095BC00090091 /* TransferViewModel.swift */; };
+		D4ABEB352BE38D79003C5BFF /* DepositConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4ABEB342BE38D79003C5BFF /* DepositConfirmationView.swift */; };
+		D4ABEB372BE38D82003C5BFF /* DepositConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4ABEB362BE38D82003C5BFF /* DepositConfirmationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		D4711F1C2BE095A400090091 /* DepositViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositViewModel.swift; sourceTree = "<group>"; };
 		D4711F1E2BE095B300090091 /* TransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferView.swift; sourceTree = "<group>"; };
 		D4711F202BE095BC00090091 /* TransferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferViewModel.swift; sourceTree = "<group>"; };
+		D4ABEB342BE38D79003C5BFF /* DepositConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositConfirmationView.swift; sourceTree = "<group>"; };
+		D4ABEB362BE38D82003C5BFF /* DepositConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositConfirmationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				D4711F182BE094D100090091 /* PayViewModel.swift */,
 				D4711F1A2BE0959800090091 /* DepositView.swift */,
 				D4711F1C2BE095A400090091 /* DepositViewModel.swift */,
+				D4ABEB342BE38D79003C5BFF /* DepositConfirmationView.swift */,
+				D4ABEB362BE38D82003C5BFF /* DepositConfirmationViewModel.swift */,
 				D4711F1E2BE095B300090091 /* TransferView.swift */,
 				D4711F202BE095BC00090091 /* TransferViewModel.swift */,
 				C62C3E422BE0902A00F0B800 /* Assets.xcassets */,
@@ -160,6 +166,8 @@
 				C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */,
 				D4711F212BE095BC00090091 /* TransferViewModel.swift in Sources */,
 				D4711F192BE094D100090091 /* PayViewModel.swift in Sources */,
+				D4ABEB352BE38D79003C5BFF /* DepositConfirmationView.swift in Sources */,
+				D4ABEB372BE38D82003C5BFF /* DepositConfirmationViewModel.swift in Sources */,
 				D4711F1B2BE0959800090091 /* DepositView.swift in Sources */,
 				D4711F1D2BE095A400090091 /* DepositViewModel.swift in Sources */,
 				D4711F1F2BE095B300090091 /* TransferView.swift in Sources */,

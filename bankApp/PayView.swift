@@ -11,17 +11,17 @@ struct PayView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                VStack {
+                VStack(spacing: 20) {
                         Text("Would you like to")
                             .font(.title)
                     NavigationLink(
-                        destination: DepositView(),
+                        destination: DepositView(viewModel: DepositViewModel()),
                         label: {
                             Text("Deposit")
-                                .font(.headline)
+                                .font(.title)
                                 .frame(maxWidth: .infinity)
                                 .frame(width: 300, height: 80)
-                                .background(Color.cyan)
+                                .background(Color.green)
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .padding()
                                 .foregroundColor(.white)
@@ -32,10 +32,10 @@ struct PayView: View {
                         destination: TransferView(),
                         label: {
                             Text("Transfer")
-                                .font(.headline)
+                                .font(.title)
                                 .frame(maxWidth: .infinity)
                                 .frame(width: 300, height: 80)
-                                .background(Color.cyan)
+                                .background(Color.orange)
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .padding()
                                 .foregroundColor(.white)
