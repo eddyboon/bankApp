@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C134265B2BE35E57007C27AE /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C134265A2BE35E57007C27AE /* Account.swift */; };
+		C18370A32BE33C7400614F94 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A22BE33C7400614F94 /* DashboardView.swift */; };
+		C18370A52BE33D2300614F94 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A42BE33D2300614F94 /* HomeView.swift */; };
+		C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A62BE33F3C00614F94 /* HomeViewModel.swift */; };
+		C18370AB2BE3427300614F94 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370AA2BE3427300614F94 /* Transaction.swift */; };
+		C18370AD2BE34EBE00614F94 /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */; };
 		C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */; };
 		C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E402BE0902600F0B800 /* LoginView.swift */; };
 		C62C3E432BE0902A00F0B800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C62C3E422BE0902A00F0B800 /* Assets.xcassets */; };
@@ -26,6 +32,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C134265A2BE35E57007C27AE /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		C18370A22BE33C7400614F94 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		C18370A42BE33D2300614F94 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		C18370A62BE33F3C00614F94 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		C18370AA2BE3427300614F94 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
 		C62C3E3B2BE0902600F0B800 /* bankApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bankApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bankAppApp.swift; sourceTree = "<group>"; };
 		C62C3E402BE0902600F0B800 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -99,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				C62C3E532BE26FBC00F0B800 /* InputsView.swift */,
+				C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -108,6 +121,9 @@
 			children = (
 				C62C3E6E2BE27E2100F0B800 /* AuthViewModel.swift */,
 				C62C3E702BE27F6E00F0B800 /* User.swift */,
+				C18370AA2BE3427300614F94 /* Transaction.swift */,
+				C134265A2BE35E57007C27AE /* Account.swift */,
+				C18370A62BE33F3C00614F94 /* HomeViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -115,6 +131,8 @@
 		C62C3E582BE275FD00F0B800 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C18370A42BE33D2300614F94 /* HomeView.swift */,
+				C18370A22BE33C7400614F94 /* DashboardView.swift */,
 				C62C3E592BE2761500F0B800 /* RegistrationView.swift */,
 				C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */,
 			);
@@ -203,10 +221,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C18370AB2BE3427300614F94 /* Transaction.swift in Sources */,
+				C134265B2BE35E57007C27AE /* Account.swift in Sources */,
+				C18370A52BE33D2300614F94 /* HomeView.swift in Sources */,
 				C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */,
+				C18370A32BE33C7400614F94 /* DashboardView.swift in Sources */,
+				C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */,
 				C62C3E6F2BE27E2100F0B800 /* AuthViewModel.swift in Sources */,
 				C62C3E712BE27F6E00F0B800 /* User.swift in Sources */,
 				C62C3E542BE26FBC00F0B800 /* InputsView.swift in Sources */,
+				C18370AD2BE34EBE00614F94 /* TransactionRowView.swift in Sources */,
 				C62C3E732BE28ABA00F0B800 /* TempDashboardView.swift in Sources */,
 				C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */,
 				C62C3E5A2BE2761500F0B800 /* RegistrationView.swift in Sources */,
