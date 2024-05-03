@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C134265B2BE35E57007C27AE /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C134265A2BE35E57007C27AE /* Account.swift */; };
+		C134265D2BE468A3007C27AE /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C134265C2BE468A3007C27AE /* DashboardViewModel.swift */; };
+		C134265F2BE47440007C27AE /* PayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C134265E2BE47440007C27AE /* PayView.swift */; };
 		C18370A32BE33C7400614F94 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A22BE33C7400614F94 /* DashboardView.swift */; };
 		C18370A52BE33D2300614F94 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A42BE33D2300614F94 /* HomeView.swift */; };
 		C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A62BE33F3C00614F94 /* HomeViewModel.swift */; };
@@ -33,6 +35,8 @@
 
 /* Begin PBXFileReference section */
 		C134265A2BE35E57007C27AE /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		C134265C2BE468A3007C27AE /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		C134265E2BE47440007C27AE /* PayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayView.swift; sourceTree = "<group>"; };
 		C18370A22BE33C7400614F94 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		C18370A42BE33D2300614F94 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C18370A62BE33F3C00614F94 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 				C18370AA2BE3427300614F94 /* Transaction.swift */,
 				C134265A2BE35E57007C27AE /* Account.swift */,
 				C18370A62BE33F3C00614F94 /* HomeViewModel.swift */,
+				C134265C2BE468A3007C27AE /* DashboardViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -135,6 +140,7 @@
 				C18370A22BE33C7400614F94 /* DashboardView.swift */,
 				C62C3E592BE2761500F0B800 /* RegistrationView.swift */,
 				C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */,
+				C134265E2BE47440007C27AE /* PayView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -224,6 +230,7 @@
 				C18370AB2BE3427300614F94 /* Transaction.swift in Sources */,
 				C134265B2BE35E57007C27AE /* Account.swift in Sources */,
 				C18370A52BE33D2300614F94 /* HomeView.swift in Sources */,
+				C134265F2BE47440007C27AE /* PayView.swift in Sources */,
 				C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */,
 				C18370A32BE33C7400614F94 /* DashboardView.swift in Sources */,
 				C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */,
@@ -234,6 +241,7 @@
 				C62C3E732BE28ABA00F0B800 /* TempDashboardView.swift in Sources */,
 				C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */,
 				C62C3E5A2BE2761500F0B800 /* RegistrationView.swift in Sources */,
+				C134265D2BE468A3007C27AE /* DashboardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,16 +9,20 @@ import SwiftUI
 
 struct DashboardView: View {
     
-    // @State var selectedTab = nil
+    @StateObject var viewModel = DashboardViewModel()
+    
     
     var body: some View {
         VStack(alignment: .leading) {
             
-            TabView {
+            TabView(selection: $viewModel.selection ) {
                 HomeView()
                     .tabItem {
-                        Image(systemName: "house")
-                        Text("Home")
+                        Label("Home", systemImage: "house")
+                    }
+                PayView()
+                    .tabItem {
+                        Label("Pay", systemImage: "dollarsign.circle.fill")
                     }
                 
             }
