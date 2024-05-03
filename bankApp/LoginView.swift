@@ -28,6 +28,7 @@ struct LoginView: View {
                     VStack (spacing: 24) {
                         InputView(text: $email, title: "Email Address", placeholder: "name@example.com")
                             .autocapitalization(.none)
+                            .keyboardType(.emailAddress)
                         
                         InputView(text: $password, title: "Password", placeholder: "Enter a password", isSecuredField: true)
                     }

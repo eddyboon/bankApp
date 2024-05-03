@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct TempDashboardView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
     var body: some View {
-        Text("Hello, World! This is where the dashboard view will be")
+        VStack {
+            Text("Hello, World! This is where the dashboard view will be")
+            Text("This line should show")
+            Text("Email: \(authViewModel.currentUser?.email ?? "errorEmail"), phone number: \(authViewModel.currentUser?.phoneNumber ?? "errorNumber")")
+        }
+        
     }
 }
 
