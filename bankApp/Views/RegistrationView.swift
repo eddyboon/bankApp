@@ -12,6 +12,7 @@ struct RegistrationView: View {
     @State var password: String = ""
     @State var confirmPassword: String = ""
     @State var name: String = ""
+    @State var phoneNumber: String = ""
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var authViewModel: AuthViewModel
     
@@ -33,7 +34,8 @@ struct RegistrationView: View {
                         .autocapitalization(.none)
                     
                     InputView(text: $name, title: "Name", placeholder: "Enter your name")
-                        .autocapitalization(.none)
+                    
+                    InputView(text: $phoneNumber, title: "Phone Number", placeholder: "Enter your phone number")
                     
                     InputView(text: $password, title: "Password", placeholder: "Enter a password", isSecuredField: true)
                     
@@ -61,7 +63,7 @@ struct RegistrationView: View {
                 Button {
                     // Perform sign up button
                     Task {
-                        try await authViewModel.createUser(withEmail: email, password: password, name: name)
+                        try await authViewModel.createUser(withEmail: email, password: password, name: name, phoneNumber: phoneNumber)
                     }
                     
                 } label: {
@@ -99,7 +101,7 @@ struct RegistrationView: View {
 // Form validation protocol to make sure login info is valid
 extension RegistrationView: AuthenticateionFormProtocol {
     var formIsValid: Bool {
-        return !email.isEmpty && email.contains(".com") && email.contains("@") && !password.isEmpty && password.count > 5 && !name.isEmpty && confirmPassword == password
+        return !email.isEmpty && email.contains(".com") && email.contains("@") && !password.isEmpty && password.count > 5 && !name.isEmpty && confirmPassword == password && phoneNumber.prefix(2) == "04" && phoneNumber.count == 10 && authViewModel.checkString(string: phoneNumber) == true
     }
 }
 

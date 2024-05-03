@@ -34,10 +34,10 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func createUser(withEmail email: String, password: String, name: String) async throws {
+    func createUser(withEmail email: String, password: String, name: String, phoneNumber: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            let user = User(id: result.user.uid, name: name, email: email, totalAmount: "0.00")
+            let user = User(id: result.user.uid, name: name, email: email, phoneNumber: phoneNumber, totalAmount: "0.00")
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
             await fetchUser()
@@ -62,6 +62,13 @@ class AuthViewModel: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
         self.currentUser = try? snapshot.data(as: User.self)
+    }
+    
+    func checkString(string: String) -> Bool {
+        let digits = CharacterSet.decimalDigits
+        let stringSet = CharacterSet(charactersIn: string)
+        
+        return digits.isSuperset(of: stringSet)
     }
     
 }
