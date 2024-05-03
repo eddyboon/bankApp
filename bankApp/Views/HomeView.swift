@@ -10,21 +10,23 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject var viewModel = HomeViewModel()
+    @EnvironmentObject var authViewModel: AuthViewModel
     
-    let transactions: [Transaction]
+    let transactions: [Transaction] = Transaction.Mock_Transactions
     
-    init() {
-        transactions = Transaction.Mock_Transactions
-    }
-    
+  
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Welcome \(viewModel.user.name),")
-                .font(.title)
-                .padding()
-            
-            
+            if let userName = authViewModel.currentUser?.name {
+                Text("Welcome \(userName),")
+                    .font(.title)
+                    .padding()
+            }
+            else {
+                Text("Welcome {unauthorised},")
+                    .font(.title)
+                    .padding()
+            }
             HStack {
                 Text("Balance: ")
                     .font(.title2)
@@ -59,10 +61,19 @@ struct HomeView: View {
                        }
                    }.padding(.vertical,10)
                        .background(Color.white)
-               }.background(.white)
-                   .cornerRadius(15)
-                   .padding()
-                   .shadow(color: Color.black.opacity(0.1), radius: 15, x: 5, y: 5)
+               }
+            .background(.white)
+            .cornerRadius(15)
+            .padding()
+            .shadow(color: Color.black.opacity(0.1), radius: 15, x: 5, y: 5)
+            
+            Button {
+                
+            } label: {
+                Text("Add transaction test")
+            }
+            .padding(.horizontal)
+
         }
         
        }
@@ -70,4 +81,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environmentObject(AuthViewModel())
 }

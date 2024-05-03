@@ -85,8 +85,11 @@ extension LoginView: AuthenticateionFormProtocol {
     }
 }
 
-#Preview {
-    NavigationStack {
-        LoginView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            LoginView()
+                .environmentObject(AuthViewModel())
+        }
     }
 }

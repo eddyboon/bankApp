@@ -16,7 +16,6 @@
         let db = Firestore.firestore()
         
         func retrieveUser() {
-            let ref = db.collection("Users")
             
         }
     }
