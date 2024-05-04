@@ -11,9 +11,13 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
+    @StateObject var viewModel: HomeViewModel
     
     let transactions: [Transaction] = Transaction.Mock_Transactions
     
+    init() {
+        _viewModel = StateObject(wrappedValue: HomeViewModel())
+    }
   
     var body: some View {
         VStack(alignment: .leading) {
@@ -56,9 +60,14 @@ struct HomeView: View {
                    .padding(.top, 30)
                    
                    LazyVStack (spacing: 25){
-                       ForEach(transactions) { transaction in
-                           TransactionRowView(transactionModel: transaction)
+                       if(viewModel.transactions?.count == 0) {
+                           Text("No transactions to show")
+                       } else {
+                           ForEach(transactions) { transaction in
+                               TransactionRowView(transactionModel: transaction)
+                           }
                        }
+                       
                    }.padding(.vertical,10)
                        .background(Color.white)
                }
@@ -68,12 +77,19 @@ struct HomeView: View {
             .shadow(color: Color.black.opacity(0.1), radius: 15, x: 5, y: 5)
             
             Button {
-                
+                viewModel.addTestTransaction()
             } label: {
                 Text("Add transaction test")
             }
             .padding(.horizontal)
 
+        }
+        .onAppear {
+            Task {
+                viewModel.setUser(user: authViewModel.currentUser ?? nil)
+                await viewModel.fetchTransactions()
+            }
+            
         }
         
        }

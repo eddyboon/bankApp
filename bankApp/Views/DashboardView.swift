@@ -32,4 +32,5 @@ struct DashboardView: View {
 
 #Preview {
     DashboardView()
+        .environmentObject(AuthViewModel())
 }

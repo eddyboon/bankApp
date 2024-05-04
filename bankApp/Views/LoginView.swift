@@ -15,7 +15,7 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             if (authViewModel.isLoggedIn) {
-                TempDashboardView()
+                DashboardView()
             } else {
                 VStack {
                     // Image or header
@@ -85,11 +85,7 @@ extension LoginView: AuthenticateionFormProtocol {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            LoginView()
-                .environmentObject(AuthViewModel())
-        }
-    }
+#Preview {
+    LoginView()
+        .environmentObject(AuthViewModel())
 }

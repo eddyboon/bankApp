@@ -95,7 +95,6 @@
 				C62C3E552BE2723300F0B800 /* Models */,
 				C62C3E522BE26FAC00F0B800 /* Components */,
 				C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */,
-				C62C3E402BE0902600F0B800 /* LoginView.swift */,
 				C62C3E422BE0902A00F0B800 /* Assets.xcassets */,
 				C62C3E5F2BE27C2F00F0B800 /* GoogleService-Info.plist */,
 				C62C3E442BE0902A00F0B800 /* Preview Content */,
@@ -123,12 +122,12 @@
 		C62C3E552BE2723300F0B800 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C18370A62BE33F3C00614F94 /* HomeViewModel.swift */,
 				C62C3E6E2BE27E2100F0B800 /* AuthViewModel.swift */,
+				C134265C2BE468A3007C27AE /* DashboardViewModel.swift */,
 				C62C3E702BE27F6E00F0B800 /* User.swift */,
 				C18370AA2BE3427300614F94 /* Transaction.swift */,
 				C134265A2BE35E57007C27AE /* Account.swift */,
-				C18370A62BE33F3C00614F94 /* HomeViewModel.swift */,
-				C134265C2BE468A3007C27AE /* DashboardViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -136,6 +135,7 @@
 		C62C3E582BE275FD00F0B800 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C62C3E402BE0902600F0B800 /* LoginView.swift */,
 				C18370A42BE33D2300614F94 /* HomeView.swift */,
 				C18370A22BE33C7400614F94 /* DashboardView.swift */,
 				C62C3E592BE2761500F0B800 /* RegistrationView.swift */,
