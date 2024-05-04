@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 class HomeViewModel: ObservableObject {
     
-    @Published var mockUser = User.MOCK_USER
+    // @Published var mockUser = User.MOCK_USER
     @Published var transactions: [Transaction]? = []
     @Published var user: User?
     @Published var isLoadingTransactions = false
@@ -19,22 +19,23 @@ class HomeViewModel: ObservableObject {
     let db = Firestore.firestore()
     
     func fetchTransactions() async {
-        if let currentUser = self.user {
-            let transactionsRef = db.collection("users").document(currentUser.id).collection("Transactions")
-            
-            do {
-                let querySnapshot = try await transactionsRef.getDocuments()
-                self.transactions = querySnapshot.documents.compactMap({ document in
-                    try? document.data(as: Transaction.self)
-                })  
-            }
-            catch {
-                print("Failed to retrieve transactions: \(error)")
-            }
+        
+        guard let currentUser = user else {
+            print("No user found to fetch transactions.")
+            return
         }
-        else {
-            print("HomeViewModel knows of no user to fetch.")
+        
+        isLoadingTransactions = true
+        let transactionsRef = db.collection("users").document(currentUser.id).collection("Transactions")
+        
+        do {
+            let querySnapshot = try await transactionsRef.getDocuments()
+            self.transactions = querySnapshot.documents.compactMap { try? $0.data(as: Transaction.self) }
+        } catch {
+            print("Failed to retrieve transactions: \(error)")
         }
+        
+        isLoadingTransactions = false
     }
     
     func setUser(user: User?) {
@@ -42,6 +43,39 @@ class HomeViewModel: ObservableObject {
     }
     
     func addTestTransaction() {
+        guard let currentUser = user else {
+            print("User not set before retrieving transactions.")
+            return
+        }
         
+        let newTransaction = Transaction(
+            id: NSUUID().uuidString,
+            name: "Google", date: Date(),
+            amount: 50.00,
+            type: "debit"
+        )
+        
+        let transactionsRef = db.collection("users").document(currentUser.id).collection("Transactions")
+        
+        do {
+            let _ = try transactionsRef.addDocument(from: newTransaction) { error in
+                if let error = error {
+                    print("Error adding transaction to Firestore: \(error.localizedDescription)")
+                }
+                else {
+                    if self.transactions == nil {
+                        self.transactions = [newTransaction]
+                    }
+                    else {
+                        self.transactions?.append(newTransaction)
+                    }
+                }
+                print("Transaction added to db and local list")
+            }
+        }
+        catch let error {
+            print("Error adding transaction to firestore db: \(error.localizedDescription)")
+        }
+
     }
 }

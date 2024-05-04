@@ -60,17 +60,28 @@ struct HomeView: View {
                    .padding(.top, 30)
                    
                    LazyVStack (spacing: 25){
-                       if(viewModel.transactions?.count == 0) {
-                           Text("No transactions to show")
-                       } else {
-                           ForEach(transactions) { transaction in
-                               TransactionRowView(transactionModel: transaction)
+                       if(viewModel.isLoadingTransactions) {
+                           ProgressView()
+                               .progressViewStyle(CircularProgressViewStyle())
+                               .scaleEffect(1.5)
+                       }
+                       else {
+                           if(viewModel.transactions?.count == 0) {
+                               Text("No transactions to show")
+                           } else {
+                               // Force unwrap, change later
+                               ForEach(viewModel.transactions!) { transaction in
+                                   TransactionRowView(transactionModel: transaction)
+                               }
                            }
                        }
                        
-                   }.padding(.vertical,10)
-                       .background(Color.white)
-               }
+                       
+                       
+                   }
+                   .padding(.vertical,10)
+                   .background(Color.white)
+               } // End of embedded vstack
             .background(.white)
             .cornerRadius(15)
             .padding()
@@ -83,7 +94,7 @@ struct HomeView: View {
             }
             .padding(.horizontal)
 
-        }
+        } // End of root vstack
         .onAppear {
             Task {
                 viewModel.setUser(user: authViewModel.currentUser ?? nil)

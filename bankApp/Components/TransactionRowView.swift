@@ -12,6 +12,12 @@ struct TransactionRowView: View {
     
     var transactionModel: Transaction
     
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        return formatter
+    }
+    
     var body: some View {
         HStack(spacing: 5) {
             VStack(alignment: .leading, spacing: 4){
@@ -20,13 +26,13 @@ struct TransactionRowView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                 
-                Text(transactionModel.date)
+                Text(dateFormatter.string(from: transactionModel.date))
                     .font(.footnote)
                     .fontWeight(.semibold)
                     .foregroundColor(.gray)
             }
             Spacer()
-            Text("- $\(transactionModel.value)")
+            Text("- $\(transactionModel.amount)")
                 .font(.footnote)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
