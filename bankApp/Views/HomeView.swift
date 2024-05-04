@@ -35,8 +35,13 @@ struct HomeView: View {
                 Text("Balance: ")
                     .font(.title2)
                     .padding()
-                Text("AUD $4000")
-                    .font(.headline)
+                if let balance = authViewModel.currentUser?.displayBalance() {
+                    Text(balance)
+                }
+                else {
+                    Text("Unauthorised, no balance to show.")
+                }
+                
             }
             
             VStack{
@@ -86,9 +91,12 @@ struct HomeView: View {
             .cornerRadius(15)
             .padding()
             .shadow(color: Color.black.opacity(0.1), radius: 15, x: 5, y: 5)
+            .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
             
             Button {
-                viewModel.addTestTransaction()
+                DispatchQueue.main.async {
+                    viewModel.addTestTransaction()
+                }
             } label: {
                 Text("Add transaction test")
             }
@@ -97,11 +105,14 @@ struct HomeView: View {
         } // End of root vstack
         .onAppear {
             Task {
-                viewModel.setUser(user: authViewModel.currentUser ?? nil)
+                await MainActor.run {
+                    viewModel.setUser(user: authViewModel.currentUser ?? nil)
+                }
+                
                 await viewModel.fetchTransactions()
             }
-            
         }
+
         
        }
     }

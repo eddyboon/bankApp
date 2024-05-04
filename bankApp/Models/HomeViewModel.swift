@@ -18,6 +18,7 @@ class HomeViewModel: ObservableObject {
     
     let db = Firestore.firestore()
     
+    @MainActor
     func fetchTransactions() async {
         
         guard let currentUser = user else {
@@ -31,11 +32,15 @@ class HomeViewModel: ObservableObject {
         do {
             let querySnapshot = try await transactionsRef.getDocuments()
             self.transactions = querySnapshot.documents.compactMap { try? $0.data(as: Transaction.self) }
+            self.isLoadingTransactions = false
+            
         } catch {
+            self.isLoadingTransactions = false
             print("Failed to retrieve transactions: \(error)")
+            
         }
         
-        isLoadingTransactions = false
+        
     }
     
     func setUser(user: User?) {
@@ -63,14 +68,12 @@ class HomeViewModel: ObservableObject {
                     print("Error adding transaction to Firestore: \(error.localizedDescription)")
                 }
                 else {
-                    if self.transactions == nil {
-                        self.transactions = [newTransaction]
-                    }
-                    else {
+                    DispatchQueue.main.async {
                         self.transactions?.append(newTransaction)
+                        print("Transaction added to db and local list")
                     }
                 }
-                print("Transaction added to db and local list")
+                
             }
         }
         catch let error {

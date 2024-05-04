@@ -10,10 +10,19 @@ import SwiftUI
 struct DashboardView: View {
     
     @StateObject var viewModel = DashboardViewModel()
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     
     var body: some View {
         VStack(alignment: .leading) {
+            
+            Button {
+                authViewModel.isLoggedIn = false
+            } label: {
+                Text("Sign out")
+                    .padding()
+            }
+
             
             TabView(selection: $viewModel.selection ) {
                 HomeView()
