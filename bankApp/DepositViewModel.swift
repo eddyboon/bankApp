@@ -6,12 +6,16 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestoreSwift
 
 class DepositViewModel: ObservableObject {
     @Published var depositAmount: Double = 0
     @Published var showDepositConfirmationView: Bool = false
     
-    func depositMoney(depositAmount: Double) {
+    func depositMoney(depositAmount: Double) async throws {
         // Add to current account balance in database
+        let database = Firestore.firestore()
+        
     }
 }
