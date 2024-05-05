@@ -14,9 +14,9 @@ class DepositViewModel: ObservableObject {
     @Published var showDepositConfirmationView: Bool = false
     @Published var user: User?
     
-//    func depositMoney(depositAmount: Double) async throws {
-//        // Add to current account balance in database
-//        let database = Firestore.firestore()
-//        
-//    }
+    func depositMoney(depositAmount: Double) {
+        // Add to current account balance in database
+        let database = Firestore.firestore()
+        
+    }
 }
