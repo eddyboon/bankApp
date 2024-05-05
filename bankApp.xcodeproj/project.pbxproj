@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */; };
-		C62C3E412BE0902600F0B800 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E402BE0902600F0B800 /* ContentView.swift */; };
 		C62C3E432BE0902A00F0B800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C62C3E422BE0902A00F0B800 /* Assets.xcassets */; };
 		C62C3E462BE0902A00F0B800 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C62C3E452BE0902A00F0B800 /* Preview Assets.xcassets */; };
 		D411908B2BE7345300E9C23E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D411908A2BE7345300E9C23E /* FirebaseAnalytics */; };
@@ -53,7 +52,6 @@
 /* Begin PBXFileReference section */
 		C62C3E3B2BE0902600F0B800 /* bankApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bankApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bankAppApp.swift; sourceTree = "<group>"; };
-		C62C3E402BE0902600F0B800 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C62C3E422BE0902A00F0B800 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C62C3E452BE0902A00F0B800 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D4711F162BE0944A00090091 /* PayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayView.swift; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */,
-				C62C3E402BE0902600F0B800 /* ContentView.swift */,
 				D4711F162BE0944A00090091 /* PayView.swift */,
 				D4711F182BE094D100090091 /* PayViewModel.swift */,
 				D4711F1A2BE0959800090091 /* DepositView.swift */,
@@ -263,7 +260,6 @@
 			files = (
 				D4ABEB3B2BE3A881003C5BFF /* TransferConfirmationViewModel.swift in Sources */,
 				D4711F172BE0944A00090091 /* PayView.swift in Sources */,
-				C62C3E412BE0902600F0B800 /* ContentView.swift in Sources */,
 				C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */,
 				D4711F212BE095BC00090091 /* TransferViewModel.swift in Sources */,
 				D4711F192BE094D100090091 /* PayViewModel.swift in Sources */,

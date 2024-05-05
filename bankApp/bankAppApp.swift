@@ -11,7 +11,6 @@ import SwiftUI
 struct bankAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
         }
     }
 }
