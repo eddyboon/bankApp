@@ -14,6 +14,7 @@ struct DepositView: View {
     @StateObject var viewModel: DepositViewModel
     @State var depositAmount: Double = 0
     let depositSuggestions = [10.0, 50.0, 100.0]
+    @ObservedObject var depositConfirmationViewModel: DepositConfirmationViewModel
     
     var body: some View {
         VStack {
@@ -57,7 +58,7 @@ struct DepositView: View {
                     .foregroundColor(.white)
             }
             .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
-                DepositConfirmationView(viewModel: viewModel, depositAmount: depositAmount)
+                DepositConfirmationView(viewModel: depositConfirmationViewModel, depositAmount: depositAmount)
             }
         }
     }
@@ -66,5 +67,5 @@ struct DepositView: View {
 
 
 #Preview {
-    DepositView(viewModel: DepositViewModel())
+    DepositView(viewModel: DepositViewModel(), depositConfirmationViewModel: DepositConfirmationViewModel())
 }

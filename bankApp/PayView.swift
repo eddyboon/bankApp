@@ -15,7 +15,7 @@ struct PayView: View {
                         Text("Would you like to")
                             .font(.title)
                     NavigationLink(
-                        destination: DepositView(viewModel: DepositViewModel()),
+                        destination: DepositView(viewModel: DepositViewModel(), depositConfirmationViewModel: DepositConfirmationViewModel()),
                         label: {
                             Text("Deposit")
                                 .font(.title)

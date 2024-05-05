@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DepositConfirmationView: View {
-    @StateObject var viewModel: DepositViewModel
+    @StateObject var viewModel: DepositConfirmationViewModel
     var depositAmount: Double
     
     var body: some View {
@@ -16,7 +16,7 @@ struct DepositConfirmationView: View {
             HStack {
                 Text("✅")
                     .font(.largeTitle)
-                Text("\nDeposited\n$\(depositAmount) !")
+                Text("\nDeposited\n$\(depositAmount, specifier: viewModel.getDepositSpecifier(double: depositAmount)) !")
                     .font(.largeTitle)
                     .bold()
                     .padding(10)
@@ -39,5 +39,5 @@ struct DepositConfirmationView: View {
 }
 
 #Preview {
-    DepositConfirmationView(viewModel: DepositViewModel(), depositAmount: 100)
+    DepositConfirmationView(viewModel: DepositConfirmationViewModel(), depositAmount: 100)
 }
