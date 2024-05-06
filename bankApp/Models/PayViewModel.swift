@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+class PayViewModel: ObservableObject {
+    @Published var doubleSpecifier: String = "%.2f"
+    
+    func getDoubleSpecifier(double: Double) -> String {
+        if double.truncatingRemainder(dividingBy: 1) == 0 {
+            return "%.f"
+        }
+        return "%.2f"
+    }
+}

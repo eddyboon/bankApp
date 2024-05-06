@@ -14,7 +14,8 @@ struct DepositView: View {
     @StateObject var viewModel: DepositViewModel
     @State var depositAmount: Double = 0
     let depositSuggestions = [10.0, 50.0, 100.0]
-    @ObservedObject var depositConfirmationViewModel: DepositConfirmationViewModel
+    var payViewModel: PayViewModel
+    var depositConfirmationViewModel: DepositConfirmationViewModel
     
     var body: some View {
         VStack {
@@ -38,7 +39,7 @@ struct DepositView: View {
                     Button(action: {
                         depositAmount = suggestion
                     }) {
-                        Text("\(suggestion)")
+                        Text("\(suggestion, specifier: "%.f")")
                             .fontWeight(.semibold)
                             .padding()
                     }
@@ -58,7 +59,7 @@ struct DepositView: View {
                     .foregroundColor(.white)
             }
             .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
-                DepositConfirmationView(viewModel: depositConfirmationViewModel, depositAmount: depositAmount)
+                DepositConfirmationView(viewModel: depositConfirmationViewModel, payViewModel: payViewModel, depositAmount: depositAmount)
             }
         }
     }
@@ -67,5 +68,5 @@ struct DepositView: View {
 
 
 #Preview {
-    DepositView(viewModel: DepositViewModel(), depositConfirmationViewModel: DepositConfirmationViewModel())
+    DepositView(viewModel: DepositViewModel(depositAmount: 100.00, showDepositConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel(), depositConfirmationViewModel: DepositConfirmationViewModel())
 }

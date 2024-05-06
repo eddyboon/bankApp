@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TransferView: View {
     @StateObject var viewModel: TransferViewModel
+    var payViewModel: PayViewModel
     @State var transferAmount: String = ""
     @State var transferRecipient: String = "04"
     let transferSuggestions = [10, 50, 100]
@@ -91,12 +92,12 @@ struct TransferView: View {
             .opacity(validRecipient && validAmount ? 1.0 : 0.5) // Darken the submit button if it is disabled, so the user knows their inputs are not valid yet
             .disabled(!validRecipient || !validAmount) // Disable the play submit if the recipient or amount are invalid
             .fullScreenCover(isPresented: $viewModel.showTransferConfirmationView) {
-                TransferConfirmationView(viewModel: viewModel, transferAmount: Double(transferAmount) ?? 0, transferRecipient: transferRecipient)
+                TransferConfirmationView(viewModel: viewModel, payViewModel: payViewModel, transferAmount: Double(transferAmount) ?? 0, transferRecipient: transferRecipient)
             }
         }
     }
 }
 
 #Preview {
-    TransferView(viewModel: TransferViewModel())
+    TransferView(viewModel: TransferViewModel(), payViewModel: PayViewModel())
 }

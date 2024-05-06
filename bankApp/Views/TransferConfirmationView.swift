@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TransferConfirmationView: View {
     @StateObject var viewModel: TransferViewModel
+    var payViewModel: PayViewModel
     var transferAmount: Double
     var transferRecipient: String
     
@@ -17,13 +18,13 @@ struct TransferConfirmationView: View {
             HStack {
                 Text("✅")
                     .font(.largeTitle)
-                Text("\nTransferred\n$\(transferAmount)\nto \(transferRecipient) !")
+                Text("\nTransferred\n$\(transferAmount, specifier: payViewModel.getDoubleSpecifier(double: transferAmount))\nto \(transferRecipient) !")
                     .font(.largeTitle)
                     .bold()
                     .padding(10)
             }
 //            NavigationLink(
-//                destination: ContentView(),
+//                destination: DashboardView(),
 //                label: {
 //                    Text("OK")
 //                        .font(.title)
@@ -40,5 +41,5 @@ struct TransferConfirmationView: View {
 }
 
 #Preview {
-    TransferConfirmationView(viewModel: TransferViewModel(), transferAmount: 100, transferRecipient: "User")
+    TransferConfirmationView(viewModel: TransferViewModel(), payViewModel: PayViewModel(), transferAmount: 100, transferRecipient: "User")
 }
