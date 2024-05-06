@@ -15,6 +15,7 @@ struct TempDashboardView: View {
             Text("Hello, World! This is where the dashboard view will be")
             Text("This line should show")
             Text("Email: \(authViewModel.currentUser?.email ?? "errorEmail"), phone number: \(authViewModel.currentUser?.phoneNumber ?? "errorNumber")")
+            Text("This is the account balance: \(authViewModel.currentUser?.balance ?? -10000)")
         }
         
     }
