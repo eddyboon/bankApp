@@ -10,6 +10,8 @@
 		C134265B2BE35E57007C27AE /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C134265A2BE35E57007C27AE /* Account.swift */; };
 		C134265D2BE468A3007C27AE /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C134265C2BE468A3007C27AE /* DashboardViewModel.swift */; };
 		C134265F2BE47440007C27AE /* PayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C134265E2BE47440007C27AE /* PayView.swift */; };
+		C13426612BE8BA90007C27AE /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13426602BE8BA90007C27AE /* TransactionsView.swift */; };
+		C13426632BE8BB63007C27AE /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13426622BE8BB63007C27AE /* TransactionsViewModel.swift */; };
 		C18370A32BE33C7400614F94 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A22BE33C7400614F94 /* DashboardView.swift */; };
 		C18370A52BE33D2300614F94 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A42BE33D2300614F94 /* HomeView.swift */; };
 		C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A62BE33F3C00614F94 /* HomeViewModel.swift */; };
@@ -37,6 +39,8 @@
 		C134265A2BE35E57007C27AE /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C134265C2BE468A3007C27AE /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		C134265E2BE47440007C27AE /* PayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayView.swift; sourceTree = "<group>"; };
+		C13426602BE8BA90007C27AE /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
+		C13426622BE8BB63007C27AE /* TransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
 		C18370A22BE33C7400614F94 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		C18370A42BE33D2300614F94 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C18370A62BE33F3C00614F94 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 				C18370A62BE33F3C00614F94 /* HomeViewModel.swift */,
 				C62C3E6E2BE27E2100F0B800 /* AuthViewModel.swift */,
 				C134265C2BE468A3007C27AE /* DashboardViewModel.swift */,
+				C13426622BE8BB63007C27AE /* TransactionsViewModel.swift */,
 				C62C3E702BE27F6E00F0B800 /* User.swift */,
 				C18370AA2BE3427300614F94 /* Transaction.swift */,
 				C134265A2BE35E57007C27AE /* Account.swift */,
@@ -141,6 +146,7 @@
 				C62C3E592BE2761500F0B800 /* RegistrationView.swift */,
 				C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */,
 				C134265E2BE47440007C27AE /* PayView.swift */,
+				C13426602BE8BA90007C27AE /* TransactionsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -232,7 +238,9 @@
 				C18370A52BE33D2300614F94 /* HomeView.swift in Sources */,
 				C134265F2BE47440007C27AE /* PayView.swift in Sources */,
 				C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */,
+				C13426612BE8BA90007C27AE /* TransactionsView.swift in Sources */,
 				C18370A32BE33C7400614F94 /* DashboardView.swift in Sources */,
+				C13426632BE8BB63007C27AE /* TransactionsViewModel.swift in Sources */,
 				C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */,
 				C62C3E6F2BE27E2100F0B800 /* AuthViewModel.swift in Sources */,
 				C62C3E712BE27F6E00F0B800 /* User.swift in Sources */,

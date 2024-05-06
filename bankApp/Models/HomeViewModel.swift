@@ -56,7 +56,7 @@ class HomeViewModel: ObservableObject {
         let newTransaction = Transaction(
             id: NSUUID().uuidString,
             name: "Google", date: Date(),
-            amount: 50.00,
+            amount: 50.25,
             type: "debit"
         )
         
