@@ -22,19 +22,37 @@ class DepositViewModel: ObservableObject {
         self.authViewModel = authViewModel
     }
     
+    @MainActor
     func depositMoney(depositAmount: Double) {
-        //        // Add to current account balance in database
-        //        guard let currentUserID = authViewModel.currentUser?.id else {
-        //            print("Current user ID is nil")
-        //            return
-        //        }
-        //        let database = Firestore.firestore()
-        //        database.collection("users").document(currentUserID).setData(["totalAmount": depositAmount], merge: true) { error in
-        //            if let error = error {
-        //                print("Error depositing money: \(error.localizedDescription)")
-        //            } else {
-        //                print("Money deposited successfully")
-        //            }
-        //        }
+        guard let currentUserID = authViewModel.currentUser?.id else {
+            print("Current user ID is nil")
+            return
+        }
+        let database = Firestore.firestore()
+        database.collection("users").document(currentUserID).getDocument { documentSnapshot, error in
+            if let error = error {
+                print("Error fetching balance: \(error.localizedDescription)")
+                return
+            }
+            guard let document = documentSnapshot, document.exists else {
+                print("Document does not exist")
+                return
+            }
+            do {
+                let user = try document.data(as: User.self)
+                let newBalance = (user.balance) + depositAmount
+                database.collection("users").document(currentUserID).updateData(["balance": newBalance]) { error in
+                    if let error = error {
+                        print("Error updating balance: \(error.localizedDescription)")
+                    }
+                    else {
+                        print("Total amount updated successfully")
+                    }
+                }
+            }
+            catch {
+                print("Error getting user document: \(error.localizedDescription)")
+            }
+        }
     }
 }

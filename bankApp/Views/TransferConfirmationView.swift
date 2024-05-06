@@ -11,14 +11,14 @@ struct TransferConfirmationView: View {
     @StateObject var viewModel: TransferViewModel
     var payViewModel: PayViewModel
     var transferAmount: Double
-    var transferRecipient: String
+    var transferRecipientName: String
     
     var body: some View {
         VStack {
             HStack {
                 Text("✅")
                     .font(.largeTitle)
-                Text("\nTransferred\n$\(transferAmount, specifier: payViewModel.getDoubleSpecifier(double: transferAmount))\nto \(transferRecipient) !")
+                Text("\nTransferred\n$\(transferAmount, specifier: payViewModel.getDoubleSpecifier(double: transferAmount))\nto \(transferRecipientName) !")
                     .font(.largeTitle)
                     .bold()
                     .padding(10)
@@ -41,5 +41,5 @@ struct TransferConfirmationView: View {
 }
 
 #Preview {
-    TransferConfirmationView(viewModel: TransferViewModel(), payViewModel: PayViewModel(), transferAmount: 100, transferRecipient: "User")
+    TransferConfirmationView(viewModel: TransferViewModel(transferAmount: 100, showTransferConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel(), transferAmount: 100, transferRecipientName: "User")
 }
