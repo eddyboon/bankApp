@@ -55,6 +55,11 @@ struct LoginView: View {
                     .opacity(formIsValid ? 1.0 : 0.5)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .padding(.top, 24)
+                    .alert("Failed to login. Try Again", isPresented: $authViewModel.failedLogin) {
+                        Button("Ok", role: .cancel) {
+                            authViewModel.failedLogin = false
+                        }
+                    }
                     
                     Spacer()
                     

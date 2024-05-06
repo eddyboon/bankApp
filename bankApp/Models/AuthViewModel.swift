@@ -16,6 +16,7 @@ protocol AuthenticateionFormProtocol {
 @MainActor
 class AuthViewModel: ObservableObject {
     @Published var isLoggedIn: Bool = false
+    @Published var failedLogin: Bool = false
     @Published var currentUser: User?
     
     init() {
@@ -31,6 +32,7 @@ class AuthViewModel: ObservableObject {
             isLoggedIn = true
         } catch {
             print("Failed to log in user")
+            failedLogin = true
         }
     }
     
