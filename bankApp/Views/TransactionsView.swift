@@ -23,9 +23,17 @@ struct TransactionsView: View {
                 .font(.title)
                 .padding()
             
+            
+            DatePicker("Filter by date:", selection: $viewModel.filterDate, displayedComponents: .date)
+                .datePickerStyle(.automatic)
+                .padding()
             HStack {
-                
+                Text("Filter by name:")
+                TextField("Enter name", text: $viewModel.filterName)
             }
+            .padding()
+           
+
             
             ScrollView {
                 if(viewModel.transactions.count == 0) {

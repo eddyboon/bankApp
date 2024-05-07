@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 class HomeViewModel: ObservableObject {
     
     // @Published var mockUser = User.MOCK_USER
-    @Published var transactions: [Transaction]? = []
+    @Published var transactions: [Transaction] = []
     @Published var user: User?
     @Published var isLoadingTransactions = false
     
@@ -56,7 +56,7 @@ class HomeViewModel: ObservableObject {
         let newTransaction = Transaction(
             id: NSUUID().uuidString,
             name: "Google", date: Date(),
-            amount: 50.25,
+            amount: 0.50,
             type: "debit"
         )
         
@@ -69,7 +69,7 @@ class HomeViewModel: ObservableObject {
                 }
                 else {
                     DispatchQueue.main.async {
-                        self.transactions?.append(newTransaction)
+                        self.transactions.append(newTransaction)
                         print("Transaction added to db and local list")
                     }
                 }

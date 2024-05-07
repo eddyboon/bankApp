@@ -51,14 +51,17 @@ struct HomeView: View {
                            .fontWeight(.bold)
                            .foregroundColor(.black)
                        Spacer()
-                       Button{
+                       Button(action: {
                            
-                       } label: {
-                           Image(systemName: "arrow.up.right")
-                               .resizable()
-                               .frame(width: 17, height: 17)
-                               .foregroundColor(.black)
+                       }) {
+                           NavigationLink(destination: TransactionsView(transactions: viewModel.transactions)) {
+                               Image(systemName: "arrow.up.right")
+                                   .resizable()
+                                   .frame(width: 17, height: 17)
+                                   .foregroundColor(.black)
+                           }
                        }
+
                    }
                    .padding(.horizontal)
                    .padding(.trailing, 15)
@@ -71,12 +74,12 @@ struct HomeView: View {
                                .scaleEffect(1.5)
                        }
                        else {
-                           if(viewModel.transactions?.count == 0) {
+                           if(viewModel.transactions.count == 0) {
                                Text("No transactions to show")
                            } else {
                                // Force unwrap, change later
                                // Show only 6 most recent transactions. User can navigate to dedicated page to view all.
-                               ForEach(viewModel.transactions!.prefix(6)) { transaction in
+                               ForEach(viewModel.transactions.prefix(6)) { transaction in
                                    TransactionRowView(transactionModel: transaction)
                                }
                            }
@@ -119,6 +122,8 @@ struct HomeView: View {
     }
 
 #Preview {
-    HomeView()
-        .environmentObject(AuthViewModel())
+    NavigationStack {
+        HomeView()
+            .environmentObject(AuthViewModel())
+    }
 }

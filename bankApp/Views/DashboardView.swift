@@ -12,17 +12,35 @@ struct DashboardView: View {
     @StateObject var viewModel = DashboardViewModel()
     @EnvironmentObject var authViewModel: AuthViewModel
     
+    init() {
+        _viewModel = StateObject(wrappedValue: DashboardViewModel())
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
             
-            Button {
-                authViewModel.isLoggedIn = false
-            } label: {
-                Text("Sign out")
-                    .padding()
-            }
+            HStack {
+                
+                Spacer()
+                
+                Menu {
+                    Button("Profile") {
+                        
+                    }
+                    Button("Sign out") {
+                        authViewModel.isLoggedIn = false
+                    }
 
+                } label: {
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 36, height: 36)
+                }
+            }
+            .padding()
+            
+            
             
             TabView(selection: $viewModel.selection ) {
                 HomeView()
@@ -35,6 +53,9 @@ struct DashboardView: View {
                     }
                 
             }
+        }
+        .onTapGesture {
+            viewModel.showDropdown = false
         }
     }
 }
