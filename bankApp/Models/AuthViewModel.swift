@@ -17,6 +17,9 @@ protocol AuthenticateionFormProtocol {
 class AuthViewModel: ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var failedLogin: Bool = false
+    @Published var failedSignup: Bool = false
+    @Published var emailAlreadyExist: Bool = false
+    @Published var numberAlreadyExist: Bool = false
     @Published var currentUser: User?
     
     init() {
@@ -38,15 +41,29 @@ class AuthViewModel: ObservableObject {
     
     func createUser(withEmail email: String, password: String, name: String, phoneNumber: String) async throws {
         do {
-            let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            let user = User(id: result.user.uid, name: name, email: email, phoneNumber: phoneNumber, balance: 0.00)
-            let encodedUser = try Firestore.Encoder().encode(user)
-            try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
-            await fetchUser()
-            isLoggedIn = true;
+            // Check if phoneNumber exists
+            let querySnapshot = try await Firestore.firestore().collection("users").whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments()
+            if (querySnapshot.isEmpty) {
+                // Check if email is already in use
+                let emailQuerySnapshot = try await Firestore.firestore().collection("users").whereField("email", isEqualTo: email).getDocuments()
+                if (emailQuerySnapshot.isEmpty) {
+                    let result = try await Auth.auth().createUser(withEmail: email, password: password)
+                    let user = User(id: result.user.uid, name: name, email: email, phoneNumber: phoneNumber, balance: 0.00)
+                    let encodedUser = try Firestore.Encoder().encode(user)
+                    try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
+                    await fetchUser()
+                    isLoggedIn = true;
+                } else {
+                    emailAlreadyExist = true
+                }
+            } else {
+                numberAlreadyExist = true
+            }
+            
             
         } catch {
             print("Failed to create user")
+            failedSignup = true
         }
     }
     

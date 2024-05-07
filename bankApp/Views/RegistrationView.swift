@@ -153,6 +153,21 @@ struct RegistrationView: View {
                 .opacity(formIsValid ? 1.0 : 0.5)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.top, 24)
+                .alert("Failed to Signup. Phone Number already exists.", isPresented: $authViewModel.numberAlreadyExist) {
+                    Button("Ok", role: .cancel) {
+                        authViewModel.numberAlreadyExist = false
+                    }
+                }
+                .alert("Failed to Signup. An error occurred. Please try again.", isPresented: $authViewModel.failedSignup) {
+                    Button("Ok", role: .cancel) {
+                        authViewModel.failedSignup = false
+                    }
+                }
+                .alert("Failed to Signup. Email already exists.", isPresented: $authViewModel.emailAlreadyExist) {
+                    Button("Ok", role: .cancel) {
+                        authViewModel.emailAlreadyExist = false
+                    }
+                }
                 
                 Spacer()
                 
