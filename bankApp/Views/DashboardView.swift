@@ -28,14 +28,12 @@ struct DashboardView: View {
                         
                     }
                     
-                    Button {
-                        authViewModel.signOut()
+                    NavigationLink {
+                        LoginView().onAppear(perform: {
+                            authViewModel.signOut()
+                        }).navigationBarBackButtonHidden(true)
                     } label: {
-                        NavigationLink {
-                            LoginView()
-                        } label: {
-                            Text("Sign Out")
-                        }
+                        Text("Sign Out")
                     }
 
 
