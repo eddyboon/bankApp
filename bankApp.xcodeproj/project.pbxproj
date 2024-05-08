@@ -22,7 +22,14 @@
 		C62C3E6D2BE27D9100F0B800 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C62C3E6C2BE27D9100F0B800 /* FirebaseStorage */; };
 		C62C3E6F2BE27E2100F0B800 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E6E2BE27E2100F0B800 /* AuthViewModel.swift */; };
 		C62C3E712BE27F6E00F0B800 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E702BE27F6E00F0B800 /* User.swift */; };
-		C62C3E732BE28ABA00F0B800 /* TempDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */; };
+		D4729F912BEB889E0096F291 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4729F902BEB889E0096F291 /* DashboardView.swift */; };
+		D4729F932BEB88C40096F291 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4729F922BEB88C40096F291 /* DashboardViewModel.swift */; };
+		D4729F952BEB89340096F291 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4729F942BEB89340096F291 /* HomeView.swift */; };
+		D4729F972BEB8A5D0096F291 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4729F962BEB8A5D0096F291 /* HomeViewModel.swift */; };
+		D4729F992BEB8A8A0096F291 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4729F982BEB8A8A0096F291 /* Transaction.swift */; };
+		D4729F9B2BEB8AB90096F291 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4729F9A2BEB8AB90096F291 /* TransactionsView.swift */; };
+		D4729F9D2BEB8AC40096F291 /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4729F9C2BEB8AC40096F291 /* TransactionsViewModel.swift */; };
+		D4729F9F2BEB8B050096F291 /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4729F9E2BEB8B050096F291 /* TransactionRowView.swift */; };
 		D47FBC5A2BE7873900F551AF /* DepositConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47FBC592BE7873900F551AF /* DepositConfirmationView.swift */; };
 		D47FBC5C2BE7875600F551AF /* DepositConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47FBC5B2BE7875600F551AF /* DepositConfirmationViewModel.swift */; };
 		D47FBC5E2BE7878600F551AF /* DepositView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47FBC5D2BE7878600F551AF /* DepositView.swift */; };
@@ -46,7 +53,14 @@
 		C62C3E5F2BE27C2F00F0B800 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C62C3E6E2BE27E2100F0B800 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		C62C3E702BE27F6E00F0B800 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempDashboardView.swift; sourceTree = "<group>"; };
+		D4729F902BEB889E0096F291 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		D4729F922BEB88C40096F291 /* DashboardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		D4729F942BEB89340096F291 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		D4729F962BEB8A5D0096F291 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		D4729F982BEB8A8A0096F291 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		D4729F9A2BEB8AB90096F291 /* TransactionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
+		D4729F9C2BEB8AC40096F291 /* TransactionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
+		D4729F9E2BEB8B050096F291 /* TransactionRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
 		D47FBC592BE7873900F551AF /* DepositConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositConfirmationView.swift; sourceTree = "<group>"; };
 		D47FBC5B2BE7875600F551AF /* DepositConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositConfirmationViewModel.swift; sourceTree = "<group>"; };
 		D47FBC5D2BE7878600F551AF /* DepositView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositView.swift; sourceTree = "<group>"; };
@@ -119,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				C62C3E532BE26FBC00F0B800 /* InputsView.swift */,
+				D4729F9E2BEB8B050096F291 /* TransactionRowView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -128,9 +143,13 @@
 			children = (
 				C62C3E6E2BE27E2100F0B800 /* AuthViewModel.swift */,
 				C62C3E702BE27F6E00F0B800 /* User.swift */,
+				D4729F922BEB88C40096F291 /* DashboardViewModel.swift */,
 				D47FBC5B2BE7875600F551AF /* DepositConfirmationViewModel.swift */,
 				D47FBC5F2BE7879800F551AF /* DepositViewModel.swift */,
+				D4729F962BEB8A5D0096F291 /* HomeViewModel.swift */,
 				D47FBC632BE787B400F551AF /* PayViewModel.swift */,
+				D4729F982BEB8A8A0096F291 /* Transaction.swift */,
+				D4729F9C2BEB8AC40096F291 /* TransactionsViewModel.swift */,
 				D47FBC672BE787DD00F551AF /* TransferConfirmationViewModel.swift */,
 				D47FBC6B2BE787FE00F551AF /* TransferViewModel.swift */,
 			);
@@ -141,10 +160,12 @@
 			isa = PBXGroup;
 			children = (
 				C62C3E592BE2761500F0B800 /* RegistrationView.swift */,
-				C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */,
+				D4729F902BEB889E0096F291 /* DashboardView.swift */,
 				D47FBC592BE7873900F551AF /* DepositConfirmationView.swift */,
 				D47FBC5D2BE7878600F551AF /* DepositView.swift */,
+				D4729F942BEB89340096F291 /* HomeView.swift */,
 				D47FBC612BE787AB00F551AF /* PayView.swift */,
+				D4729F9A2BEB8AB90096F291 /* TransactionsView.swift */,
 				D47FBC652BE787C900F551AF /* TransferConfirmationView.swift */,
 				D47FBC692BE787ED00F551AF /* TransferView.swift */,
 			);
@@ -236,20 +257,27 @@
 				D47FBC682BE787DD00F551AF /* TransferConfirmationViewModel.swift in Sources */,
 				D47FBC5C2BE7875600F551AF /* DepositConfirmationViewModel.swift in Sources */,
 				C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */,
+				D4729F972BEB8A5D0096F291 /* HomeViewModel.swift in Sources */,
+				D4729F932BEB88C40096F291 /* DashboardViewModel.swift in Sources */,
+				D4729F9B2BEB8AB90096F291 /* TransactionsView.swift in Sources */,
 				D47FBC662BE787C900F551AF /* TransferConfirmationView.swift in Sources */,
 				C62C3E6F2BE27E2100F0B800 /* AuthViewModel.swift in Sources */,
 				C62C3E712BE27F6E00F0B800 /* User.swift in Sources */,
 				C62C3E542BE26FBC00F0B800 /* InputsView.swift in Sources */,
 				D47FBC5A2BE7873900F551AF /* DepositConfirmationView.swift in Sources */,
-				C62C3E732BE28ABA00F0B800 /* TempDashboardView.swift in Sources */,
 				C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */,
 				D47FBC6C2BE787FE00F551AF /* TransferViewModel.swift in Sources */,
 				C62C3E5A2BE2761500F0B800 /* RegistrationView.swift in Sources */,
 				D47FBC622BE787AB00F551AF /* PayView.swift in Sources */,
+				D4729F992BEB8A8A0096F291 /* Transaction.swift in Sources */,
+				D4729F9D2BEB8AC40096F291 /* TransactionsViewModel.swift in Sources */,
+				D4729F912BEB889E0096F291 /* DashboardView.swift in Sources */,
 				D47FBC602BE7879800F551AF /* DepositViewModel.swift in Sources */,
 				D47FBC6A2BE787ED00F551AF /* TransferView.swift in Sources */,
+				D4729F9F2BEB8B050096F291 /* TransactionRowView.swift in Sources */,
 				D47FBC5E2BE7878600F551AF /* DepositView.swift in Sources */,
 				D47FBC642BE787B400F551AF /* PayViewModel.swift in Sources */,
+				D4729F952BEB89340096F291 /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

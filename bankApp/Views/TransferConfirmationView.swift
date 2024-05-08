@@ -10,7 +10,7 @@ import SwiftUI
 struct TransferConfirmationView: View {
     @StateObject var viewModel: TransferViewModel
     var payViewModel: PayViewModel
-    var transferAmount: Double
+    var transferAmount: Decimal
     var transferRecipientName: String
     
     var body: some View {
@@ -18,7 +18,7 @@ struct TransferConfirmationView: View {
             HStack {
                 Text("✅")
                     .font(.largeTitle)
-                Text("\nTransferred\n$\(transferAmount, specifier: payViewModel.getDoubleSpecifier(double: transferAmount))\nto \(transferRecipientName) !")
+                Text("\nTransferred\n$\(transferAmount) !")
                     .font(.largeTitle)
                     .bold()
                     .padding(10)

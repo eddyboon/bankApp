@@ -12,10 +12,12 @@ import Combine
 
 struct DepositView: View {
     @StateObject var viewModel: DepositViewModel
-    @State var depositAmount: Double = 0
-    let depositSuggestions = [10.0, 50.0, 100.0]
+    @State var depositAmount: Decimal = 0
+    let depositSuggestions: [Decimal] = [10, 50, 100].map { Decimal($0) }
     var payViewModel: PayViewModel
     var depositConfirmationViewModel: DepositConfirmationViewModel
+    var authViewModel: AuthViewModel
+    var dashboardViewModel: DashboardViewModel
     
     var body: some View {
         VStack {
@@ -39,7 +41,7 @@ struct DepositView: View {
                     Button(action: {
                         depositAmount = suggestion
                     }) {
-                        Text("\(suggestion, specifier: "%.f")")
+                        Text("\(suggestion)")
                             .fontWeight(.semibold)
                             .padding()
                     }
@@ -59,7 +61,7 @@ struct DepositView: View {
                     .foregroundColor(.white)
             }
             .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
-                DepositConfirmationView(viewModel: depositConfirmationViewModel, payViewModel: payViewModel, depositAmount: depositAmount)
+                DepositConfirmationView(viewModel: depositConfirmationViewModel, authViewModel: authViewModel, payViewModel: payViewModel, depositAmount: depositAmount, dashboardViewModel: dashboardViewModel)
             }
         }
     }
@@ -68,5 +70,5 @@ struct DepositView: View {
 
 
 #Preview {
-    DepositView(viewModel: DepositViewModel(depositAmount: 100.00, showDepositConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel(), depositConfirmationViewModel: DepositConfirmationViewModel())
+    DepositView(viewModel: DepositViewModel(depositAmount: 50, showDepositConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel(), depositConfirmationViewModel: DepositConfirmationViewModel(), authViewModel: AuthViewModel(), dashboardViewModel: DashboardViewModel())
 }

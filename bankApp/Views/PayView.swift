@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PayView: View {
     @ObservedObject var authViewModel: AuthViewModel
-    var payViewModel: PayViewModel
+    var viewModel: PayViewModel
     var body: some View {
         NavigationView {
             ZStack {
@@ -17,7 +17,7 @@ struct PayView: View {
                         Text("Would you like to")
                             .font(.title)
                     NavigationLink(
-                        destination: DepositView(viewModel: DepositViewModel(depositAmount: 0, showDepositConfirmationView: false, authViewModel: authViewModel), payViewModel: payViewModel, depositConfirmationViewModel: DepositConfirmationViewModel()),
+                        destination: DepositView(viewModel: DepositViewModel(depositAmount: 0, showDepositConfirmationView: false, authViewModel: authViewModel), payViewModel: viewModel, depositConfirmationViewModel: DepositConfirmationViewModel(), authViewModel: authViewModel, dashboardViewModel: DashboardViewModel()),
                         label: {
                             Text("Deposit")
                                 .font(.title)
@@ -31,7 +31,7 @@ struct PayView: View {
                     Text("or")
                         .font(.title)
                     NavigationLink(
-                        destination: TransferView(viewModel: TransferViewModel(transferAmount: 100, showTransferConfirmationView: false, authViewModel: authViewModel), payViewModel: payViewModel),
+                        destination: TransferView(viewModel: TransferViewModel(transferAmount: 0, showTransferConfirmationView: false, authViewModel: authViewModel), payViewModel: viewModel),
                         label: {
                             Text("Transfer")
                                 .font(.title)
@@ -50,5 +50,5 @@ struct PayView: View {
 }
 
 #Preview {
-    PayView(authViewModel: AuthViewModel(), payViewModel: PayViewModel())
+    PayView(authViewModel: AuthViewModel(), viewModel: PayViewModel())
 }

@@ -10,12 +10,12 @@ import Firebase
 import FirebaseFirestoreSwift
 
 class DepositViewModel: ObservableObject {
-    @Published var depositAmount: Double = 0
+    @Published var depositAmount: Decimal = 0
     @Published var showDepositConfirmationView: Bool = false
     @Published var user: User?
     var authViewModel: AuthViewModel
     
-    init(depositAmount: Double, showDepositConfirmationView: Bool, user: User? = nil, authViewModel: AuthViewModel) {
+    init(depositAmount: Decimal, showDepositConfirmationView: Bool, user: User? = nil, authViewModel: AuthViewModel) {
         self.depositAmount = depositAmount
         self.showDepositConfirmationView = showDepositConfirmationView
         self.user = user
@@ -23,7 +23,7 @@ class DepositViewModel: ObservableObject {
     }
     
     @MainActor
-    func depositMoney(depositAmount: Double) {
+    func depositMoney(depositAmount: Decimal) {
         guard let currentUserID = authViewModel.currentUser?.id else {
             print("Current user ID is nil")
             return
