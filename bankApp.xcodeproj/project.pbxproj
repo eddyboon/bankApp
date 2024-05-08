@@ -32,7 +32,6 @@
 		C62C3E6D2BE27D9100F0B800 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C62C3E6C2BE27D9100F0B800 /* FirebaseStorage */; };
 		C62C3E6F2BE27E2100F0B800 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E6E2BE27E2100F0B800 /* AuthViewModel.swift */; };
 		C62C3E712BE27F6E00F0B800 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E702BE27F6E00F0B800 /* User.swift */; };
-		C62C3E732BE28ABA00F0B800 /* TempDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,7 +55,6 @@
 		C62C3E5F2BE27C2F00F0B800 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C62C3E6E2BE27E2100F0B800 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		C62C3E702BE27F6E00F0B800 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempDashboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +142,6 @@
 				C18370A42BE33D2300614F94 /* HomeView.swift */,
 				C18370A22BE33C7400614F94 /* DashboardView.swift */,
 				C62C3E592BE2761500F0B800 /* RegistrationView.swift */,
-				C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */,
 				C134265E2BE47440007C27AE /* PayView.swift */,
 				C13426602BE8BA90007C27AE /* TransactionsView.swift */,
 			);
@@ -246,7 +243,6 @@
 				C62C3E712BE27F6E00F0B800 /* User.swift in Sources */,
 				C62C3E542BE26FBC00F0B800 /* InputsView.swift in Sources */,
 				C18370AD2BE34EBE00614F94 /* TransactionRowView.swift in Sources */,
-				C62C3E732BE28ABA00F0B800 /* TempDashboardView.swift in Sources */,
 				C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */,
 				C62C3E5A2BE2761500F0B800 /* RegistrationView.swift in Sources */,
 				C134265D2BE468A3007C27AE /* DashboardViewModel.swift in Sources */,

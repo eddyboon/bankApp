@@ -13,7 +13,7 @@ struct LoginView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             if (authViewModel.isLoggedIn) {
                 DashboardView()
             } else {

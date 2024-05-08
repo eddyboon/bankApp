@@ -90,6 +90,6 @@ class AuthViewModel: ObservableObject {
             } catch {
                 print("Failed to log user out")
             }
-        }
+    }
     
 }
