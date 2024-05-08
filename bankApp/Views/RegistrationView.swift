@@ -135,6 +135,8 @@ struct RegistrationView: View {
                 if (authViewModel.signupLoading) {
                     // Show loading icon
                     Spacer()
+                        .frame(minHeight: 10, idealHeight: 25, maxHeight: 25)
+                        .fixedSize()
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .scaleEffect(1.5)
