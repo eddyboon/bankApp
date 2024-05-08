@@ -12,19 +12,7 @@ struct User: Identifiable, Codable {
     let name: String
     let email: String
     let phoneNumber: String
-    var balance: Decimal
-
-    func displayBalance() -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: "en_US")
-        
-        guard let formattedBalance = formatter.string(from: balance as NSDecimalNumber) else {
-            return "Invalid balance"
-        }
-        
-        return formattedBalance
-    }
+    let balance: Double
 }
 
 extension User {
