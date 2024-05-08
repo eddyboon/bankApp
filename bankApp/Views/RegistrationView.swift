@@ -133,7 +133,7 @@ struct RegistrationView: View {
                 .padding(.top, 12)
                 
                 if (authViewModel.signupLoading) {
-                    // Show progress bar
+                    // Show loading icon
                     Spacer()
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())

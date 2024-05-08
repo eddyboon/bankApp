@@ -21,6 +21,7 @@ class AuthViewModel: ObservableObject {
     @Published var emailAlreadyExist: Bool = false
     @Published var numberAlreadyExist: Bool = false
     @Published var signupLoading: Bool = false
+    @Published var signinLoading: Bool = false
     @Published var currentUser: User?
     
     init() {
@@ -31,12 +32,15 @@ class AuthViewModel: ObservableObject {
     
     func signIn(withEmail email: String, password: String) async throws {
         do {
+            signinLoading = true
             _ = try await Auth.auth().signIn(withEmail: email, password: password)
             await fetchUser()
             isLoggedIn = true
+            signinLoading = false
         } catch {
             print("Failed to log in user")
             failedLogin = true
+            signinLoading = false
         }
     }
     
