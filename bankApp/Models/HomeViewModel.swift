@@ -32,6 +32,7 @@ class HomeViewModel: ObservableObject {
         do {
             let querySnapshot = try await transactionsRef.getDocuments()
             self.transactions = querySnapshot.documents.compactMap { try? $0.data(as: Transaction.self) }
+            self.transactions.sort {$0.date > $1.date } // Sort in descending order
             self.isLoadingTransactions = false
             
         } catch {
@@ -70,6 +71,7 @@ class HomeViewModel: ObservableObject {
                 else {
                     DispatchQueue.main.async {
                         self.transactions.append(newTransaction)
+                        self.transactions.sort {$0.date > $1.date } // Sort in descending order
                         print("Transaction added to db and local list")
                     }
                 }

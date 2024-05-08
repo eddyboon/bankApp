@@ -111,10 +111,7 @@ struct HomeView: View {
         } // End of root vstack
         .onAppear {
             Task {
-                await MainActor.run {
-                    viewModel.setUser(user: authViewModel.currentUser ?? nil)
-                }
-                
+                viewModel.setUser(user: authViewModel.currentUser ?? nil)
                 await viewModel.fetchTransactions()
             }
         }
