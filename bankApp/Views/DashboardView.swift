@@ -28,7 +28,7 @@ struct DashboardView: View {
                         
                     }
                     Button("Sign out") {
-                        authViewModel.isLoggedIn = false
+                        authViewModel.signOut()
                     }
 
                 } label: {
