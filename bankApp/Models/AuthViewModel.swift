@@ -20,6 +20,7 @@ class AuthViewModel: ObservableObject {
     @Published var failedSignup: Bool = false
     @Published var emailAlreadyExist: Bool = false
     @Published var numberAlreadyExist: Bool = false
+    @Published var signupLoading: Bool = false
     @Published var currentUser: User?
     
     init() {
@@ -41,6 +42,7 @@ class AuthViewModel: ObservableObject {
     
     func createUser(withEmail email: String, password: String, name: String, phoneNumber: String) async throws {
         do {
+            signupLoading = true
             // Check if phoneNumber exists
             let querySnapshot = try await Firestore.firestore().collection("users").whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments()
             if (querySnapshot.isEmpty) {
@@ -59,11 +61,12 @@ class AuthViewModel: ObservableObject {
             } else {
                 numberAlreadyExist = true
             }
-            
+            signupLoading = false
             
         } catch {
             print("Failed to create user")
             failedSignup = true
+            signupLoading = false
         }
         
         
