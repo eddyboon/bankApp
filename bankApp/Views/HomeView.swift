@@ -21,7 +21,7 @@ struct HomeView: View {
   
     var body: some View {
         VStack(alignment: .leading) {
-            if let userName = authViewModel.currentUser?.name {
+            if let userName = viewModel.user?.name {
                 Text("Welcome \(userName),")
                     .font(.title)
                     .padding()
@@ -79,7 +79,7 @@ struct HomeView: View {
                            } else {
                                // Force unwrap, change later
                                // Show only 6 most recent transactions. User can navigate to dedicated page to view all.
-                               ForEach(viewModel.transactions.prefix(6)) { transaction in
+                               ForEach(viewModel.transactions.prefix(8)) { transaction in
                                    TransactionRowView(transactionModel: transaction)
                                }
                            }

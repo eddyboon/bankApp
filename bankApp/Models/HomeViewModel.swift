@@ -58,7 +58,7 @@ class HomeViewModel: ObservableObject {
             id: NSUUID().uuidString,
             name: "Google", date: Date(),
             amount: 0.50,
-            type: "debit"
+            type: "credit"
         )
         
         let transactionsRef = db.collection("users").document(currentUser.id).collection("Transactions")
@@ -72,6 +72,7 @@ class HomeViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.transactions.append(newTransaction)
                         self.transactions.sort {$0.date > $1.date } // Sort in descending order
+                        self.updateBalance(value: newTransaction.amount, transactionType: newTransaction.type)
                         print("Transaction added to db and local list")
                     }
                 }
@@ -82,5 +83,14 @@ class HomeViewModel: ObservableObject {
             print("Error adding transaction to firestore db: \(error.localizedDescription)")
         }
 
+    }
+    
+    func updateBalance(value: Decimal, transactionType: String) {
+        if(transactionType == "debit") {
+            self.user?.balance -= value
+        }
+        else {
+            self.user?.balance += value
+        }
     }
 }

@@ -11,7 +11,7 @@ struct User: Identifiable, Codable {
     let id: String
     let name: String
     let email: String
-    let balance: Decimal
+    var balance: Decimal
     
     
     func displayBalance() -> String {
