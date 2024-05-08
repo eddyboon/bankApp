@@ -1,17 +1,17 @@
-//
-//  AuthViewModel.swift
-//  bankApp
-//
-//  Created by Edward Ong on 1/5/24.
-//
+    //
+    //  AuthViewModel.swift
+    //  bankApp
+    //
+    //  Created by Edward Ong on 1/5/24.
+    //
 
-import Foundation
-import Firebase
-import FirebaseFirestoreSwift
+    import Foundation
+    import Firebase
+    import FirebaseFirestoreSwift
 
-protocol AuthenticateionFormProtocol {
-    var formIsValid: Bool {get}
-}
+    protocol AuthenticateionFormProtocol {
+        var formIsValid: Bool {get}
+    }
 
 @MainActor
 class AuthViewModel: ObservableObject {
@@ -65,16 +65,8 @@ class AuthViewModel: ObservableObject {
             print("Failed to create user")
             failedSignup = true
         }
-    }
-    
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-            self.currentUser = nil
-            isLoggedIn = false
-        } catch {
-            print("Failed to log user out")
-        }
+        
+        
     }
     
     func fetchUser() async {
@@ -89,5 +81,15 @@ class AuthViewModel: ObservableObject {
         
         return digits.isSuperset(of: stringSet)
     }
+
+    func signOut() {
+            do {
+                try Auth.auth().signOut()
+                self.currentUser = nil
+                isLoggedIn = false
+            } catch {
+                print("Failed to log user out")
+            }
+        }
     
 }

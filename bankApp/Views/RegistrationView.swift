@@ -193,8 +193,11 @@ extension RegistrationView: AuthenticateionFormProtocol {
     }
 }
 
-#Preview {
-    NavigationStack {
+struct RegistrationView_Previews: PreviewProvider {
+    static var previews: some View {
         RegistrationView()
+            .environmentObject(AuthViewModel()) // Provide an instance of AuthViewModel to the preview
     }
 }
+
+   
