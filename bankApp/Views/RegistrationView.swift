@@ -132,40 +132,50 @@ struct RegistrationView: View {
                 .padding(.horizontal)
                 .padding(.top, 12)
                 
-                // Sign up button
-                Button {
-                    // Perform sign up button
-                    Task {
-                        try await authViewModel.createUser(withEmail: email, password: password, name: name, phoneNumber: phoneNumber)
+                if (authViewModel.signupLoading) {
+                    // Show loading icon
+                    Spacer()
+                        .frame(minHeight: 10, idealHeight: 25, maxHeight: 25)
+                        .fixedSize()
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(1.5)
+                } else {
+                    // Sign up button
+                    Button {
+                        // Perform sign up button
+                        Task {
+                            try await authViewModel.createUser(withEmail: email, password: password, name: name, phoneNumber: phoneNumber)
+                        }
+                        
+                    } label: {
+                        HStack {
+                            Text("Sign Up")
+                                .fontWeight(.semibold)
+                            Image(systemName: "arrow.right")
+                        }
+                        .foregroundColor(.white)
+                        .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                     }
-                    
-                } label: {
-                    HStack {
-                        Text("Sign Up")
-                            .fontWeight(.semibold)
-                        Image(systemName: "arrow.right")
+                    .background(Color(.systemBlue))
+                    .disabled(!formIsValid)
+                    .opacity(formIsValid ? 1.0 : 0.5)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.top, 24)
+                    .alert("Failed to Signup. Phone Number already exists.", isPresented: $authViewModel.numberAlreadyExist) {
+                        Button("Ok", role: .cancel) {
+                            authViewModel.numberAlreadyExist = false
+                        }
                     }
-                    .foregroundColor(.white)
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
-                }
-                .background(Color(.systemBlue))
-                .disabled(!formIsValid)
-                .opacity(formIsValid ? 1.0 : 0.5)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.top, 24)
-                .alert("Failed to Signup. Phone Number already exists.", isPresented: $authViewModel.numberAlreadyExist) {
-                    Button("Ok", role: .cancel) {
-                        authViewModel.numberAlreadyExist = false
+                    .alert("Failed to Signup. An error occurred. Please try again.", isPresented: $authViewModel.failedSignup) {
+                        Button("Ok", role: .cancel) {
+                            authViewModel.failedSignup = false
+                        }
                     }
-                }
-                .alert("Failed to Signup. An error occurred. Please try again.", isPresented: $authViewModel.failedSignup) {
-                    Button("Ok", role: .cancel) {
-                        authViewModel.failedSignup = false
-                    }
-                }
-                .alert("Failed to Signup. Email already exists.", isPresented: $authViewModel.emailAlreadyExist) {
-                    Button("Ok", role: .cancel) {
-                        authViewModel.emailAlreadyExist = false
+                    .alert("Failed to Signup. Email already exists.", isPresented: $authViewModel.emailAlreadyExist) {
+                        Button("Ok", role: .cancel) {
+                            authViewModel.emailAlreadyExist = false
+                        }
                     }
                 }
                 

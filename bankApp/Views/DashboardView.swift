@@ -27,9 +27,15 @@ struct DashboardView: View {
                     Button("Profile") {
                         
                     }
-                    Button("Sign out") {
-                        authViewModel.signOut()
+                    
+                    NavigationLink {
+                        LoginView().onAppear(perform: {
+                            authViewModel.signOut()
+                        }).navigationBarBackButtonHidden(true)
+                    } label: {
+                        Text("Sign Out")
                     }
+
 
                 } label: {
                     Image(systemName: "person.crop.circle")
