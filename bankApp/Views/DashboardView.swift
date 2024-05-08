@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DashboardView: View {
     
-    @StateObject var viewModel = DashboardViewModel()
+    @StateObject var viewModel: DashboardViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     
     init() {
@@ -42,7 +42,7 @@ struct DashboardView: View {
             
             
             
-            TabView(selection: $viewModel.selection ) {
+            TabView() {
                 HomeView()
                     .tabItem {
                         Label("Home", systemImage: "house")
@@ -54,13 +54,12 @@ struct DashboardView: View {
                 
             }
         }
-        .onTapGesture {
-            viewModel.showDropdown = false
-        }
     }
 }
 
 #Preview {
-    DashboardView()
-        .environmentObject(AuthViewModel())
+    NavigationStack {
+        DashboardView()
+            .environmentObject(AuthViewModel())
+    }
 }

@@ -95,7 +95,9 @@ struct HomeView: View {
             .cornerRadius(15)
             .padding()
             .shadow(color: Color.black.opacity(0.1), radius: 15, x: 5, y: 5)
-            .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+            
+            // Push everything to top
+            Spacer()
             
             Button {
                 DispatchQueue.main.async {
@@ -116,6 +118,7 @@ struct HomeView: View {
                 await viewModel.fetchTransactions()
             }
         }
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
 
         
        }

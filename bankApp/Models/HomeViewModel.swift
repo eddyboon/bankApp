@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 
+@MainActor
 class HomeViewModel: ObservableObject {
     
     // @Published var mockUser = User.MOCK_USER
@@ -18,7 +19,6 @@ class HomeViewModel: ObservableObject {
     
     let db = Firestore.firestore()
     
-    @MainActor
     func fetchTransactions() async {
         
         guard let currentUser = user else {

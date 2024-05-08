@@ -23,13 +23,12 @@ struct TransactionsView: View {
                 .font(.title)
                 .padding()
             
-            
-            DatePicker("Filter by date:", selection: $viewModel.filterDate, displayedComponents: .date)
-                .datePickerStyle(.automatic)
-                .padding()
             HStack {
-                Text("Filter by name:")
-                TextField("Enter name", text: $viewModel.filterName)
+                Text("Search:")
+                    .padding(.trailing, 10)
+                TextField("Filter by name, value or date", text: $viewModel.filterText)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .font(.system(size: 14))
             }
             .padding()
            
@@ -40,7 +39,7 @@ struct TransactionsView: View {
                     Text("No transactions to show")
                 } else {
                     // Force unwrap, change later
-                    ForEach(viewModel.transactions) { transaction in
+                    ForEach(viewModel.filteredTransactions) { transaction in
                         TransactionRowView(transactionModel: transaction)
                     }
                 }
