@@ -26,6 +26,7 @@
 		C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370A62BE33F3C00614F94 /* HomeViewModel.swift */; };
 		C18370AB2BE3427300614F94 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370AA2BE3427300614F94 /* Transaction.swift */; };
 		C18370AD2BE34EBE00614F94 /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */; };
+		C1EF69F62BECB40500826F84 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EF69F52BECB40500826F84 /* NavigationController.swift */; };
 		C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */; };
 		C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E402BE0902600F0B800 /* LoginView.swift */; };
 		C62C3E432BE0902A00F0B800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C62C3E422BE0902A00F0B800 /* Assets.xcassets */; };
@@ -63,6 +64,7 @@
 		C18370A62BE33F3C00614F94 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C18370AA2BE3427300614F94 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
+		C1EF69F52BECB40500826F84 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C62C3E3B2BE0902600F0B800 /* bankApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bankApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bankAppApp.swift; sourceTree = "<group>"; };
 		C62C3E402BE0902600F0B800 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				C62C3E552BE2723300F0B800 /* Models */,
 				C62C3E522BE26FAC00F0B800 /* Components */,
 				C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */,
+				C1EF69F52BECB40500826F84 /* NavigationController.swift */,
 				C62C3E422BE0902A00F0B800 /* Assets.xcassets */,
 				C62C3E5F2BE27C2F00F0B800 /* GoogleService-Info.plist */,
 				C62C3E442BE0902A00F0B800 /* Preview Content */,
@@ -278,6 +281,7 @@
 				C62C3E542BE26FBC00F0B800 /* InputsView.swift in Sources */,
 				C18370AD2BE34EBE00614F94 /* TransactionRowView.swift in Sources */,
 				C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */,
+				C1EF69F62BECB40500826F84 /* NavigationController.swift in Sources */,
 				C134267F2BEC6523007C27AE /* DepositConfirmationView.swift in Sources */,
 				C62C3E5A2BE2761500F0B800 /* RegistrationView.swift in Sources */,
 				C134265D2BE468A3007C27AE /* DashboardViewModel.swift in Sources */,
