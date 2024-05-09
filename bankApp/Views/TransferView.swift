@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct TransferView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var viewModel: TransferViewModel
-    var payViewModel: PayViewModel
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: TransferViewModel())
+    }
     
     var body: some View {
         VStack {
@@ -54,7 +58,7 @@ struct TransferView: View {
                 }
             }
             Button(action: {
-                viewModel.transferMoney(transferAmount: viewModel.transferAmount)
+                viewModel.transferMoney(transferAmount: viewModel.transferAmount, user: authViewModel.currentUser)
                 viewModel.showTransferConfirmationView = true
             }) {
                 Text("Submit")
@@ -69,7 +73,7 @@ struct TransferView: View {
             .opacity(viewModel.validRecipient && viewModel.validAmount ? 1.0 : 0.5) // Darken the submit button if it is disabled, so the user knows their inputs are not valid yet
             .disabled(!viewModel.validRecipient || !viewModel.validAmount) // Disable the play submit if the recipient or amount are invalid
             .fullScreenCover(isPresented: $viewModel.showTransferConfirmationView) {
-                TransferConfirmationView(viewModel: viewModel, payViewModel: payViewModel, transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipientName)
+                TransferConfirmationView(transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipientName)
             }
             Text("Transferring to \(viewModel.transferRecipientName)")
                 .opacity(viewModel.validRecipient ? 1.0 : 0)
@@ -80,5 +84,6 @@ struct TransferView: View {
 }
 
 #Preview {
-    TransferView(viewModel: TransferViewModel(transferAmount: 100, showTransferConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel())
+    TransferView()
+        .environmentObject(AuthViewModel())
 }

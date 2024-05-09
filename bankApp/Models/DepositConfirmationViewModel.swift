@@ -8,4 +8,9 @@
 import Foundation
 
 class DepositConfirmationViewModel: ObservableObject {
+    @Published var depositAmount: Decimal
+    
+    init(depositAmount: Decimal) {
+        self.depositAmount = depositAmount
+    }
 }

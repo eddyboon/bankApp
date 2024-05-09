@@ -11,13 +11,12 @@ import SwiftUI
 import Combine
 
 struct DepositView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var viewModel: DepositViewModel
-    @State var depositAmount: Decimal = 0
-    let depositSuggestions: [Decimal] = [10, 50, 100].map { Decimal($0) }
-    var payViewModel: PayViewModel
-    var depositConfirmationViewModel: DepositConfirmationViewModel
-    var authViewModel: AuthViewModel
-    var dashboardViewModel: DashboardViewModel
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: DepositViewModel())
+    }
     
     var body: some View {
         VStack {
@@ -29,7 +28,7 @@ struct DepositView: View {
                 .padding(.top)
             HStack {
                 Text("$")
-                TextField("", value: $depositAmount, format: .number)
+                TextField("", value: $viewModel.depositAmount, format: .number)
                     .padding(.horizontal)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 250, height: 50)
@@ -37,9 +36,9 @@ struct DepositView: View {
                     .keyboardType(.numberPad)
             }
             HStack(spacing: 20) {
-                ForEach(depositSuggestions, id: \.self) { suggestion in
+                ForEach(viewModel.depositSuggestions, id: \.self) { suggestion in
                     Button(action: {
-                        depositAmount = suggestion
+                        viewModel.depositAmount = suggestion
                     }) {
                         Text("\(suggestion)")
                             .fontWeight(.semibold)
@@ -48,7 +47,7 @@ struct DepositView: View {
                 }
             }
             Button(action: {
-                viewModel.depositMoney(depositAmount: depositAmount)
+                viewModel.depositMoney(depositAmount: viewModel.depositAmount, user: authViewModel.currentUser)
                 viewModel.showDepositConfirmationView = true
             }) {
                 Text("Submit")
@@ -61,7 +60,7 @@ struct DepositView: View {
                     .foregroundColor(.white)
             }
             .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
-                DepositConfirmationView(viewModel: depositConfirmationViewModel, authViewModel: authViewModel, payViewModel: payViewModel, depositAmount: depositAmount, dashboardViewModel: dashboardViewModel)
+                DepositConfirmationView(depositAmount: viewModel.depositAmount)
             }
         }
     }
@@ -70,5 +69,6 @@ struct DepositView: View {
 
 
 #Preview {
-    DepositView(viewModel: DepositViewModel(depositAmount: 50, showDepositConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel(), depositConfirmationViewModel: DepositConfirmationViewModel(), authViewModel: AuthViewModel(), dashboardViewModel: DashboardViewModel())
+    DepositView()
+        .environmentObject(AuthViewModel())
 }

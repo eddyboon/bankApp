@@ -13,23 +13,20 @@ class DepositViewModel: ObservableObject {
     @Published var depositAmount: Decimal = 0
     @Published var showDepositConfirmationView: Bool = false
     @Published var user: User?
-    var authViewModel: AuthViewModel
     
-    init(depositAmount: Decimal, showDepositConfirmationView: Bool, user: User? = nil, authViewModel: AuthViewModel) {
-        self.depositAmount = depositAmount
-        self.showDepositConfirmationView = showDepositConfirmationView
-        self.user = user
-        self.authViewModel = authViewModel
-    }
+    let depositSuggestions: [Decimal] = [10, 50, 100].map { Decimal($0) }
+    let database = Firestore.firestore()
+    
     
     @MainActor
-    func depositMoney(depositAmount: Decimal) {
-        guard let currentUserID = authViewModel.currentUser?.id else {
+    func depositMoney(depositAmount: Decimal, user: User?) {
+        
+        guard let currentUserID = user?.id else {
             print("Current user ID is nil")
             return
         }
-        let database = Firestore.firestore()
-        database.collection("users").document(currentUserID).getDocument { documentSnapshot, error in
+        
+        self.database.collection("users").document(currentUserID).getDocument { documentSnapshot, error in
             if let error = error {
                 print("Error fetching balance: \(error.localizedDescription)")
                 return
@@ -41,7 +38,7 @@ class DepositViewModel: ObservableObject {
             do {
                 let user = try document.data(as: User.self)
                 let newBalance = (user.balance) + depositAmount
-                database.collection("users").document(currentUserID).updateData(["balance": newBalance]) { error in
+                self.database.collection("users").document(currentUserID).updateData(["balance": newBalance]) { error in
                     if let error = error {
                         print("Error updating balance: \(error.localizedDescription)")
                     }

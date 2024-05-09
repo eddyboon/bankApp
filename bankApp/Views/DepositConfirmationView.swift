@@ -9,10 +9,10 @@ import SwiftUI
 
 struct DepositConfirmationView: View {
     @StateObject var viewModel: DepositConfirmationViewModel
-    var authViewModel: AuthViewModel
-    var payViewModel: PayViewModel
-    var depositAmount: Decimal
-    var dashboardViewModel: DashboardViewModel
+    
+    init(depositAmount: Decimal) {
+        _viewModel = StateObject(wrappedValue: DepositConfirmationViewModel(depositAmount: depositAmount))
+    }
     
     var body: some View {
         NavigationView {
@@ -20,13 +20,13 @@ struct DepositConfirmationView: View {
                 HStack {
                     Text("✅")
                         .font(.largeTitle)
-                    Text("\nDeposited\n$\(depositAmount) !")
+                    Text("\nDeposited\n$\(viewModel.depositAmount) !")
                         .font(.largeTitle)
                         .bold()
                         .padding(10)
                 }
                 NavigationLink(
-                    destination: DashboardView(viewModel: DashboardViewModel(), authViewModel: authViewModel, payViewModel: payViewModel),
+                    destination: DashboardView(),
                     label: {
                         Text("OK")
                             .font(.title)
@@ -44,5 +44,6 @@ struct DepositConfirmationView: View {
 }
 
 #Preview {
-    DepositConfirmationView(viewModel: DepositConfirmationViewModel(), authViewModel: AuthViewModel(), payViewModel: PayViewModel(), depositAmount: 50, dashboardViewModel: DashboardViewModel())
+    DepositConfirmationView(depositAmount: 50)
+        .environmentObject(AuthViewModel())
 }

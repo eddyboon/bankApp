@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct TransferConfirmationView: View {
-    @StateObject var viewModel: TransferViewModel
-    var payViewModel: PayViewModel
-    var transferAmount: Decimal
-    var transferRecipientName: String
+    
+    @StateObject var viewModel: TransferConfirmationViewModel
+    
+    init(transferAmount: Decimal, transferRecipientName: String) {
+        _viewModel = StateObject(wrappedValue: TransferConfirmationViewModel(transferAmount: transferAmount, transferRecipientName: transferRecipientName))
+    }
     
     var body: some View {
         VStack {
             HStack {
                 Text("✅")
                     .font(.largeTitle)
-                Text("\nTransferred\n$\(transferAmount) !")
+                Text("\nTransferred\n$\(viewModel.transferAmount) !")
                     .font(.largeTitle)
                     .bold()
                     .padding(10)
@@ -41,5 +43,5 @@ struct TransferConfirmationView: View {
 }
 
 #Preview {
-    TransferConfirmationView(viewModel: TransferViewModel(transferAmount: 100, showTransferConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel(), transferAmount: 100, transferRecipientName: "User")
+    TransferConfirmationView(transferAmount: 50, transferRecipientName: "Geoff")
 }

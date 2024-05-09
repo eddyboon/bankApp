@@ -18,18 +18,12 @@ class TransferViewModel: ObservableObject {
     let transferSuggestions = [10, 50, 100]
     @Published var validRecipient: Bool = false
     @Published var validAmount: Bool = false
-    var authViewModel: AuthViewModel
     
-    init(transferAmount: Decimal, showTransferConfirmationView: Bool, authViewModel: AuthViewModel) {
-        self.transferAmount = transferAmount
-        self.showTransferConfirmationView = showTransferConfirmationView
-        self.authViewModel = authViewModel
-    }
     
     @MainActor
-    func transferMoney(transferAmount: Decimal) {
+    func transferMoney(transferAmount: Decimal, user: User?) {
         // Deducts from balance but does not add to other persons account balance yet
-        guard let currentUserID = authViewModel.currentUser?.id else {
+        guard let currentUserID = user?.id else {
             print("Current user ID is nil")
             return
         }
