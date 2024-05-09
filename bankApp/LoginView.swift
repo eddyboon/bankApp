@@ -15,7 +15,8 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             if (authViewModel.isLoggedIn) {
-                TempDashboardView()
+                //TempDashboardView()
+                ProfileView()
             } else {
                 VStack {
                     // Image or header

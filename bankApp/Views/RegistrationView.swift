@@ -18,7 +18,8 @@ struct RegistrationView: View {
     
     var body: some View {
         if (authViewModel.isLoggedIn) {
-            TempDashboardView()
+           //TempDashboardView()
+            ProfileView()
         } else {
             VStack {
                 // Image or header
