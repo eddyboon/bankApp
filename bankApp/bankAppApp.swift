@@ -10,26 +10,19 @@ struct bankAppApp: App {
         FirebaseApp.configure()
     }
     
-    enum AppScreen: Hashable {
-        case login
-        case dashboard
-        case pay
-        case profile
-    }
-    
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $navigationController.path) {
                 LoginView()
                     .onChange(of: authViewModel.isLoggedIn) { isLoggedIn in
                         if isLoggedIn {
-                            navigationController.path.append(AppScreen.dashboard)
+                            navigationController.path.append(NavigationController.AppScreen.dashboard)
                         }
                         else {
                             navigationController.path.removeLast()
                         }
                     }
-                    .navigationDestination(for: AppScreen.self) { screen in
+                    .navigationDestination(for: NavigationController.AppScreen.self) { screen in
                         switch screen {
                         case .login:
                             LoginView()

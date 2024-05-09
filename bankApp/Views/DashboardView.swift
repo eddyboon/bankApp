@@ -30,6 +30,7 @@ struct DashboardView: View {
                     }
                     
                     Button("Signout") {
+                        authViewModel.signOut()
                         dismiss()
                     }
 
