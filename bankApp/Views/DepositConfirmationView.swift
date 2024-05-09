@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct DepositConfirmationView: View {
+    @Binding var showFullscreenCover: Bool
     @StateObject var viewModel: DepositConfirmationViewModel
     
-    init(depositAmount: Decimal) {
+    init(depositAmount: Decimal, showFullscreenCover: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: DepositConfirmationViewModel(depositAmount: depositAmount))
+        self._showFullscreenCover = showFullscreenCover
     }
     
     var body: some View {
-        NavigationView {
             VStack {
                 HStack {
                     Text("✅")
@@ -37,13 +38,15 @@ struct DepositConfirmationView: View {
                             .padding()
                             .foregroundColor(.white)
                     })
+                .onTapGesture {
+                    showFullscreenCover = false
+                }
                 .navigationBarBackButtonHidden(true)
             }
-        }
     }
 }
 
 #Preview {
-    DepositConfirmationView(depositAmount: 50)
+    DepositConfirmationView(depositAmount: 50, showFullscreenCover: .constant(true))
         .environmentObject(AuthViewModel())
 }
