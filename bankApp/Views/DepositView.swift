@@ -13,6 +13,7 @@ import Combine
 struct DepositView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var viewModel: DepositViewModel
+    @Environment(\.dismiss) var dismiss
     
     init() {
         _viewModel = StateObject(wrappedValue: DepositViewModel())
@@ -60,7 +61,7 @@ struct DepositView: View {
                     .foregroundColor(.white)
             }
             .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
-                DepositConfirmationView(depositAmount: viewModel.depositAmount, showFullscreenCover: $viewModel.showDepositConfirmationView)
+                DepositConfirmationView(depositAmount: viewModel.depositAmount, showFullscreenCover: $viewModel.showDepositConfirmationView, transactionDismissed: $viewModel.transactionDismissed)
             }
         }
     }

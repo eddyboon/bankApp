@@ -11,6 +11,7 @@ struct DashboardView: View {
     
     @StateObject var viewModel: DashboardViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    @Environment(\.dismiss) var dismiss
     
     init() {
         _viewModel = StateObject(wrappedValue: DashboardViewModel())
@@ -28,12 +29,8 @@ struct DashboardView: View {
                         
                     }
                     
-                    NavigationLink {
-                        LoginView().onAppear(perform: {
-                            authViewModel.signOut()
-                        }).navigationBarBackButtonHidden(true)
-                    } label: {
-                        Text("Sign Out")
+                    Button("Signout") {
+                        dismiss()
                     }
 
 

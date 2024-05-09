@@ -11,7 +11,7 @@ struct DepositConfirmationView: View {
     @Binding var showFullscreenCover: Bool
     @StateObject var viewModel: DepositConfirmationViewModel
     
-    init(depositAmount: Decimal, showFullscreenCover: Binding<Bool>) {
+    init(depositAmount: Decimal, showFullscreenCover: Binding<Bool>, transactionDismissed: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: DepositConfirmationViewModel(depositAmount: depositAmount))
         self._showFullscreenCover = showFullscreenCover
     }
@@ -47,6 +47,6 @@ struct DepositConfirmationView: View {
 }
 
 #Preview {
-    DepositConfirmationView(depositAmount: 50, showFullscreenCover: .constant(true))
+    DepositConfirmationView(depositAmount: 50, showFullscreenCover: .constant(true), transactionDismissed: .constant(true))
         .environmentObject(AuthViewModel())
 }
