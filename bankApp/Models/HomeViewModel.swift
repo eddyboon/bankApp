@@ -85,15 +85,6 @@ class HomeViewModel: ObservableObject {
 
     }
     
-    func fetchBalance() {
-        guard let currentUser = user else {
-            print("User not set before retrieving balance")
-            return
-        }
-        
-        let balanceRef = db.collection("users").document(currentUser.id)
-    }
-    
     func updateBalance(value: Decimal, transactionType: String) {
         if(transactionType == "debit") {
             self.user?.balance -= value

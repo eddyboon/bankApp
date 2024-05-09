@@ -113,7 +113,6 @@ struct HomeView: View {
             Task {
                 viewModel.setUser(user: authViewModel.currentUser ?? nil)
                 await viewModel.fetchTransactions()
-                await authViewModel.fetchUser()
             }
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)

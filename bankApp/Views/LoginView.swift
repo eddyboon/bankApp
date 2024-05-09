@@ -13,9 +13,9 @@ struct LoginView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             if (authViewModel.isLoggedIn) {
-                DashboardView(viewModel: DashboardViewModel(), authViewModel: authViewModel, payViewModel: PayViewModel())
+                DashboardView()
             } else {
                 VStack {
                     // Image or header
@@ -35,26 +35,49 @@ struct LoginView: View {
                     .padding(.horizontal)
                     .padding(.top, 12)
                     
-                    // sign in button
-                    Button {
-                        // Perform sign in action
-                        Task {
-                            try await authViewModel.signIn(withEmail: email, password: password)
+                    if (authViewModel.signinLoading) {
+                        // Show loading icon
+                        Spacer()
+                            .frame(minHeight: 10, idealHeight: 25, maxHeight: 25)
+                            .fixedSize()
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1.5)
+                    } else {
+                        // sign in button
+                        Button {
+                            // Perform sign in action
+                            Task {
+                                try await authViewModel.signIn(withEmail: email, password: password)
+                                if (authViewModel.isLoggedIn) {
+                                    // Clear both fields
+                                    email = ""
+                                    password = ""
+                                } else {
+                                    // Only clear the password field
+                                    password = ""
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Text("Sign In")
+                                    .fontWeight(.semibold)
+                                Image(systemName: "arrow.right")
+                            }
+                            .foregroundColor(.white)
+                            .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                         }
-                    } label: {
-                        HStack {
-                            Text("Sign In")
-                                .fontWeight(.semibold)
-                            Image(systemName: "arrow.right")
+                        .background(Color(.systemBlue))
+                        .disabled(!formIsValid)
+                        .opacity(formIsValid ? 1.0 : 0.5)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding(.top, 24)
+                        .alert("Failed to login. Try Again", isPresented: $authViewModel.failedLogin) {
+                            Button("Ok", role: .cancel) {
+                                authViewModel.failedLogin = false
+                            }
                         }
-                        .foregroundColor(.white)
-                        .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                     }
-                    .background(Color(.systemBlue))
-                    .disabled(!formIsValid)
-                    .opacity(formIsValid ? 1.0 : 0.5)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .padding(.top, 24)
                     
                     Spacer()
                     
@@ -87,7 +110,6 @@ extension LoginView: AuthenticateionFormProtocol {
 }
 
 #Preview {
-    NavigationStack {
-        LoginView()
-    }
+    LoginView()
+        .environmentObject(AuthViewModel())
 }
