@@ -11,6 +11,7 @@ struct DashboardView: View {
     
     @StateObject var viewModel: DashboardViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var navigationController: NavigationController
     @Environment(\.dismiss) var dismiss
     
     init() {
@@ -46,15 +47,17 @@ struct DashboardView: View {
             
             
             
-            TabView() {
+            TabView(selection: $navigationController.currentTab) {
                 HomeView()
                     .tabItem {
                         Label("Home", systemImage: "house")
                     }
+                    .tag(NavigationController.Tab.dashboard)
                 PayView()
                     .tabItem {
                         Label("Pay", systemImage: "dollarsign.circle.fill")
                     }
+                    .tag(NavigationController.Tab.pay)
                 
             }
         }

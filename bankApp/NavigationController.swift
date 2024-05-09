@@ -19,5 +19,11 @@ class NavigationController: ObservableObject {
         case profile
     }
     
+    enum Tab {
+        case dashboard
+        case pay
+    }
+    
     @Published var path = NavigationPath()
+    @Published var currentTab = Tab.dashboard
 }

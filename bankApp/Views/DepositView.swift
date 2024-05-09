@@ -12,6 +12,7 @@ import Combine
 
 struct DepositView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var navigationController: NavigationController
     @StateObject var viewModel: DepositViewModel
     @Environment(\.dismiss) var dismiss
     
@@ -62,6 +63,12 @@ struct DepositView: View {
             }
             .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
                 DepositConfirmationView(depositAmount: viewModel.depositAmount, showFullscreenCover: $viewModel.showDepositConfirmationView, transactionDismissed: $viewModel.transactionDismissed)
+            }
+            .onReceive(viewModel.$transactionDismissed) { transactionIsDismissed in
+                if(transactionIsDismissed) {
+                    dismiss()
+                    navigationController.currentTab = NavigationController.Tab.dashboard
+                }
             }
         }
     }
