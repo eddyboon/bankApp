@@ -26,6 +26,7 @@
 		C18370AB2BE3427300614F94 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370AA2BE3427300614F94 /* Transaction.swift */; };
 		C18370AD2BE34EBE00614F94 /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */; };
 		C1EF69F62BECB40500826F84 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EF69F52BECB40500826F84 /* NavigationController.swift */; };
+		C1EF69F82BED924F00826F84 /* PayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EF69F72BED924F00826F84 /* PayView.swift */; };
 		C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */; };
 		C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E402BE0902600F0B800 /* LoginView.swift */; };
 		C62C3E432BE0902A00F0B800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C62C3E422BE0902A00F0B800 /* Assets.xcassets */; };
@@ -63,6 +64,7 @@
 		C18370AA2BE3427300614F94 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
 		C1EF69F52BECB40500826F84 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		C1EF69F72BED924F00826F84 /* PayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayView.swift; sourceTree = "<group>"; };
 		C62C3E3B2BE0902600F0B800 /* bankApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bankApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bankAppApp.swift; sourceTree = "<group>"; };
 		C62C3E402BE0902600F0B800 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				C13426792BEC6523007C27AE /* DepositView.swift */,
 				C134267B2BEC6523007C27AE /* TransferConfirmationView.swift */,
 				C13426782BEC6523007C27AE /* TransferView.swift */,
+				C1EF69F72BED924F00826F84 /* PayView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */,
 				C62C3E6F2BE27E2100F0B800 /* AuthViewModel.swift in Sources */,
 				C62C3E712BE27F6E00F0B800 /* User.swift in Sources */,
+				C1EF69F82BED924F00826F84 /* PayView.swift in Sources */,
 				C62C3E542BE26FBC00F0B800 /* InputsView.swift in Sources */,
 				C18370AD2BE34EBE00614F94 /* TransactionRowView.swift in Sources */,
 				C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */,
