@@ -9,11 +9,13 @@ import SwiftUI
 
 struct DashboardView: View {
     
-    @StateObject var viewModel: DashboardViewModel
+    @ObservedObject var viewModel: DashboardViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    var payViewModel: PayViewModel
     
-    init() {
-        _viewModel = StateObject(wrappedValue: DashboardViewModel())
+    init(viewModel: DashboardViewModel, authViewModel: AuthViewModel, payViewModel: PayViewModel) {
+        self.viewModel = viewModel
+        self.payViewModel = payViewModel
     }
     
     var body: some View {
@@ -35,8 +37,8 @@ struct DashboardView: View {
                     } label: {
                         Text("Sign Out")
                     }
-
-
+                    
+                    
                 } label: {
                     Image(systemName: "person.crop.circle")
                         .resizable()
@@ -53,7 +55,7 @@ struct DashboardView: View {
                     .tabItem {
                         Label("Home", systemImage: "house")
                     }
-                PayView()
+                PayView(authViewModel: authViewModel, viewModel: payViewModel)
                     .tabItem {
                         Label("Pay", systemImage: "dollarsign.circle.fill")
                     }
@@ -65,7 +67,7 @@ struct DashboardView: View {
 
 #Preview {
     NavigationStack {
-        DashboardView()
+        DashboardView(viewModel: DashboardViewModel(), authViewModel: AuthViewModel(), payViewModel: PayViewModel())
             .environmentObject(AuthViewModel())
     }
 }
