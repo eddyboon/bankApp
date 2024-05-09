@@ -11,7 +11,7 @@ struct PayView: View {
     @ObservedObject var authViewModel: AuthViewModel
     var viewModel: PayViewModel
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 VStack(spacing: 20) {
                         Text("Would you like to")
