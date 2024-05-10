@@ -19,12 +19,41 @@ class TransferViewModel: ObservableObject {
     @Published var validRecipient: Bool = false
     @Published var validAmount: Bool = false
     var authViewModel: AuthViewModel
+    @Published var recipientFound: Bool = false
+    @Published var recipientChecked: Bool = false
+    @Published var recipientNameChecked: Bool = false
+    @Published var currentBalance: Decimal = 0
     
     init(transferAmount: Decimal, showTransferConfirmationView: Bool, authViewModel: AuthViewModel) {
         self.transferAmount = transferAmount
         self.showTransferConfirmationView = showTransferConfirmationView
         self.authViewModel = authViewModel
+        Task {
+            try await getCurrentBalance()
+            print(currentBalance)
+        }
     }
+    
+    @MainActor
+    func getCurrentBalance() async throws {
+        guard let currentUserID = authViewModel.currentUser?.id else {
+            print("Current user ID is nil")
+            return
+        }
+        do {
+            let documentSnapshot = try await Firestore.firestore().collection("users").document(currentUserID).getDocument()
+            guard documentSnapshot.exists else {
+                print("Document does not exist")
+                return
+            }
+            let user = try documentSnapshot.data(as: User.self)
+            self.currentBalance = user.balance
+            print(currentBalance)
+        } catch {
+            print("Error fetching balance: \(error.localizedDescription)")
+        }
+    }
+    
     
     @MainActor
     func transferMoney(transferAmount: Decimal, recipientPhoneNo: String) {
@@ -96,28 +125,23 @@ class TransferViewModel: ObservableObject {
                 }
         }
     }
-    func getRecipientName(phoneNumber: String) -> String {
+    @MainActor
+    func getRecipientName(phoneNumber: String) async throws -> String {
         var recipientName = ""
-        let database = Firestore.firestore()
-        let phoneNo = phoneNumber
-        
-        database.collection("users").whereField("phoneNumber", isEqualTo: phoneNo)
-            .getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("Error fetching recipient name: \(error.localizedDescription)")
-                    return
-                }
-                guard let documents = querySnapshot?.documents, documents.count > 0 else {
-                    return
-                }
-                let document = documents.first!
-                do {
-                    let recipient = try document.data(as: User.self)
-                    recipientName = recipient.name
-                } catch {
-                    print("Error getting recipient data: \(error.localizedDescription)")
-                }
+        let querySnapshot = try await Firestore.firestore().collection("users").whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments()
+        if(querySnapshot.isEmpty) {
+            print("Phone number not found")
+            recipientFound = false
+            return recipientName
+        }
+        else {
+            for document in querySnapshot.documents {
+                print(document.data()["name"] ?? "")
+                recipientName = document.data()["name"] as! String
+                recipientFound = true
+                return recipientName
             }
+        }
         return recipientName // This will be empty initially, filled asynchronously
     }
     
@@ -132,13 +156,6 @@ class TransferViewModel: ObservableObject {
         }
         if(transferRecipient.count == 10 && transferRecipient.allSatisfy(\.isNumber)) {
             validRecipient = true
-//            transferRecipientName = getRecipientName(phoneNumber: transferRecipient)
-//            if transferRecipientName != "" {
-//                validRecipient = true
-//            }
-//            else {
-//                validRecipient = false
-//            }
         }
         else {
             validRecipient = false
@@ -146,15 +163,23 @@ class TransferViewModel: ObservableObject {
     }
     
     func validateAmount() {
-        if transferAmountString.count > 10 {
-            transferAmountString = String(transferAmountString.prefix(10))
+        if transferAmountString.count > 7 {
+            transferAmountString = String(transferAmountString.prefix(7))
             transferAmount = Decimal(string: transferAmountString) ?? 0
         }
-        if let actualAmount = Decimal(string: transferAmountString), actualAmount > 0 && transferAmountString.count < 11 {
+        if let actualAmount = Decimal(string: transferAmountString), actualAmount > 0 && transferAmountString.count < 8 && isValidMoneyAmount(amountString: transferAmountString) {
             validAmount = true
             transferAmount = Decimal(string: transferAmountString) ?? 0
         } else {
             validAmount = false
         }
+    }
+    func isValidMoneyAmount(amountString: String) -> Bool {
+        let pattern = #"^\d+(\.\d{1,2})?$"# // Regular expression pattern to match valid money amounts
+        guard let regex = try? NSRegularExpression(pattern: pattern) else { // Create a regular expression object
+            return false
+        }
+        let range = NSRange(location: 0, length: amountString.utf16.count)
+        return regex.firstMatch(in: amountString, options: [], range: range) != nil
     }
 }

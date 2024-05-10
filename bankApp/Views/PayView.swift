@@ -31,7 +31,7 @@ struct PayView: View {
                     Text("or")
                         .font(.title)
                     NavigationLink(
-                        destination: TransferView(viewModel: TransferViewModel(transferAmount: 0, showTransferConfirmationView: false, authViewModel: authViewModel), payViewModel: viewModel),
+                        destination: TransferView(viewModel: TransferViewModel(transferAmount: 0, showTransferConfirmationView: false, authViewModel: authViewModel), payViewModel: viewModel, authViewModel: authViewModel),
                         label: {
                             Text("Transfer")
                                 .font(.title)

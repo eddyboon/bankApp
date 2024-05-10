@@ -12,8 +12,6 @@ import Combine
 
 struct DepositView: View {
     @StateObject var viewModel: DepositViewModel
-    @State var depositAmount: Decimal = 0
-    let depositSuggestions: [Decimal] = [10, 50, 100].map { Decimal($0) }
     var payViewModel: PayViewModel
     var depositConfirmationViewModel: DepositConfirmationViewModel
     var authViewModel: AuthViewModel
@@ -29,17 +27,20 @@ struct DepositView: View {
                 .padding(.top)
             HStack {
                 Text("$")
-                TextField("", value: $depositAmount, format: .number)
+                TextField("", text: $viewModel.depositAmountString)
                     .padding(.horizontal)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 250, height: 50)
                     .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
+                    .onChange(of: viewModel.depositAmountString) {
+                        viewModel.validateAmount()
+                    }
             }
             HStack(spacing: 20) {
-                ForEach(depositSuggestions, id: \.self) { suggestion in
+                ForEach(viewModel.depositSuggestions, id: \.self) { suggestion in
                     Button(action: {
-                        depositAmount = suggestion
+                        viewModel.depositAmountString = suggestion.description
                     }) {
                         Text("\(suggestion)")
                             .fontWeight(.semibold)
@@ -48,7 +49,7 @@ struct DepositView: View {
                 }
             }
             Button(action: {
-                viewModel.depositMoney(depositAmount: depositAmount)
+                viewModel.depositMoney(depositAmount: viewModel.depositAmount)
                 viewModel.showDepositConfirmationView = true
             }) {
                 Text("Submit")
@@ -61,8 +62,10 @@ struct DepositView: View {
                     .foregroundColor(.white)
             }
             .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
-                DepositConfirmationView(viewModel: depositConfirmationViewModel, authViewModel: authViewModel, payViewModel: payViewModel, depositAmount: depositAmount, dashboardViewModel: dashboardViewModel)
+                DepositConfirmationView(viewModel: DepositConfirmationViewModel(), authViewModel: authViewModel, payViewModel: payViewModel, depositAmount: viewModel.depositAmount, dashboardViewModel: dashboardViewModel)
             }
+            .opacity(viewModel.validAmount ? 1.0 : 0) // Darken the submit button if it is disabled, so the user knows their input is not valid yet
+            .disabled(!viewModel.validAmount) // Disable the submit button if the amount is invalid
         }
     }
 }

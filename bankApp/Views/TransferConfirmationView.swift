@@ -15,30 +15,31 @@ struct TransferConfirmationView: View {
     var transferRecipientName: String
     
     var body: some View {
-        VStack {
-            HStack {
-                Text("✅")
-                    .font(.largeTitle)
-                Text("\nTransferred\n$\(transferAmount) to ??? !")
-                    .font(.largeTitle)
-                    .bold()
-                    .padding(10)
+        NavigationView {
+            VStack {
+                HStack {
+                    Text("✅")
+                        .font(.largeTitle)
+                    Text("\nTransferred\n$\(transferAmount) to \(transferRecipientName) !")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(10)
+                }
+                NavigationLink(
+                    destination: DashboardView(viewModel: DashboardViewModel(), authViewModel: authViewModel, payViewModel: payViewModel),
+                    label: {
+                        Text("OK")
+                            .font(.title)
+                            .frame(maxWidth: .infinity)
+                            .frame(width: 300, height: 50)
+                            .background(Color.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding()
+                            .foregroundColor(.white)
+                    })
             }
-            NavigationLink(
-                destination: DashboardView(viewModel: DashboardViewModel(), authViewModel: authViewModel, payViewModel: payViewModel),
-                label: {
-                    Text("OK")
-                        .font(.title)
-                        .frame(maxWidth: .infinity)
-                        .frame(width: 300, height: 50)
-                        .background(Color.blue)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .padding()
-                        .foregroundColor(.white)
-                })
             .navigationBarBackButtonHidden(true)
         }
-        
     }
 }
 

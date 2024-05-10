@@ -11,8 +11,11 @@ import FirebaseFirestoreSwift
 
 class DepositViewModel: ObservableObject {
     @Published var depositAmount: Decimal = 0
+    @Published var depositAmountString: String = ""
+    @Published var validAmount: Bool = false
     @Published var showDepositConfirmationView: Bool = false
     @Published var user: User?
+    let depositSuggestions: [Decimal] = [10, 50, 100].map { Decimal($0) }
     var authViewModel: AuthViewModel
     
     init(depositAmount: Decimal, showDepositConfirmationView: Bool, user: User? = nil, authViewModel: AuthViewModel) {
@@ -54,5 +57,26 @@ class DepositViewModel: ObservableObject {
                 print("Error getting user document: \(error.localizedDescription)")
             }
         }
+    }
+    func validateAmount() {
+        if depositAmountString.count > 7 {
+            depositAmountString = String(depositAmountString.prefix(7))
+            depositAmount = Decimal(string: depositAmountString) ?? 0
+        }
+        if let actualAmount = Decimal(string: depositAmountString), actualAmount > 0 && depositAmountString.count < 8 && isValidMoneyAmount(amountString: depositAmountString) {
+            validAmount = true
+            depositAmount = Decimal(string: depositAmountString) ?? 0
+        }
+        else {
+            validAmount = false
+        }
+    }
+    func isValidMoneyAmount(amountString: String) -> Bool {
+        let pattern = #"^\d+(\.\d{1,2})?$"# // Regular expression pattern to match valid money amounts
+        guard let regex = try? NSRegularExpression(pattern: pattern) else { // Create a regular expression object
+            return false
+        }
+        let range = NSRange(location: 0, length: amountString.utf16.count)
+        return regex.firstMatch(in: amountString, options: [], range: range) != nil
     }
 }
