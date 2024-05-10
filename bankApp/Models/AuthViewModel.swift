@@ -19,6 +19,7 @@ class AuthViewModel: ObservableObject {
     @Published var failedLogin: Bool = false
     @Published var currentUser: User?
     
+    
     init() {
         Task {
             await fetchUser()
@@ -93,6 +94,7 @@ class AuthViewModel: ObservableObject {
             self.currentUser = currentUser // Update the currentUser property
         }
     }
+
 
     
 

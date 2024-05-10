@@ -1,4 +1,4 @@
-//
+
 //  ProfileView.swift
 //  Profile Bank App
 //
@@ -11,62 +11,79 @@ struct ProfileView: View {
     
     @EnvironmentObject var viewModel: AuthViewModel
     
-    @State private var showEditProfile = false
     
+    @State private var showEditProfile = false
+    @StateObject var editViewModel = EditProfileViewModel()
     
     var body: some View {
-       if let user = viewModel.currentUser {
-            List {
-                Section {
-                    HStack {
-                        Text(user.initials)
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .frame(width: 72, height: 72)
-                            .background(Color(.systemGray3))
-                            .clipShape(Circle())
-                        
-                        VStack(alignment: .leading, spacing: 5 ) {
-                            Text(user.name)
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .padding(.top, 4)
-                            
-                            Text(user.email)
-                                .font(.footnote)
-                                .foregroundColor(.gray)
-                            
-                        }
-                        Button {
-                            showEditProfile.toggle()
-                        }label: {
-                            Text("Edit Profile")
-                                .font(.subheadline).bold()
-                                .frame(width:120, height: 30)
-                                .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 0.75))
-                                .foregroundColor(.black)
-                                .padding(.top, 4)
-                        }
-
-                    }
-                }
-                
-                Section {
+        VStack {
+            if let user = viewModel.currentUser {
+                // Profile circle
+                VStack {
+                    Text(user.initials)
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .frame(width: 180, height: 180)
+                        .background(Color(.systemGray3))
+                        .clipShape(Circle())
+                        .padding()
+                    
+                    // Name
+                    Text(user.name)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .padding(.bottom, 4) // Add padding between the circle and the name
+                    
+                    // Edit Profile Button
                     Button {
-                        viewModel.signOut()
+                        showEditProfile.toggle()
                     } label: {
-                        ProfileRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red)
+                        Text("Edit Profile")
+                            .font(.subheadline).bold()
+                            .frame(width: 120, height: 30)
+                            .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 0.75))
+                            .foregroundColor(.black)
+                            .padding(.bottom, 4)
                     }
                 }
-            }//end
-            .sheet(isPresented: $showEditProfile, content: {
-                EditProfileView()
-                })
-       }
+                .padding(.top) // Add padding to move the profile circle to the top
+                
+                
+                // Spacer between profile and list
+                Spacer()
+                
+                // List
+                List {
+                    Section {
+                        Button {
+                            print("Change Password")
+                        }label: {
+                            ProfileRowView(imageName: "lock.fill", title: "Change Password", tintColor: .red)
+                            
+                        }
+                    }
+                
+                    Section {
+                        Button {
+                            viewModel.signOut()
+                        } label: {
+                            ProfileRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red)
+                        }
+                    }
+                    
+                }//end of list
+            }
+        }
+        .sheet(isPresented: $showEditProfile, content: {
+            EditProfileView(editViewModel: EditProfileViewModel())
+                
+         })
+        }
     }
-}
 
+    
+    
 #Preview {
     ProfileView()
 }

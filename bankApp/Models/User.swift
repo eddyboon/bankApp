@@ -14,6 +14,7 @@ struct User: Identifiable, Codable {
     var phoneNumber: String
     let balance: Double
     var birthday: Date
+    var profileImageUrl: String?
     
     var initials: String {
         let formatter = PersonNameComponentsFormatter()
@@ -30,3 +31,5 @@ struct User: Identifiable, Codable {
 extension User {
     static var MOCK_USER = User(id: NSUUID().uuidString, name: "Edward Ong", email: "test@gmail.com", phoneNumber: "0483214561", balance: 0.00, birthday: Date())
 }
+
+

@@ -7,11 +7,13 @@
 
 import SwiftUI
 import Firebase
+import PhotosUI
 
 struct EditProfileView: View {
     
     @EnvironmentObject var viewModel: AuthViewModel
     
+    @StateObject var editViewModel: EditProfileViewModel
     @State private var selectedDate = Date()
     @State private var emailAddress = ""
     @State private var phoneNumber = ""
@@ -37,6 +39,19 @@ struct EditProfileView: View {
                         }
                         
                         Spacer()
+                        
+                        
+                        PhotosPicker(selection: $editViewModel.selectedItem) {
+                            if let image = editViewModel.profileImage {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width:50, height: 50)
+                                    .clipShape(Circle())
+                            } else {
+                                CircularProfileImageView()
+                            }
+                        }
                         
                     }
                     Divider()
@@ -121,7 +136,8 @@ struct EditProfileView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
                         Task {
-                            try await viewModel.updateProfile(email: emailAddress, phoneNumber: phoneNumber, birthday: selectedDate)
+//                            try await viewModel.updateProfile(email: emailAddress, phoneNumber: phoneNumber, birthday: selectedDate)
+                            try await editViewModel.updateUserData()
                             dismiss()
                         }
                         
@@ -144,6 +160,6 @@ struct EditProfileView: View {
 }
 
 #Preview {
-    EditProfileView()
+    EditProfileView(editViewModel: EditProfileViewModel())
 }
 

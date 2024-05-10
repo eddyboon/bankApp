@@ -24,12 +24,11 @@ struct ProfileRowView: View {
                 .font(.subheadline)
                 .foregroundColor(.black)
             
-            
         }
     }
 }
 
 #Preview {
-    ProfileRowView(imageName: "gear", title: "Version", tintColor: Color(.systemGray))
+    ProfileRowView(imageName: "gear", title: "Version", tintColor: Color(.blue))
 }
 
