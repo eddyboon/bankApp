@@ -40,8 +40,4 @@ class DepositViewModel: ObservableObject {
             }
         }
     }
-    
-    func addTransaction(userId: String) {
-        let transactionsRef = db.collection("users").document(userId).collection("Transactions")
-    }
 }
