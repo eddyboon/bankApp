@@ -23,14 +23,17 @@ struct TransferView: View {
                 .padding(60)
             Text("Recipient's phone number")
                 .padding(.top)
-            TextField("", text: $viewModel.transferRecipient)
+            TextField("", text: $viewModel.recipientNumber)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 250, height: 50)
                 .multilineTextAlignment(.center)
                 .keyboardType(.numberPad)
-                .onChange(of: viewModel.transferRecipient) {
-                    viewModel.validateRecipient()
-                }
+                /*.onChange(of: $viewModel.recipientNumber) { newValue in
+                    Task {
+                        await viewModel.validateRecipient()
+                    }
+                    
+                } */
             Text("Amount to transfer")
                 .padding(.top)
             HStack {
@@ -58,8 +61,9 @@ struct TransferView: View {
                 }
             }
             Button(action: {
-                viewModel.transferMoney(transferAmount: viewModel.transferAmount, user: authViewModel.currentUser)
-                viewModel.showTransferConfirmationView = true
+                Task {
+                    await viewModel.transferMoney(transferAmount: viewModel.transferAmount, user: authViewModel.currentUser)
+                }
             }) {
                 Text("Submit")
                     .font(.title2)
@@ -70,15 +74,16 @@ struct TransferView: View {
                     .padding()
                     .foregroundColor(.white)
             }
-            .opacity(viewModel.validRecipient && viewModel.validAmount ? 1.0 : 0.5) // Darken the submit button if it is disabled, so the user knows their inputs are not valid yet
-            .disabled(!viewModel.validRecipient || !viewModel.validAmount) // Disable the play submit if the recipient or amount are invalid
+            .opacity(viewModel.validAmount ? 1.0 : 0.5) // Darken the submit button if it is disabled, so the user knows their inputs are not valid yet
+            .disabled(!viewModel.validAmount) // Disable the play submit if the recipient or amount are invalid
             .fullScreenCover(isPresented: $viewModel.showTransferConfirmationView) {
-                TransferConfirmationView(transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipientName)
+                TransferConfirmationView(transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipient?.name ?? "{Unknown recipient}")
             }
-            Text("Transferring to \(viewModel.transferRecipientName)")
+            Text("Transferring to \(viewModel.transferRecipient)")
                 .opacity(viewModel.validRecipient ? 1.0 : 0)
+            /*
             Text("Recipient not found")
-                .opacity(!viewModel.validRecipient && viewModel.transferRecipient.count == 10 ? 1.0 : 0)
+                .opacity(!viewModel.validRecipient && viewModel.transferRecipient.count == 10 ? 1.0 : 0) */
         }
     }
 }

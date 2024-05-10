@@ -12,76 +12,76 @@ import FirebaseFirestoreSwift
 class TransferViewModel: ObservableObject {
     @Published var transferAmount: Decimal = 0
     @Published var showTransferConfirmationView: Bool = false
-    @Published var transferRecipient: String = "04"
-    @Published var transferRecipientName: String = ""
+    @Published var recipientNumber: String = "04"
+    @Published var transferRecipient: User? = nil
     @Published var transferAmountString: String = ""
     let transferSuggestions = [10, 50, 100]
     @Published var validRecipient: Bool = false
     @Published var validAmount: Bool = false
     
+    let db = Firestore.firestore()
+    
     
     @MainActor
-    func transferMoney(transferAmount: Decimal, user: User?) {
+    func transferMoney(transferAmount: Decimal, user: User?) async {
         // Deducts from balance but does not add to other persons account balance yet
-        guard let currentUserID = user?.id else {
+        guard let currentUser = user else {
             print("Current user ID is nil")
             return
         }
-        let database = Firestore.firestore()
-        database.collection("users").document(currentUserID).getDocument { documentSnapshot, error in
-            if let error = error {
-                print("Error fetching balance: \(error.localizedDescription)")
+        
+        // Check for valid recipient
+        if let recipient = await getRecipient(phoneNumber: self.recipientNumber) {
+            
+            let newBalance = currentUser.balance - transferAmount
+            let newRecipientBalance = recipient.balance + transferAmount
+            
+            if(newBalance < 0) {
+                print("User has insufficent funds")
                 return
             }
-            guard let document = documentSnapshot, document.exists else {
-                print("Document does not exist")
-                return
-            }
-            do {
+            
+            await FirestoreManager.shared.transferMoney(sender: currentUser, recipient: recipient, newSenderBalance: newBalance, newRecipientBalance: newRecipientBalance,  amount: transferAmount)
+            
+        }
+    }
+    
+    func getRecipient(phoneNumber: String) async -> User? {
+        
+        let usersRef = db.collection("users")
+        
+        let field = "phoneNumber"
+        let value = phoneNumber
+        
+        do {
+            let querySnapshot = try await usersRef.whereField(field, isEqualTo: value).getDocuments()
+            if let document = querySnapshot.documents.first {
                 let user = try document.data(as: User.self)
-                let newBalance = (user.balance) - transferAmount
-                if newBalance < 0 {
-                    print("Balance is too low")
-                    return
-                }
-                database.collection("users").document(currentUserID).updateData(["balance": newBalance]) { error in
-                    if let error = error {
-                        print("Error updating balance: \(error.localizedDescription)")
-                    }
-                    else {
-                        print("Total amount updated successfully")
-                    }
-                }
+                print("Recipient Name: \(user.name)")
+                return user
+            } else {
+                print("No user found matching phone number")
+                return nil
             }
-            catch {
-                print("Error getting user document: \(error.localizedDescription)")
-            }
+        }
+        catch {
+            print("Error fetching recipient name")
+            return nil
         }
     }
-    func getRecipientName(phoneNumber: String) -> String {
-        let query = Firestore.firestore().collection("users").whereField("phoneNumber", isEqualTo: phoneNumber).limit(to: 1)
-        var userName = ""
-        query.getDocuments { snapshot, error in
-            guard let documents = snapshot?.documents, let user = documents.first?.data(), let name = user["name"] as? String else {
-                print("Error fetching user's name: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            userName = name
-        }
-        return userName
-    }
-    func validateRecipient() {
-        if !transferRecipient.hasPrefix("04") {
-            transferRecipient = "04"
+    
+    func validateRecipient() async {
+        if !recipientNumber.hasPrefix("04") {
+            recipientNumber = "04"
             return
         }
-        if transferRecipient.count > 10 {
-            transferRecipient = String(transferRecipient.prefix(10))
+        if recipientNumber.count > 10 {
+            recipientNumber = String(recipientNumber.prefix(10))
             return
         }
-        if(transferRecipient.count == 10 && transferRecipient.allSatisfy(\.isNumber)) {
-            transferRecipientName = getRecipientName(phoneNumber: transferRecipient)
-            if transferRecipientName != "" {
+        if(recipientNumber.count == 10 && recipientNumber.allSatisfy(\.isNumber)) {
+            transferRecipient = await getRecipient(phoneNumber: recipientNumber)
+            if transferRecipient?.name != "" {
                 validRecipient = true
             }
             else {
@@ -92,6 +92,8 @@ class TransferViewModel: ObservableObject {
             validRecipient = false
         }
     }
+    
+    
     func validateAmount() {
         if transferAmountString.count > 10 {
             transferAmountString = String(transferAmountString.prefix(10))

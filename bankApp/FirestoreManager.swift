@@ -31,36 +31,40 @@ class FirestoreManager {
                 }
     }
     
-    func depositMoney(userId: String, newBalance: Decimal, depositAmount: Decimal, completion: @escaping (Bool) -> Void) {
-        
-        let depositRef = db.collection("users").document(userId)
-        
-        // Update the user's balance
-        depositRef.updateData(["balance": newBalance]) { error in
-            if let error = error {
-                print("Error updating balance: \(error.localizedDescription).")
-                return completion(false)
-            }
-            else {
+    func depositMoney(userId: String, senderName: String, newBalance: Decimal, depositAmount: Decimal) async -> Bool {
+            let depositRef = db.collection("users").document(userId)
+
+            do {
+                // Update the user's balance
+                try await depositRef.updateData(["balance": newBalance])
                 print("New balance updated successfully.")
+
+                // Prepare the transaction
+                let newTransaction = Transaction(id: NSUUID().uuidString,
+                                                 name: senderName, date: Date(),
+                                                 amount: depositAmount,
+                                                 type: "credit")
+
+                // Add deposit transaction to user's transactions
+                try addTransaction(userId: userId, transaction: newTransaction)
+                return true
+            } catch {
+                print("Failed to update balance or add deposit transaction: \(error.localizedDescription)")
+                // Revert the balance update if an error occurred
+                try? await depositRef.updateData(["balance": newBalance - depositAmount])
+                return false
             }
-        }
+    }
+    
+    func transferMoney(sender: User, recipient: User, newSenderBalance: Decimal, newRecipientBalance: Decimal, amount: Decimal) async -> Bool {
         
-        // Prepare the transaction
-        let newTransaction = Transaction(id: NSUUID().uuidString,
-                                         name: "Deposit", date: Date(),
-                                         amount: depositAmount,
-                                         type: "credit")
+        let senderRef = db.collection("users").document(sender.id)
+        let recipientRef = db.collection("users").document(recipient.id)
         
-        // Add deposit transaction to user's transactions.
-        do {
-            try addTransaction(userId: userId, transaction: newTransaction)
-            return completion(true)
-        }
-        catch {
-            print("Failed to add deposit transaction to user's transactions.")
-            depositRef.updateData(["balance": newBalance - depositAmount])
-            return completion(false)
-        }
+        await depositMoney(userId: recipient.id, senderName: sender.name, newBalance: newRecipientBalance, depositAmount: amount)
+        
+        return false
+        
+        
     }
 }

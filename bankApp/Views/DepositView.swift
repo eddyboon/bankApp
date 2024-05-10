@@ -1,12 +1,3 @@
-//
-//  DepositView.swift
-//  bankApp
-//
-//  Created by Brandon Jury on 30/4/2024.
-//
-
-import SwiftUI
-
 import SwiftUI
 import Combine
 
@@ -48,32 +39,41 @@ struct DepositView: View {
                     }
                 }
             }
-            Button(action: {
-                viewModel.depositMoney(depositAmount: viewModel.depositAmount, authViewModel: authViewModel)
-            }) {
-                Text("Submit")
-                    .font(.title2)
-                    .frame(maxWidth: .infinity)
-                    .frame(width: 250, height: 50)
-                    .background(Color.green)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .padding()
-                    .foregroundColor(.white)
+            if(viewModel.requestInProgress) {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(1.5)
             }
-            .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
-                DepositConfirmationView(depositAmount: viewModel.depositAmount, showFullscreenCover: $viewModel.showDepositConfirmationView, transactionDismissed: $viewModel.transactionDismissed)
-            }
-            .onReceive(viewModel.$transactionDismissed) { transactionIsDismissed in
-                if(transactionIsDismissed) {
-                    dismiss()
-                    navigationController.currentTab = NavigationController.Tab.dashboard
+            else {
+                Button(action: {
+                    Task {
+                        await viewModel.depositMoney(depositAmount: viewModel.depositAmount, authViewModel: authViewModel)
+                    }
+                    
+                }) {
+                    Text("Submit")
+                        .font(.title2)
+                        .frame(maxWidth: .infinity)
+                        .frame(width: 250, height: 50)
+                        .background(Color.green)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .padding()
+                        .foregroundColor(.white)
                 }
+            }
+            
+        }
+        .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
+            DepositConfirmationView(depositAmount: viewModel.depositAmount, showFullscreenCover: $viewModel.showDepositConfirmationView, transactionDismissed: $viewModel.transactionDismissed)
+        }
+        .onReceive(viewModel.$transactionDismissed) { transactionIsDismissed in
+            if(transactionIsDismissed) {
+                dismiss()
+                navigationController.currentTab = NavigationController.Tab.dashboard
             }
         }
     }
 }
-
-
 
 #Preview {
     DepositView()
