@@ -78,8 +78,8 @@ struct HomeView: View {
                                Text("No transactions to show")
                            } else {
                                // Force unwrap, change later
-                               // Show only 6 most recent transactions. User can navigate to dedicated page to view all.
-                               ForEach(viewModel.transactions.prefix(8)) { transaction in
+                               // Show only 7 most recent transactions. User can navigate to dedicated page to view all.
+                               ForEach(viewModel.transactions.prefix(6)) { transaction in
                                    TransactionRowView(transactionModel: transaction)
                                }
                            }

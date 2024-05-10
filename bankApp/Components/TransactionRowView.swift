@@ -32,11 +32,20 @@ struct TransactionRowView: View {
                     .foregroundColor(.gray)
             }
             Spacer()
-            Text("- $\(transactionModel.amount)")
-                .font(.footnote)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
-        }.padding(.horizontal)
+            if(transactionModel.type == "deposit") {
+                Text("+ $\(transactionModel.amount)")
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+            }
+            else {
+                Text("- $\(transactionModel.amount)")
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+            }
+        }
+        .padding(.horizontal)
         
     }
 }

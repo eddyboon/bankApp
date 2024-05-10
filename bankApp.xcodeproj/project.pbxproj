@@ -27,6 +27,7 @@
 		C18370AD2BE34EBE00614F94 /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */; };
 		C1EF69F62BECB40500826F84 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EF69F52BECB40500826F84 /* NavigationController.swift */; };
 		C1EF69F82BED924F00826F84 /* PayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EF69F72BED924F00826F84 /* PayView.swift */; };
+		C1EF69FD2BED9FC200826F84 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EF69FC2BED9FC200826F84 /* FirestoreManager.swift */; };
 		C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */; };
 		C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E402BE0902600F0B800 /* LoginView.swift */; };
 		C62C3E432BE0902A00F0B800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C62C3E422BE0902A00F0B800 /* Assets.xcassets */; };
@@ -65,6 +66,7 @@
 		C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
 		C1EF69F52BECB40500826F84 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C1EF69F72BED924F00826F84 /* PayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayView.swift; sourceTree = "<group>"; };
+		C1EF69FC2BED9FC200826F84 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		C62C3E3B2BE0902600F0B800 /* bankApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bankApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bankAppApp.swift; sourceTree = "<group>"; };
 		C62C3E402BE0902600F0B800 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -116,8 +118,8 @@
 				C62C3E582BE275FD00F0B800 /* Views */,
 				C62C3E552BE2723300F0B800 /* Models */,
 				C62C3E522BE26FAC00F0B800 /* Components */,
-				C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */,
 				C1EF69F52BECB40500826F84 /* NavigationController.swift */,
+				C1EF69FC2BED9FC200826F84 /* FirestoreManager.swift */,
 				C62C3E422BE0902A00F0B800 /* Assets.xcassets */,
 				C62C3E5F2BE27C2F00F0B800 /* GoogleService-Info.plist */,
 				C62C3E442BE0902A00F0B800 /* Preview Content */,
@@ -138,6 +140,7 @@
 			children = (
 				C62C3E532BE26FBC00F0B800 /* InputsView.swift */,
 				C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */,
+				C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */,
 				C13426612BE8BA90007C27AE /* TransactionsView.swift in Sources */,
 				C18370A32BE33C7400614F94 /* DashboardView.swift in Sources */,
+				C1EF69FD2BED9FC200826F84 /* FirestoreManager.swift in Sources */,
 				C13426632BE8BB63007C27AE /* TransactionsViewModel.swift in Sources */,
 				C13426772BEC64FC007C27AE /* DepositConfirmationViewModel.swift in Sources */,
 				C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */,

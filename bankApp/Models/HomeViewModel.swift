@@ -61,26 +61,16 @@ class HomeViewModel: ObservableObject {
             type: "credit"
         )
         
-        let transactionsRef = db.collection("users").document(currentUser.id).collection("Transactions")
-        
         do {
-            let _ = try transactionsRef.addDocument(from: newTransaction) { error in
-                if let error = error {
-                    print("Error adding transaction to Firestore: \(error.localizedDescription)")
-                }
-                else {
-                    DispatchQueue.main.async {
-                        self.transactions.append(newTransaction)
-                        self.transactions.sort {$0.date > $1.date } // Sort in descending order
-                        self.updateBalance(value: newTransaction.amount, transactionType: newTransaction.type)
-                        print("Transaction added to db and local list")
-                    }
-                }
-                
-            }
+            try FirestoreManager.shared.addTransaction(userId: currentUser.id, transaction: newTransaction)
+            
+            self.transactions.append(newTransaction)
+            self.transactions.sort { $0.date > $1.date }
+            self.updateBalance(value: newTransaction.amount, transactionType: newTransaction.type)
+            print("Transaction added to db and local list")
         }
-        catch let error {
-            print("Error adding transaction to firestore db: \(error.localizedDescription)")
+        catch {
+            print("Error adding transaction to Firestore \(error.localizedDescription)")
         }
 
     }

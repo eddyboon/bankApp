@@ -49,7 +49,7 @@ struct DepositView: View {
                 }
             }
             Button(action: {
-                viewModel.depositMoney(depositAmount: viewModel.depositAmount, user: authViewModel.currentUser)
+                viewModel.depositMoney(depositAmount: viewModel.depositAmount, authViewModel: authViewModel)
                 viewModel.showDepositConfirmationView = true
             }) {
                 Text("Submit")

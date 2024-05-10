@@ -31,10 +31,10 @@ class TransactionsViewModel: ObservableObject {
     }
     
     private func isMatch(_ transaction: Transaction, searchText: String) -> Bool {
-            // Filter transactions by name, value, or date
-            let searchTextLowercased = searchText.lowercased()
-            return transaction.name.lowercased().contains(searchTextLowercased) ||
-                   "\(transaction.amount)".contains(searchTextLowercased) ||
-                   transaction.date.formatted(date: .numeric, time: .omitted).contains(searchTextLowercased)
-        }
+        // Filter transactions by name, value, or date
+        let searchTextLowercased = searchText.lowercased()
+        return transaction.name.lowercased().contains(searchTextLowercased) ||
+               "\(transaction.amount)".contains(searchTextLowercased) ||
+               transaction.date.formatted(date: .numeric, time: .omitted).contains(searchTextLowercased)
+    }
 }
