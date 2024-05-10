@@ -28,10 +28,10 @@ struct TransferView: View {
             }
             Text("Recipient's phone number")
                 .padding(.top)
-            HStack {
+            ZStack {
                 TextField("", text: $viewModel.transferRecipient)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 200, height: 50)
+                    .frame(width: 210, height: 50)
                     .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
                     .onChange(of: viewModel.transferRecipient) {
@@ -41,35 +41,45 @@ struct TransferView: View {
                         }
                         viewModel.validateRecipient()
                     }
-                Button(action: {
-                    viewModel.recipientChecked = true
-                    viewModel.recipientNameChecked = false
-                    Task {
-                        try await viewModel.transferRecipientName = viewModel.getRecipientName(phoneNumber: viewModel.transferRecipient)
-                        viewModel.recipientNameChecked = true
-                        if viewModel.transferRecipientName != "" {
-                            viewModel.recipientFound = true
+                HStack {
+                    Rectangle()
+                        .frame(width: 280, height: 50)
+                        .opacity(0)
+                    Button(action: {
+                        viewModel.recipientChecked = true
+                        viewModel.recipientNameChecked = false
+                        Task {
+                            try await viewModel.transferRecipientName = viewModel.getRecipientName(phoneNumber: viewModel.transferRecipient)
+                            viewModel.recipientNameChecked = true
+                            if viewModel.transferRecipientName != "" {
+                                viewModel.recipientFound = true
+                            }
+                            else {
+                                viewModel.recipientFound = false
+                            }
                         }
-                        else {
-                            viewModel.recipientFound = false
-                        }
+                    }) {
+                        Text("Check")
+                            .fontWeight(.semibold)
+                            .padding()
                     }
-                }) {
-                    Text("Check")
-                        .fontWeight(.semibold)
-                        .padding()
+                    .disabled(!viewModel.recipientChecked && !viewModel.recipientFound && viewModel.validRecipient ? false : true)
+                    .opacity(!viewModel.recipientChecked && !viewModel.recipientFound && viewModel.validRecipient ? 1.0 : 0.3)
                 }
-                .disabled(!viewModel.recipientChecked && !viewModel.recipientFound && viewModel.validRecipient ? false : true)
-                .opacity(!viewModel.recipientChecked && !viewModel.recipientFound && viewModel.validRecipient ? 1.0 : 0.3)
             }
             Text("Amount to transfer")
                 .padding(.top)
-            HStack {
-                Text("$")
+            ZStack {
+                HStack {
+                    Text("$")
+                    Rectangle()
+                        .frame(width: 240, height: 50)
+                        .opacity(0)
+                }
                 TextField("", text: $viewModel.transferAmountString)
                     .padding(.horizontal)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 250, height: 50)
+                    .frame(width: 240, height: 50)
                     .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
                     .onChange(of: viewModel.transferAmountString) {
@@ -116,7 +126,7 @@ struct TransferView: View {
                 .fullScreenCover(isPresented: $viewModel.showTransferConfirmationView) {
                     TransferConfirmationView(viewModel: viewModel, payViewModel: payViewModel, authViewModel: authViewModel, transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipientName)
                 }
-                Text("Your balance is too low ($\(viewModel.currentBalance) ❌")
+                Text("Your balance is too low ($\(viewModel.currentBalance)) ❌")
                     .fontWeight(.semibold)
                     .padding()
                     .opacity(viewModel.currentBalance < viewModel.transferAmount ? 1.0 : 0)
