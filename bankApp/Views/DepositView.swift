@@ -50,7 +50,6 @@ struct DepositView: View {
             }
             Button(action: {
                 viewModel.depositMoney(depositAmount: viewModel.depositAmount, authViewModel: authViewModel)
-                viewModel.showDepositConfirmationView = true
             }) {
                 Text("Submit")
                     .font(.title2)

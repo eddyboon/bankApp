@@ -31,10 +31,11 @@ class FirestoreManager {
                 }
     }
     
-    func depositMoney(userId: String, newBalance: Decimal, completion: @escaping (Bool) -> Void) {
+    func depositMoney(userId: String, newBalance: Decimal, depositAmount: Decimal, completion: @escaping (Bool) -> Void) {
         
         let depositRef = db.collection("users").document(userId)
         
+        // Update the user's balance
         depositRef.updateData(["balance": newBalance]) { error in
             if let error = error {
                 print("Error updating balance: \(error.localizedDescription).")
@@ -42,8 +43,24 @@ class FirestoreManager {
             }
             else {
                 print("New balance updated successfully.")
-                return completion(true)
             }
+        }
+        
+        // Prepare the transaction
+        let newTransaction = Transaction(id: NSUUID().uuidString,
+                                         name: "Deposit", date: Date(),
+                                         amount: depositAmount,
+                                         type: "credit")
+        
+        // Add deposit transaction to user's transactions.
+        do {
+            try addTransaction(userId: userId, transaction: newTransaction)
+            return completion(true)
+        }
+        catch {
+            print("Failed to add deposit transaction to user's transactions.")
+            depositRef.updateData(["balance": newBalance - depositAmount])
+            return completion(false)
         }
     }
 }

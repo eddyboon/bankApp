@@ -32,7 +32,7 @@ struct TransactionRowView: View {
                     .foregroundColor(.gray)
             }
             Spacer()
-            if(transactionModel.type == "deposit") {
+            if(transactionModel.type == "credit") {
                 Text("+ $\(transactionModel.amount)")
                     .font(.footnote)
                     .fontWeight(.bold)

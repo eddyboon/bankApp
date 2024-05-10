@@ -58,7 +58,7 @@ class HomeViewModel: ObservableObject {
             id: NSUUID().uuidString,
             name: "Google", date: Date(),
             amount: 0.50,
-            type: "credit"
+            type: "debit"
         )
         
         do {

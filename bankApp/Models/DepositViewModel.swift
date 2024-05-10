@@ -29,10 +29,11 @@ class DepositViewModel: ObservableObject {
         
         let newBalance = currentUser.balance + depositAmount
         
-        FirestoreManager.shared.depositMoney(userId: currentUser.id, newBalance: newBalance) { success in
+        FirestoreManager.shared.depositMoney(userId: currentUser.id, newBalance: newBalance, depositAmount: depositAmount) { success in
             if success {
                 print("Balance update successful")
                 authViewModel.currentUser?.balance += depositAmount
+                self.showDepositConfirmationView = true
             }
             else {
                 print("Failed to update balance.")
