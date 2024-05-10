@@ -119,6 +119,7 @@
 				C62C3E552BE2723300F0B800 /* Models */,
 				C62C3E522BE26FAC00F0B800 /* Components */,
 				C1EF69F52BECB40500826F84 /* NavigationController.swift */,
+				C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */,
 				C1EF69FC2BED9FC200826F84 /* FirestoreManager.swift */,
 				C62C3E422BE0902A00F0B800 /* Assets.xcassets */,
 				C62C3E5F2BE27C2F00F0B800 /* GoogleService-Info.plist */,
@@ -140,7 +141,6 @@
 			children = (
 				C62C3E532BE26FBC00F0B800 /* InputsView.swift */,
 				C18370AC2BE34EBE00614F94 /* TransactionRowView.swift */,
-				C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";

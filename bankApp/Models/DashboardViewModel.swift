@@ -12,12 +12,4 @@ import FirebaseFirestoreSwift
 
 class DashboardViewModel: ObservableObject {
     
-    @Published var selection = Tab.home
-    @Published var showDropdown: Bool = false
-    
-    enum Tab {
-        case home
-        case pay
-    }
-    
 }
