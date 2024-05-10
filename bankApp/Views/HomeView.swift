@@ -96,20 +96,11 @@ struct HomeView: View {
             
             // Push everything to top
             Spacer()
-            
-            Button {
-                DispatchQueue.main.async {
-                    viewModel.addTestTransaction()
-                }
-            } label: {
-                Text("Add transaction test")
-            }
-            .padding(.horizontal)
 
         } // End of root vstack
         .onAppear {
             Task {
-                await viewModel.fetchTransactions(authViewModel.currentUser)
+                await viewModel.fetchTransactions(authViewModel: authViewModel)
             }
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)

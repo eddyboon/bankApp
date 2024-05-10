@@ -18,9 +18,9 @@ class HomeViewModel: ObservableObject {
     
     let db = Firestore.firestore()
     
-    func fetchTransactions(user: User) async {
+    func fetchTransactions(authViewModel: AuthViewModel) async {
         
-        guard let currentUser = user else {
+        guard let currentUser = authViewModel.currentUser else {
             print("No user found to fetch transactions.")
             return
         }
