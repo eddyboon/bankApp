@@ -27,7 +27,7 @@ class TransferViewModel: ObservableObject {
     }
     
     @MainActor
-    func transferMoney(transferAmount: Decimal) {
+    func transferMoney(transferAmount: Decimal, recipientPhoneNo: String) {
         // Deducts from balance but does not add to other persons account balance yet
         guard let currentUserID = authViewModel.currentUser?.id else {
             print("Current user ID is nil")
@@ -62,20 +62,65 @@ class TransferViewModel: ObservableObject {
             catch {
                 print("Error getting user document: \(error.localizedDescription)")
             }
+            // Update recipient's balance
+            let database = Firestore.firestore()
+            database.collection("users").whereField("phoneNumber", isEqualTo: recipientPhoneNo)
+                .getDocuments { querySnapshot, error in
+                    if let error = error {
+                        print("Error fetching recipient data: \(error.localizedDescription)")
+                        return
+                    }
+                    guard let documents = querySnapshot?.documents, documents.count > 0 else {
+                        print("Recipient not found")
+                        return
+                    }
+                    let document = documents.first!
+                    
+                    // Calculate new recipient balance
+                    var newRecipientBalance: Decimal = 0.0
+                    if let currentBalance = document.data()["balance"] as? Decimal {
+                        newRecipientBalance = currentBalance + transferAmount
+                    } else {
+                        // Handle case where recipient doesn't have a balance field (set to 0?)
+                        newRecipientBalance = transferAmount
+                    }
+                    
+                    // Update recipient's balance
+                    database.collection("users").document(document.documentID).updateData(["balance": newRecipientBalance]) { error in
+                        if let error = error {
+                            print("Error updating recipient balance: \(error.localizedDescription)")
+                        } else {
+                            print("Recipient balance updated successfully")
+                        }
+                    }
+                }
         }
     }
     func getRecipientName(phoneNumber: String) -> String {
-        let query = Firestore.firestore().collection("users").whereField("phoneNumber", isEqualTo: phoneNumber).limit(to: 1)
-        var userName = ""
-        query.getDocuments { snapshot, error in
-            guard let documents = snapshot?.documents, let user = documents.first?.data(), let name = user["name"] as? String else {
-                print("Error fetching user's name: \(error?.localizedDescription ?? "Unknown error")")
-                return
+        var recipientName = ""
+        let database = Firestore.firestore()
+        let phoneNo = phoneNumber
+        
+        database.collection("users").whereField("phoneNumber", isEqualTo: phoneNo)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching recipient name: \(error.localizedDescription)")
+                    return
+                }
+                guard let documents = querySnapshot?.documents, documents.count > 0 else {
+                    return
+                }
+                let document = documents.first!
+                do {
+                    let recipient = try document.data(as: User.self)
+                    recipientName = recipient.name
+                } catch {
+                    print("Error getting recipient data: \(error.localizedDescription)")
+                }
             }
-            userName = name
-        }
-        return userName
+        return recipientName // This will be empty initially, filled asynchronously
     }
+    
     func validateRecipient() {
         if !transferRecipient.hasPrefix("04") {
             transferRecipient = "04"
@@ -86,27 +131,30 @@ class TransferViewModel: ObservableObject {
             return
         }
         if(transferRecipient.count == 10 && transferRecipient.allSatisfy(\.isNumber)) {
-            transferRecipientName = getRecipientName(phoneNumber: transferRecipient)
-            if transferRecipientName != "" {
-                validRecipient = true
-            }
-            else {
-                validRecipient = false
-            }
+            validRecipient = true
+//            transferRecipientName = getRecipientName(phoneNumber: transferRecipient)
+//            if transferRecipientName != "" {
+//                validRecipient = true
+//            }
+//            else {
+//                validRecipient = false
+//            }
         }
         else {
             validRecipient = false
         }
     }
+    
     func validateAmount() {
         if transferAmountString.count > 10 {
             transferAmountString = String(transferAmountString.prefix(10))
+            transferAmount = Decimal(string: transferAmountString) ?? 0
         }
         if let actualAmount = Decimal(string: transferAmountString), actualAmount > 0 && transferAmountString.count < 11 {
             validAmount = true
+            transferAmount = Decimal(string: transferAmountString) ?? 0
         } else {
             validAmount = false
         }
     }
-    
 }

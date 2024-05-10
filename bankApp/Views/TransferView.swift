@@ -10,6 +10,7 @@ import SwiftUI
 struct TransferView: View {
     @StateObject var viewModel: TransferViewModel
     var payViewModel: PayViewModel
+    var authViewModel: AuthViewModel
     
     var body: some View {
         VStack {
@@ -38,7 +39,6 @@ struct TransferView: View {
                     .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
                     .onChange(of: viewModel.transferAmountString) {
-                        
                         viewModel.validateAmount()
                     }
             }
@@ -54,7 +54,7 @@ struct TransferView: View {
                 }
             }
             Button(action: {
-                viewModel.transferMoney(transferAmount: viewModel.transferAmount)
+                viewModel.transferMoney(transferAmount: viewModel.transferAmount, recipientPhoneNo: viewModel.transferRecipient)
                 viewModel.showTransferConfirmationView = true
             }) {
                 Text("Submit")
@@ -67,9 +67,9 @@ struct TransferView: View {
                     .foregroundColor(.white)
             }
             .opacity(viewModel.validRecipient && viewModel.validAmount ? 1.0 : 0.5) // Darken the submit button if it is disabled, so the user knows their inputs are not valid yet
-            .disabled(!viewModel.validRecipient || !viewModel.validAmount) // Disable the play submit if the recipient or amount are invalid
+            .disabled(!viewModel.validRecipient || !viewModel.validAmount) // Disable the submit button if the recipient or amount are invalid
             .fullScreenCover(isPresented: $viewModel.showTransferConfirmationView) {
-                TransferConfirmationView(viewModel: viewModel, payViewModel: payViewModel, transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipientName)
+                TransferConfirmationView(viewModel: viewModel, payViewModel: payViewModel, authViewModel: authViewModel, transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipientName)
             }
             Text("Transferring to \(viewModel.transferRecipientName)")
                 .opacity(viewModel.validRecipient ? 1.0 : 0)
@@ -80,5 +80,5 @@ struct TransferView: View {
 }
 
 #Preview {
-    TransferView(viewModel: TransferViewModel(transferAmount: 100, showTransferConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel())
+    TransferView(viewModel: TransferViewModel(transferAmount: 100, showTransferConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel(), authViewModel: AuthViewModel())
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct TransferConfirmationView: View {
     @StateObject var viewModel: TransferViewModel
     var payViewModel: PayViewModel
+    var authViewModel: AuthViewModel
     var transferAmount: Decimal
     var transferRecipientName: String
     
@@ -18,28 +19,29 @@ struct TransferConfirmationView: View {
             HStack {
                 Text("✅")
                     .font(.largeTitle)
-                Text("\nTransferred\n$\(transferAmount) !")
+                Text("\nTransferred\n$\(transferAmount) to ??? !")
                     .font(.largeTitle)
                     .bold()
                     .padding(10)
             }
-//            NavigationLink(
-//                destination: DashboardView(),
-//                label: {
-//                    Text("OK")
-//                        .font(.title)
-//                        .frame(maxWidth: .infinity)
-//                        .frame(width: 300, height: 50)
-//                        .background(Color.blue)
-//                        .clipShape(RoundedRectangle(cornerRadius: 20))
-//                        .padding()
-//                        .foregroundColor(.white)
-//                })
+            NavigationLink(
+                destination: DashboardView(viewModel: DashboardViewModel(), authViewModel: authViewModel, payViewModel: payViewModel),
+                label: {
+                    Text("OK")
+                        .font(.title)
+                        .frame(maxWidth: .infinity)
+                        .frame(width: 300, height: 50)
+                        .background(Color.blue)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .padding()
+                        .foregroundColor(.white)
+                })
+            .navigationBarBackButtonHidden(true)
         }
         
     }
 }
 
 #Preview {
-    TransferConfirmationView(viewModel: TransferViewModel(transferAmount: 100, showTransferConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel(), transferAmount: 100, transferRecipientName: "User")
+    TransferConfirmationView(viewModel: TransferViewModel(transferAmount: 100, showTransferConfirmationView: false, authViewModel: AuthViewModel()), payViewModel: PayViewModel(), authViewModel: AuthViewModel(), transferAmount: 100, transferRecipientName: "User")
 }
