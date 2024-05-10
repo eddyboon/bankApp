@@ -14,9 +14,12 @@ class DepositViewModel: ObservableObject {
     @Published var depositAmount: Decimal = 0
     @Published var showDepositConfirmationView: Bool = false
     @Published var transactionDismissed: Bool = false
+    @Published var user: User?
     
     let depositSuggestions: [Decimal] = [10, 50, 100].map { Decimal($0) }
     let db = Firestore.firestore()
+    
+    
     
     func depositMoney(depositAmount: Decimal, authViewModel: AuthViewModel) {
         guard let currentUser = authViewModel.currentUser else {

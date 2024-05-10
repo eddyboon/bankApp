@@ -13,13 +13,15 @@ struct HomeView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var viewModel: HomeViewModel
     
+    let transactions: [Transaction] = Transaction.Mock_Transactions
+    
     init() {
         _viewModel = StateObject(wrappedValue: HomeViewModel())
     }
   
     var body: some View {
         VStack(alignment: .leading) {
-            if let userName = authViewModel.currentUser?.name {
+            if let userName = viewModel.user?.name {
                 Text("Welcome \(userName),")
                     .font(.title)
                     .padding()
@@ -109,7 +111,8 @@ struct HomeView: View {
         } // End of root vstack
         .onAppear {
             Task {
-                await viewModel.fetchTransactions(authViewModel.currentUser)
+                viewModel.setUser(user: authViewModel.currentUser ?? nil)
+                await viewModel.fetchTransactions()
             }
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
