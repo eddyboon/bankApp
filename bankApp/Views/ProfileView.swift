@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import _PhotosUI_SwiftUI
+import Firebase
+import PhotosUI
 
 struct ProfileView: View {
     
@@ -13,75 +16,123 @@ struct ProfileView: View {
     
     
     @State private var showEditProfile = false
-    @StateObject var editViewModel = EditProfileViewModel()
+    @StateObject var profileViewModel = ProfileViewModel()
     
     var body: some View {
         VStack {
             if let user = viewModel.currentUser {
                 // Profile circle
                 VStack {
-                    Text(user.initials)
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(width: 180, height: 180)
-                        .background(Color(.systemGray3))
-                        .clipShape(Circle())
-                        .padding()
+                    ZStack(alignment: .topTrailing) {
+                        
+                        PhotosPicker(selection: $profileViewModel.selectedItem) {
+                            if let image = profileViewModel.profileImage {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width:120, height: 120)
+                                    .clipShape(Circle())
+                            } else {
+                                CircularProfileImageView(user: user)
+                                    .background (
+                                        Circle()
+                                            .fill(Color(.systemGray6))
+                                            .frame(width: 128, height: 128)
+                                            .shadow(radius: 10)
+                                    )
+                            }
+                        }
+                        .navigationBarItems(trailing:
+                            Button(action: {
+                            Task {
+                                try await profileViewModel.updateUserData()
+                            }
+                            }) {
+                                Text("Done")
+                            }
+                        )
+                       
+                        
+                        Image(systemName: "pencil")
+                            .imageScale(.small)
+                            .foregroundStyle(.gray)
+                            .background(
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: 32, height: 32)
+                            )
+                            .offset(x: -8, y: 10)
+                    }
+                    .padding()
                     
                     // Name
                     Text(user.name)
-                        .font(.subheadline)
+                        .font(.headline)
                         .fontWeight(.semibold)
-                        .padding(.bottom, 4) // Add padding between the circle and the name
                     
-                    // Edit Profile Button
-                    Button {
-                        showEditProfile.toggle()
-                    } label: {
-                        Text("Edit Profile")
-                            .font(.subheadline).bold()
-                            .frame(width: 120, height: 30)
-                            .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 0.75))
-                            .foregroundColor(.black)
-                            .padding(.bottom, 4)
-                    }
                 }
-                .padding(.top) // Add padding to move the profile circle to the top
-                
+                .padding(.top, 10) // Add padding to move the profile circle to the top
+                .padding(.bottom, 30)
                 
                 // Spacer between profile and list
                 Spacer()
                 
-                // List
-                List {
+                VStack(alignment: .leading) {
+                    Section {
+                        NavigationLink {
+                            ChangeNameView()
+                            //print("Change Name")
+                        }label: {
+                            ProfileRowView(imageName: "person.fill", title: "Change Name", tintColor: .blue, showChevron: true)
+                        }
+                    }
+                    
+                    Spacer().frame(height: 25)
+                    
+                    Section {
+                        NavigationLink {
+                            ChangeEmailView()
+                        }label: {
+                            ProfileRowView(imageName: "envelope.fill", title: "Change Email", tintColor: .blue, showChevron: true)
+                        }
+                    }
+                    
+                    Spacer().frame(height: 25)
+                    
+                    Section {
+                        NavigationLink {
+                            ChangeNumberView()
+                        }label: {
+                            ProfileRowView(imageName: "phone.fill", title: "Change Mobile Number", tintColor: .blue, showChevron: true)
+                        }
+                    }
+                    
+                    Spacer().frame(height: 25)
+                    
                     Section {
                         Button {
                             print("Change Password")
                         }label: {
-                            ProfileRowView(imageName: "lock.fill", title: "Change Password", tintColor: .red)
-                            
+                            ProfileRowView(imageName: "lock.fill", title: "Change Password", tintColor: .blue, showChevron: true)
                         }
                     }
-                
+                    
+                    Spacer().frame(height: 25)
                     Section {
                         Button {
                             viewModel.signOut()
                         } label: {
-                            ProfileRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red)
+                            ProfileRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red, showChevron: false)
                         }
                     }
                     
-                }//end of list
+                    Spacer()
+                }
             }
         }
-        .sheet(isPresented: $showEditProfile, content: {
-            EditProfileView(editViewModel: EditProfileViewModel())
-                
-         })
-        }
     }
-
+}
+             
     
     
 #Preview {

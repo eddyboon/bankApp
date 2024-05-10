@@ -14,9 +14,9 @@ class UserService {
     
     static let shared = UserService()
     
-    
+    @MainActor
     func updateUserProfileImage(withImageUrl imageUrl: String) async throws {
-        guard let currentUid = Auth.auth().currentUser?.uid else {return}
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
         try await Firestore.firestore().collection("users").document(currentUid).updateData([
             "profileImageUrl" : imageUrl
         ])

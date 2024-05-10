@@ -9,11 +9,15 @@
 /* Begin PBXBuildFile section */
 		805581952BEDCE9A00C35551 /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581942BEDCE9A00C35551 /* ImageUploader.swift */; };
 		805581972BEDD1FA00C35551 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581962BEDD1FA00C35551 /* UserService.swift */; };
+		805581992BEE0B7000C35551 /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581982BEE0B7000C35551 /* ChangeNameView.swift */; };
+		805581A12BEE433600C35551 /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581A02BEE433600C35551 /* ChangeEmailView.swift */; };
+		805581A32BEE434400C35551 /* ChangeNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581A22BEE434400C35551 /* ChangeNumberView.swift */; };
+		805581A52BEE434F00C35551 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581A42BEE434F00C35551 /* ChangePasswordView.swift */; };
+		805581AA2BEE724F00C35551 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 805581A92BEE724F00C35551 /* Kingfisher */; };
 		805FE5BF2BEDBF21009E83BB /* CircularProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FE5BE2BEDBF21009E83BB /* CircularProfileImageView.swift */; };
-		805FE5C12BEDC1AC009E83BB /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FE5C02BEDC1AC009E83BB /* EditProfileViewModel.swift */; };
+		805FE5C12BEDC1AC009E83BB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FE5C02BEDC1AC009E83BB /* ProfileViewModel.swift */; };
 		806B31AA2BECD8BA00BB816B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806B31A92BECD8BA00BB816B /* ProfileView.swift */; };
 		806B31AC2BECD8F400BB816B /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806B31AB2BECD8F400BB816B /* ProfileRowView.swift */; };
-		806B31AE2BECD93200BB816B /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806B31AD2BECD93200BB816B /* EditProfileView.swift */; };
 		C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */; };
 		C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E402BE0902600F0B800 /* LoginView.swift */; };
 		C62C3E432BE0902A00F0B800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C62C3E422BE0902A00F0B800 /* Assets.xcassets */; };
@@ -35,11 +39,14 @@
 /* Begin PBXFileReference section */
 		805581942BEDCE9A00C35551 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
 		805581962BEDD1FA00C35551 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		805581982BEE0B7000C35551 /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
+		805581A02BEE433600C35551 /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
+		805581A22BEE434400C35551 /* ChangeNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNumberView.swift; sourceTree = "<group>"; };
+		805581A42BEE434F00C35551 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		805FE5BE2BEDBF21009E83BB /* CircularProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProfileImageView.swift; sourceTree = "<group>"; };
-		805FE5C02BEDC1AC009E83BB /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		805FE5C02BEDC1AC009E83BB /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		806B31A92BECD8BA00BB816B /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		806B31AB2BECD8F400BB816B /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
-		806B31AD2BECD93200BB816B /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		C62C3E3B2BE0902600F0B800 /* bankApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bankApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bankAppApp.swift; sourceTree = "<group>"; };
 		C62C3E402BE0902600F0B800 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -60,6 +67,7 @@
 			files = (
 				C62C3E632BE27D9100F0B800 /* FirebaseAuth in Frameworks */,
 				C62C3E652BE27D9100F0B800 /* FirebaseFirestore in Frameworks */,
+				805581AA2BEE724F00C35551 /* Kingfisher in Frameworks */,
 				C62C3E672BE27D9100F0B800 /* FirebaseFirestoreSwift in Frameworks */,
 				C62C3E692BE27D9100F0B800 /* FirebaseFunctions in Frameworks */,
 				C62C3E6B2BE27D9100F0B800 /* FirebaseInstallations in Frameworks */,
@@ -133,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				C62C3E6E2BE27E2100F0B800 /* AuthViewModel.swift */,
-				805FE5C02BEDC1AC009E83BB /* EditProfileViewModel.swift */,
+				805FE5C02BEDC1AC009E83BB /* ProfileViewModel.swift */,
 				C62C3E702BE27F6E00F0B800 /* User.swift */,
 			);
 			path = Models;
@@ -145,7 +153,10 @@
 				C62C3E592BE2761500F0B800 /* RegistrationView.swift */,
 				C62C3E722BE28ABA00F0B800 /* TempDashboardView.swift */,
 				806B31A92BECD8BA00BB816B /* ProfileView.swift */,
-				806B31AD2BECD93200BB816B /* EditProfileView.swift */,
+				805581982BEE0B7000C35551 /* ChangeNameView.swift */,
+				805581A02BEE433600C35551 /* ChangeEmailView.swift */,
+				805581A22BEE434400C35551 /* ChangeNumberView.swift */,
+				805581A42BEE434F00C35551 /* ChangePasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -173,6 +184,7 @@
 				C62C3E682BE27D9100F0B800 /* FirebaseFunctions */,
 				C62C3E6A2BE27D9100F0B800 /* FirebaseInstallations */,
 				C62C3E6C2BE27D9100F0B800 /* FirebaseStorage */,
+				805581A92BEE724F00C35551 /* Kingfisher */,
 			);
 			productName = bankApp;
 			productReference = C62C3E3B2BE0902600F0B800 /* bankApp.app */;
@@ -204,6 +216,7 @@
 			mainGroup = C62C3E322BE0902600F0B800;
 			packageReferences = (
 				C62C3E612BE27D9100F0B800 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				805581A82BEE724F00C35551 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = C62C3E3C2BE0902600F0B800 /* Products */;
 			projectDirPath = "";
@@ -233,17 +246,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				805581972BEDD1FA00C35551 /* UserService.swift in Sources */,
-				805FE5C12BEDC1AC009E83BB /* EditProfileViewModel.swift in Sources */,
-				806B31AE2BECD93200BB816B /* EditProfileView.swift in Sources */,
+				805FE5C12BEDC1AC009E83BB /* ProfileViewModel.swift in Sources */,
 				806B31AA2BECD8BA00BB816B /* ProfileView.swift in Sources */,
 				805FE5BF2BEDBF21009E83BB /* CircularProfileImageView.swift in Sources */,
 				C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */,
 				805581952BEDCE9A00C35551 /* ImageUploader.swift in Sources */,
+				805581992BEE0B7000C35551 /* ChangeNameView.swift in Sources */,
 				C62C3E6F2BE27E2100F0B800 /* AuthViewModel.swift in Sources */,
+				805581A12BEE433600C35551 /* ChangeEmailView.swift in Sources */,
 				C62C3E712BE27F6E00F0B800 /* User.swift in Sources */,
 				C62C3E542BE26FBC00F0B800 /* InputsView.swift in Sources */,
 				C62C3E732BE28ABA00F0B800 /* TempDashboardView.swift in Sources */,
+				805581A52BEE434F00C35551 /* ChangePasswordView.swift in Sources */,
 				C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */,
+				805581A32BEE434400C35551 /* ChangeNumberView.swift in Sources */,
 				806B31AC2BECD8F400BB816B /* ProfileRowView.swift in Sources */,
 				C62C3E5A2BE2761500F0B800 /* RegistrationView.swift in Sources */,
 			);
@@ -451,6 +467,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		805581A82BEE724F00C35551 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 		C62C3E612BE27D9100F0B800 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -462,6 +486,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		805581A92BEE724F00C35551 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 805581A82BEE724F00C35551 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		C62C3E622BE27D9100F0B800 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C62C3E612BE27D9100F0B800 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

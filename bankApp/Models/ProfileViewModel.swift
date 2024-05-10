@@ -9,9 +9,10 @@ import Foundation
 import PhotosUI
 import SwiftUI
 
-class EditProfileViewModel: ObservableObject {
+class ProfileViewModel: ObservableObject {
+    
     @Published var selectedItem: PhotosPickerItem? {
-        didSet { Task { await loadImage()} }
+        didSet { Task { await loadImage() } }
     }
     
     @Published var profileImage: Image?
@@ -24,8 +25,8 @@ class EditProfileViewModel: ObservableObject {
     @MainActor
     private func loadImage() async {
         guard let item = selectedItem else { return }
-        guard let data = try? await item.loadTransferable(type: Data.self) else {return}
-        guard let uiImage = UIImage(data:data) else {return}
+        guard let data = try? await item.loadTransferable(type: Data.self) else { return }
+        guard let uiImage = UIImage(data: data) else { return }
         self.uiImage = uiImage
         self.profileImage = Image(uiImage: uiImage)
     }
