@@ -23,6 +23,16 @@ struct DashboardView: View {
             
             HStack {
                 
+                Image("eth-logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 36, height: 36)
+                    .onTapGesture {
+                        navigationController.currentTab = NavigationController.Tab.dashboard
+                    }
+                Text("Ether-Bank")
+                    .font(.headline)
+                
                 Spacer()
                 
                 Menu {
@@ -68,5 +78,6 @@ struct DashboardView: View {
     NavigationStack {
         DashboardView()
             .environmentObject(AuthViewModel())
+            .environmentObject(NavigationController())
     }
 }
