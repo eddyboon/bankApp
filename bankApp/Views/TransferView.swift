@@ -112,7 +112,7 @@ struct TransferView: View {
                         .foregroundColor(.white)
                 }
                 .opacity({
-                    if viewModel.validRecipient && viewModel.validAmount && viewModel.recipientFound && viewModel.currentBalance > viewModel.transferAmount {
+                    if viewModel.validRecipient && viewModel.validAmount && viewModel.recipientFound && viewModel.currentBalance >= viewModel.transferAmount {
                         return 1.0
                     }
                     else if viewModel.currentBalance < viewModel.transferAmount {
