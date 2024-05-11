@@ -138,12 +138,12 @@ class TransferViewModel: ObservableObject {
             // This should always be true.
             if let currentUser = authViewModel.currentUser {
                 if(transferAmountDec >= 100000) {
-                    errorMessage = "This exceeds your transfer limit. Please enter a number less than $100,000"
+                    errorMessage = "This exceeds your transfer limit. Please enter a number less than $100,000 ❌"
                     validAmount = false
                     return
                 }
                 else if(currentUser.balance - transferAmountDec < 0) {
-                    errorMessage = "Insufficent funds. Your current balance is \(currentUser.balance)"
+                    errorMessage = "Insufficent funds. Your current balance is \(currentUser.balance) ❌"
                     validAmount = false
                     return
                 }
