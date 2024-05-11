@@ -13,8 +13,11 @@ struct ChangeNumberView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     
     @State private var phoneNumber = ""
-    @State private var password = ""
     @State private var updateSuccessMessage = ""
+    @State private var presentPasswordVerification = false
+    @State private var passwordAlert = ""
+    @State private var isPasswordIncorrect = false
+    @State private var presentIncorrectPasswordAlert = false
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -63,6 +66,40 @@ struct ChangeNumberView: View {
             Spacer()
         }
         .padding(.horizontal, 30)
+        
+        //alert
+        .onAppear() {
+            presentPasswordVerification = true
+        }.alert("Enter Your Password", isPresented: $presentPasswordVerification, actions: {
+            SecureField("Password", text: $passwordAlert)
+            Button("Done", action: {
+                Task {
+                    do {
+                        try await viewModel.verifyPassword(password: passwordAlert)
+                    }catch {
+                        // Password incorrect, show the incorrect password alert
+                        presentPasswordVerification = false // Dismiss the first alert
+                        presentIncorrectPasswordAlert = true
+                    }
+                }
+            })
+            Button("Cancel", role: .cancel, action: {
+                dismiss()
+            })
+            }, message: {
+                Text("To ensure the security of your account, please enter your current password to proceed with making changes")
+        })
+        .alert("Incorrect Password, Please Try Again", isPresented: $presentIncorrectPasswordAlert, actions: {
+                    Button("OK", action: {
+                        // Dismiss the incorrect password alert and reset variables
+                        presentIncorrectPasswordAlert = false
+                        isPasswordIncorrect = false
+                        passwordAlert = ""
+                        // Show the password verification alert again
+                        presentPasswordVerification = true
+                    })
+                })
+        //end of alert
 
         if !updateSuccessMessage.isEmpty {
                    Text(updateSuccessMessage)

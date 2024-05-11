@@ -14,6 +14,11 @@ struct ChangePasswordView: View {
 
     @State private var password = ""
     @State private var confirmPassword = ""
+    @State private var presentPasswordVerification = false
+    @State private var passwordAlert = ""
+    @State private var isPasswordIncorrect = false
+    @State private var presentIncorrectPasswordAlert = false
+    @State private var updateSuccessMessage = ""
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -38,10 +43,6 @@ struct ChangePasswordView: View {
         VStack {
             Spacer()
             VStack (spacing: 24) {
-                // Current password Field
-                ZStack(alignment: .trailing) {
-                        InputView(text: $password, title: "Password", placeholder: "Enter your password", isSecuredField: true)
-                    }
                 
                 //new password
                 ZStack(alignment: .trailing) {
@@ -88,22 +89,57 @@ struct ChangePasswordView: View {
         }
         .padding(.horizontal, 30)
 
+        //alert
+        .onAppear() {
+            presentPasswordVerification = true
+        }.alert("Enter Your Password", isPresented: $presentPasswordVerification, actions: {
+            SecureField("Password", text: $passwordAlert)
+            Button("Done", action: {
+                Task {
+                    do {
+                        try await viewModel.verifyPassword(password: passwordAlert)
+                    }catch {
+                        // Password incorrect, show the incorrect password alert
+                        presentPasswordVerification = false // Dismiss the first alert
+                        presentIncorrectPasswordAlert = true
+                    }
+                }
+            })
+            Button("Cancel", role: .cancel, action: {
+                dismiss()
+            })
+            }, message: {
+                Text("To ensure the security of your account, please enter your current password to proceed with making changes")
+        })
+        .alert("Incorrect Password, Please Try Again", isPresented: $presentIncorrectPasswordAlert, actions: {
+                    Button("OK", action: {
+                        // Dismiss the incorrect password alert and reset variables
+                        presentIncorrectPasswordAlert = false
+                        isPasswordIncorrect = false
+                        passwordAlert = ""
+                        // Show the password verification alert again
+                        presentPasswordVerification = true
+                    })
+                })
+        //end of alert
+
+        if !updateSuccessMessage.isEmpty {
+                   Text(updateSuccessMessage)
+                       .foregroundColor(.green)
+                       .bold()
+                       .padding(.bottom)
+               }
                     
-                    
         
         
         
-        
-        
-        
-                    
                 //}
                 Spacer()
                 
                 Button("Save") {
                     Task {
-                     //to do updatePassword
-                        dismiss()
+                        try await viewModel.updatePassword(newPassword: password)
+                        updateSuccessMessage = "Your password has been successfully updated."
                     }
                     
                 }

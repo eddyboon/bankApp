@@ -68,6 +68,8 @@ struct ChangeEmailView: View {
             Spacer()
         }
         .padding(.horizontal, 30)
+        
+        
 
                     
                     

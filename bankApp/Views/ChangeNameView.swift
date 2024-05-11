@@ -98,6 +98,7 @@ struct ChangeNameView: View {
                         presentPasswordVerification = true
                     })
                 })
+        //end of alert
         
         //success message
         if !updateSuccessMessage.isEmpty {

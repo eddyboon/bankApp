@@ -150,10 +150,26 @@ class AuthViewModel: ObservableObject {
     
     // Update Password
     
-    func updatePassword() {
-        
-    }
+//    func updatePassword() {
+//        
+//    }
+//    
     
+    func updatePassword(newPassword: String) async throws {
+        do {
+            // Update the password
+            let user = Auth.auth().currentUser
+            try await user?.updatePassword(to: newPassword)
+            
+            // Password updated successfully
+            print("Password updated successfully")
+        } catch {
+            // Handle errors
+            print("Failed to update password: \(error.localizedDescription)")
+            throw error
+        }
+    }
+
     
     
     
