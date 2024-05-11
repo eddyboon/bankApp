@@ -12,12 +12,9 @@ struct ChangeNumberView: View {
     
     @EnvironmentObject var viewModel: AuthViewModel
     
-    @State private var name = ""
-    @State private var selectedDate = Date()
-    @State private var emailAddress = ""
     @State private var phoneNumber = ""
     @State private var password = ""
-    @State private var confirmNewEmail = ""
+    @State private var updateSuccessMessage = ""
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -67,22 +64,19 @@ struct ChangeNumberView: View {
         }
         .padding(.horizontal, 30)
 
+        if !updateSuccessMessage.isEmpty {
+                   Text(updateSuccessMessage)
+                       .foregroundColor(.green)
+                       .bold()
+                       .padding(.bottom)
+               }
                     
-                    
-        
-        
-        
-        
-        
-        
-                    
-                //}
                 Spacer()
                 
                 Button("Save") {
                     Task {
-                        //to do: UpdateNumber
-                        dismiss()
+                        viewModel.updatePhoneNumber(phoneNumber)
+                        updateSuccessMessage = "Your phone number has been successfully updated."
                         }
                     
                 }

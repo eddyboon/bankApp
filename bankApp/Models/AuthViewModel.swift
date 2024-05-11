@@ -75,22 +75,106 @@ class AuthViewModel: ObservableObject {
     }
     
     
+
+    //Updates name when user changes in profile
     func updateName(_ newName: String) {
-            guard var user = currentUser else { return }
-            user.name = newName
-            currentUser = user
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        // Update Firestore
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(uid)
+        userRef.updateData(["name": newName]) { error in
+            if let error = error {
+                print("Error updating name: \(error)")
+            } else {
+                print("Name successfully updated")
+            }
         }
+    }
+
     
     //To Do:
+    
+    
     // Update Email
+//    func updateEmail() {
+//        let db = Firestore.firestore()
+//        let userEmail = Auth.auth().currentUser?.email
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        if emailAddress.text != nil {
+//            db.collection("users").document("\(uid)").updateData(["UserEmail": emailAddress.text!])
+//            if emailAddress.text != userEmail {
+//                currentUser?.updateEmail(to: emailAddress.text!) { error in
+//                    if let error = error {
+//                        print(error)
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
+
+
     
-    
-    // Update Number
-    
-    
+    // Update Phone Number
+    func updatePhoneNumber(_ newPhoneNumber: String) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            print("User not authenticated")
+            return
+        }
+        
+        Firestore.firestore().collection("users").document(uid).getDocument { document, error in
+            if let error = error {
+                print("Error fetching user document: \(error.localizedDescription)")
+                return
+            }
+            
+            guard var user = try? document?.data(as: User.self) else {
+                print("Failed to parse user document")
+                return
+            }
+            
+            user.phoneNumber = newPhoneNumber
+            
+            do {
+                try Firestore.firestore().collection("users").document(uid).setData(from: user)
+                print("Phone number updated successfully")
+            } catch {
+                print("Failed to update phone number: \(error.localizedDescription)")
+            }
+        }
+    }
+
+
     
     
     // Update Password
+    
+    func updatePassword() {
+        
+    }
+    
+    
+    
+    
+    //verify user before allowing them to change profile credentials
+    func verifyPassword(password: String) async throws {
+        guard let user = Auth.auth().currentUser else {
+            print("User not authenticated")
+            return
+        }
+        
+        let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
+        
+        do {
+            try await user.reauthenticate(with: credential)
+            // Password verification successful, user is reauthenticated
+        } catch {
+            //print("Incorrect Password: \(error.localizedDescription)")
+            throw error
+        }
+    }
+
     
    
   

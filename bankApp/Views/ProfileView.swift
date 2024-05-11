@@ -110,8 +110,8 @@ struct ProfileView: View {
                     Spacer().frame(height: 25)
                     
                     Section {
-                        Button {
-                            print("Change Password")
+                        NavigationLink {
+                            ChangePasswordView()
                         }label: {
                             ProfileRowView(imageName: "lock.fill", title: "Change Password", tintColor: .blue, showChevron: true)
                         }
