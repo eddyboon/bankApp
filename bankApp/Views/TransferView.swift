@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TransferView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var navigationController: NavigationController
     @StateObject var viewModel: TransferViewModel
+    @Environment(\.dismiss) var dismiss
     
     init() {
         _viewModel = StateObject(wrappedValue: TransferViewModel())
@@ -38,7 +40,7 @@ struct TransferView: View {
                 .padding(.top)
             HStack {
                 Text("$")
-                TextField("", text: $viewModel.transferAmountString)
+                TextField("", value: $viewModel.transferAmount, format: .number)
                     .padding(.horizontal)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 250, height: 50)
@@ -60,30 +62,44 @@ struct TransferView: View {
                     }
                 }
             }
-            Button(action: {
-                Task {
-                    await viewModel.transferMoney(transferAmount: viewModel.transferAmount, user: authViewModel.currentUser)
+            if(!viewModel.undergoingNetworkRequests) {
+                Button(action: {
+                    Task {
+                        await viewModel.transferMoney(authViewModel: authViewModel)
+                    }
+                }) {
+                    Text("Submit")
+                        .font(.title2)
+                        .frame(maxWidth: .infinity)
+                        .frame(width: 250, height: 50)
+                        .background(Color.orange)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .padding()
+                        .foregroundColor(.white)
                 }
-            }) {
-                Text("Submit")
-                    .font(.title2)
-                    .frame(maxWidth: .infinity)
-                    .frame(width: 250, height: 50)
-                    .background(Color.orange)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .padding()
-                    .foregroundColor(.white)
+                .opacity(viewModel.validAmount ? 1.0 : 0.5) // Darken the submit button if it is disabled, so the user knows their inputs are not valid yet
+                .disabled(!viewModel.validAmount) // Disable the pay submit if the recipient or amount are invalid
             }
-            .opacity(viewModel.validAmount ? 1.0 : 0.5) // Darken the submit button if it is disabled, so the user knows their inputs are not valid yet
-            .disabled(!viewModel.validAmount) // Disable the play submit if the recipient or amount are invalid
-            .fullScreenCover(isPresented: $viewModel.showTransferConfirmationView) {
-                TransferConfirmationView(transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipient?.name ?? "{Unknown recipient}")
+            else {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(1.5)
             }
-            Text("Transferring to \(viewModel.transferRecipient)")
+            
+            Text("Transferring to \(viewModel.transferRecipient?.name ?? "undefined")")
                 .opacity(viewModel.validRecipient ? 1.0 : 0)
             /*
             Text("Recipient not found")
                 .opacity(!viewModel.validRecipient && viewModel.transferRecipient.count == 10 ? 1.0 : 0) */
+        }
+        .fullScreenCover(isPresented: $viewModel.showTransferConfirmationView) {
+            TransferConfirmationView(transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipient?.name ?? "{Unknown recipient}", transactionDismissed: $viewModel.transactionDismissed, showFullscreenCover: $viewModel.showTransferConfirmationView)
+        }
+        .onReceive(viewModel.$transactionDismissed) { isDismissed in
+            if isDismissed {
+                navigationController.currentTab = NavigationController.Tab.dashboard
+                dismiss()
+            }
         }
     }
 }

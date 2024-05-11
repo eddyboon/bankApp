@@ -21,13 +21,13 @@ class FirestoreManager {
                 do {
                     try transactionsRef.addDocument(from: transaction) { error in
                         if let error = error {
-                            print("Error adding transaction to Firestore: \(error.localizedDescription)")
+                            print("Error adding transaction for \(userId) to Firestore: \(error.localizedDescription)")
                         } else {
                             print("Transaction added successfully")
                         }
                     }
                 } catch let error {
-                    print("Error adding transaction to Firestore: \(error.localizedDescription)")
+                    print("Error adding transaction for \(userId) to Firestore: \(error.localizedDescription)")
                 }
     }
     
@@ -61,10 +61,53 @@ class FirestoreManager {
         let senderRef = db.collection("users").document(sender.id)
         let recipientRef = db.collection("users").document(recipient.id)
         
-        await depositMoney(userId: recipient.id, senderName: sender.name, newBalance: newRecipientBalance, depositAmount: amount)
+        let success = await depositMoney(userId: recipient.id, senderName: sender.name, newBalance: newRecipientBalance, depositAmount: amount)
         
-        return false
+        if success {
+            print("Transfer deposit successful")
+        }
+        else {
+            print("Transfer deposit unsuccessful")
+            return false
+
+        }
         
+        // Deduct money from sender account
+        do {
+            try await senderRef.updateData(["balance": newSenderBalance])
+        }
+        catch {
+            print("Error updating sender balance.")
+            return false
+        }
+        
+        // Add money to recipient account
+        do {
+            try await recipientRef.updateData(["balance": newRecipientBalance])
+        }
+        catch {
+            print("Error updating recipient balance")
+            return false
+        }
+        
+        
+        // Prepare recipient transaction record
+        let recipientTransaction = Transaction(id: NSUUID().uuidString, name: "Transfer from \(sender.name)", date: Date(), amount: amount, type: "credit")
+        
+        // Prepare sender transaction record
+        let senderTransaction = Transaction(id: NSUUID().uuidString, name: "Transfer to \(recipient.name)", date: Date(), amount: amount, type: "debit")
+        
+        do {
+            try addTransaction(userId: recipient.id, transaction: recipientTransaction)
+            try addTransaction(userId: sender.id, transaction: senderTransaction)
+        }
+        catch {
+            print("Error updating transactions.")
+            return false
+        }
+        
+        print("All transfer operations successful")
+        return true
         
     }
 }

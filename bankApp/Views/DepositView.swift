@@ -68,8 +68,8 @@ struct DepositView: View {
         }
         .onReceive(viewModel.$transactionDismissed) { transactionIsDismissed in
             if(transactionIsDismissed) {
-                dismiss()
                 navigationController.currentTab = NavigationController.Tab.dashboard
+                dismiss()
             }
         }
     }
