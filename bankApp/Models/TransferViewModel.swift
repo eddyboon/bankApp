@@ -105,30 +105,14 @@ class TransferViewModel: ObservableObject {
     
     func validateAmount(authViewModel: AuthViewModel) {
         
-        // Input must be a number if this is true.
-        if let transferAmountDec = Decimal(string: transferAmountString) {
-            
-            // This should always be true.
-            if let currentUser = authViewModel.currentUser {
-                if(transferAmountDec >= 100000) {
-                    errorMessage = "This exceeds your transfer limit. Please enter a number less than $100,000"
-                    validAmount = false
-                }
-                else if(currentUser.balance - transferAmountDec < 0) {
-                    errorMessage = "Insufficent funds. Your current balance is \(currentUser.balance)"
-                    validAmount = false
-                }
-                
-                
-                
-                if(transferAmountDec == 0) {
-                    transferAmountString = ""
-                }
-            }
+        if(transferAmountString == "") {
+            validAmount = false
+            return
         }
         
         if(transferAmountString == "-") {
             transferAmountString = ""
+            return
         }
         else if(transferAmountString.contains(".")) {
             let decimalCount = transferAmountString.filter {$0 == "."}.count
@@ -148,9 +132,32 @@ class TransferViewModel: ObservableObject {
                 transferAmountString = "\(numberSplit[0]).\(truncatedDecimal)"
             }
         }
-        else {
-            validAmount = true
+        
+        // Input must be a number if this is true.
+        if let transferAmountDec = Decimal(string: transferAmountString) {
+            // This should always be true.
+            if let currentUser = authViewModel.currentUser {
+                if(transferAmountDec >= 100000) {
+                    errorMessage = "This exceeds your transfer limit. Please enter a number less than $100,000"
+                    validAmount = false
+                    return
+                }
+                else if(currentUser.balance - transferAmountDec < 0) {
+                    errorMessage = "Insufficent funds. Your current balance is \(currentUser.balance)"
+                    validAmount = false
+                    return
+                }
+                
+                if(transferAmountDec == 0) {
+                    transferAmountString = ""
+                }
+            }
         }
+        
+        errorMessage = ""
+        validAmount = true
+        
+        
     }
     
     func ensurePhoneNumberFormat() {
