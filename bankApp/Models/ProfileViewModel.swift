@@ -12,36 +12,17 @@ import Combine
 
 class ProfileViewModel: ObservableObject {
     
-//    @Published var selectedItem: PhotosPickerItem? {
-//        didSet { Task { await loadImage() }  }
-//    }
-    
     @Published var selectedItem: PhotosPickerItem? {
-        didSet {
-            Task.detached {
-                await self.loadImage() // Explicitly capture self
-            }
-        }
+        didSet { Task { await loadImage() }  }
     }
-
-
-
     
+
     @Published var profileImage: Image?
     
     private var uiImage: UIImage?
     
-    //private var isProfileUpdated: Bool = false
-    
-    @Published var isProfileUpdated: Bool = false
-
     func updateUserData() async throws {
       try await updateProfileImage()
-        isProfileUpdated = true
-    }
-    
-    func shouldShowUpdateButton() -> Bool {
-        return selectedItem != nil && !isProfileUpdated
     }
     
     @MainActor

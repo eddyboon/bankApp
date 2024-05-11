@@ -13,11 +13,11 @@
 		805581A12BEE433600C35551 /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581A02BEE433600C35551 /* ChangeEmailView.swift */; };
 		805581A32BEE434400C35551 /* ChangeNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581A22BEE434400C35551 /* ChangeNumberView.swift */; };
 		805581A52BEE434F00C35551 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581A42BEE434F00C35551 /* ChangePasswordView.swift */; };
-		805581AA2BEE724F00C35551 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 805581A92BEE724F00C35551 /* Kingfisher */; };
 		805FE5BF2BEDBF21009E83BB /* CircularProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FE5BE2BEDBF21009E83BB /* CircularProfileImageView.swift */; };
 		805FE5C12BEDC1AC009E83BB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FE5C02BEDC1AC009E83BB /* ProfileViewModel.swift */; };
 		806B31AA2BECD8BA00BB816B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806B31A92BECD8BA00BB816B /* ProfileView.swift */; };
 		806B31AC2BECD8F400BB816B /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806B31AB2BECD8F400BB816B /* ProfileRowView.swift */; };
+		80F717252BEFC6D8007B728E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 80F717242BEFC6D8007B728E /* Kingfisher */; };
 		C62C3E3F2BE0902600F0B800 /* bankAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E3E2BE0902600F0B800 /* bankAppApp.swift */; };
 		C62C3E412BE0902600F0B800 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62C3E402BE0902600F0B800 /* LoginView.swift */; };
 		C62C3E432BE0902A00F0B800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C62C3E422BE0902A00F0B800 /* Assets.xcassets */; };
@@ -67,7 +67,7 @@
 			files = (
 				C62C3E632BE27D9100F0B800 /* FirebaseAuth in Frameworks */,
 				C62C3E652BE27D9100F0B800 /* FirebaseFirestore in Frameworks */,
-				805581AA2BEE724F00C35551 /* Kingfisher in Frameworks */,
+				80F717252BEFC6D8007B728E /* Kingfisher in Frameworks */,
 				C62C3E672BE27D9100F0B800 /* FirebaseFirestoreSwift in Frameworks */,
 				C62C3E692BE27D9100F0B800 /* FirebaseFunctions in Frameworks */,
 				C62C3E6B2BE27D9100F0B800 /* FirebaseInstallations in Frameworks */,
@@ -184,7 +184,7 @@
 				C62C3E682BE27D9100F0B800 /* FirebaseFunctions */,
 				C62C3E6A2BE27D9100F0B800 /* FirebaseInstallations */,
 				C62C3E6C2BE27D9100F0B800 /* FirebaseStorage */,
-				805581A92BEE724F00C35551 /* Kingfisher */,
+				80F717242BEFC6D8007B728E /* Kingfisher */,
 			);
 			productName = bankApp;
 			productReference = C62C3E3B2BE0902600F0B800 /* bankApp.app */;
@@ -216,7 +216,7 @@
 			mainGroup = C62C3E322BE0902600F0B800;
 			packageReferences = (
 				C62C3E612BE27D9100F0B800 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				805581A82BEE724F00C35551 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				80F717232BEFC6D8007B728E /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = C62C3E3C2BE0902600F0B800 /* Products */;
 			projectDirPath = "";
@@ -467,7 +467,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		805581A82BEE724F00C35551 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		80F717232BEFC6D8007B728E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
@@ -486,9 +486,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		805581A92BEE724F00C35551 /* Kingfisher */ = {
+		80F717242BEFC6D8007B728E /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 805581A82BEE724F00C35551 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 80F717232BEFC6D8007B728E /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 		C62C3E622BE27D9100F0B800 /* FirebaseAuth */ = {

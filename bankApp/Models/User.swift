@@ -16,15 +16,6 @@ struct User: Identifiable, Codable {
     var birthday: Date
     var profileImageUrl: String
     
-    var initials: String {
-        let formatter = PersonNameComponentsFormatter()
-        if let components = formatter.personNameComponents(from: name) {
-            formatter.style = .abbreviated
-            return formatter.string(from: components)
-    }
-
-    return ""
- }
     
 }
 

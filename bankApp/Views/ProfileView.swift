@@ -15,133 +15,123 @@ struct ProfileView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     
     @StateObject var profileViewModel = ProfileViewModel()
-    @State private var isProfileSaved = false
-    //@State private var isProfileUpdated = false
-    
-    
+    @Environment(\.dismiss) var dismiss
+    @State private var showAlert = false
+   
     var body: some View {
         VStack {
-            // (viewModel.isLoggedIn) {
-                // Profile circle
-                VStack {
-                    ZStack(alignment: .topTrailing) {
-                        
-                        PhotosPicker(selection: $profileViewModel.selectedItem) {
-                            if let image = profileViewModel.profileImage {
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width:120, height: 120)
-                                    .clipShape(Circle())
-                            } else {
-                                CircularProfileImageView(user: viewModel.currentUser)
-                                    .background (
-                                        Circle()
-                                            .fill(Color(.systemGray6))
-                                            .frame(width: 128, height: 128)
-                                            .shadow(radius: 10)
-                                    )
-                            }
-                        }
-                        
-                        Image(systemName: "pencil")
-                            .imageScale(.small)
-                            .foregroundStyle(.gray)
-                            .background(
-                                Circle()
-                                    .fill(Color.white)
-                                    .frame(width: 32, height: 32)
-                            )
-                            .offset(x: -8, y: 10)
-                    }
-                    .padding()
+            // Profile circle
+            VStack {
+                ZStack(alignment: .topTrailing) {
                     
-                    if profileViewModel.shouldShowUpdateButton() {
-                        Button(action: {
-                            Task {
-                                try await profileViewModel.updateUserData()
-                                //isProfileUpdated = true
-                            }
-                        }) {
-                            Text("Save profile picture")
-                                .foregroundColor(.blue)
-                                .font(.subheadline)
+                    PhotosPicker(selection: $profileViewModel.selectedItem) {
+                        if let image = profileViewModel.profileImage {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width:128, height: 128)
+                                .clipShape(Circle())
+                                .shadow(radius: 10)
+                        } else {
+                            CircularProfileImageView(user: viewModel.currentUser)
+                                .background (
+                                    Circle()
+                                        .fill(Color(.systemGray6))
+                                        .frame(width: 128, height: 128)
+                                        .shadow(radius: 10)
+                                )
                         }
                     }
+                    .onChange(of: profileViewModel.profileImage) {
+                        showAlert = true
+                    }
                     
-//                    if isProfileSaved {
-//                        Text("Successfully saved")
-//                            .foregroundColor(.green)
-//                    }
-
-                    
-                    // Name
-                    Text(viewModel.currentUser?.name ?? "")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                    
+                    Image(systemName: "pencil")
+                        .imageScale(.small)
+                        .foregroundStyle(.gray)
+                        .background(
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 32, height: 32)
+                        )
+                        .offset(x: -8, y: 10)
                 }
-                .padding(.top, 10) // Add padding to move the profile circle to the top
-                .padding(.bottom, 30)
+                .padding()
+ 
+                // Name
+                Text(viewModel.currentUser?.name ?? "")
+                    .font(.headline)
+                    .fontWeight(.semibold)
                 
-                // Spacer between profile and list
+            }
+            .padding(.top, 10) // Add padding to move the profile circle to the top
+            .padding(.bottom, 30)
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Image Selected"), message: Text("Do you want to save this profile picture?"), primaryButton: .default(Text("Save")) {
+                    Task {
+                        try await profileViewModel.updateUserData()
+                    }
+                }, secondaryButton: .cancel())
+            }
+            
+            // Spacer between profile and list
+            Spacer()
+            
+            VStack(alignment: .leading) {
+                Section {
+                    NavigationLink {
+                        ChangeNameView()
+                        //print("Change Name")
+                    }label: {
+                        ProfileRowView(imageName: "person.fill", title: "Change Name", tintColor: .blue, showChevron: true)
+                    }
+                }
+                
+                Spacer().frame(height: 25)
+                
+                //                    Section {
+                //                        NavigationLink {
+                //                            ChangeEmailView()
+                //                        }label: {
+                //                            ProfileRowView(imageName: "envelope.fill", title: "Change Email", tintColor: .blue, showChevron: true)
+                //                        }
+                //                    }
+                
+                //Spacer().frame(height: 25)
+                
+                Section {
+                    NavigationLink {
+                        ChangeNumberView()
+                    }label: {
+                        ProfileRowView(imageName: "phone.fill", title: "Change Mobile Number", tintColor: .blue, showChevron: true)
+                    }
+                }
+                
+                Spacer().frame(height: 25)
+                
+                Section {
+                    NavigationLink {
+                        ChangePasswordView()
+                    }label: {
+                        ProfileRowView(imageName: "lock.fill", title: "Change Password", tintColor: .blue, showChevron: true)
+                    }
+                }
+                
+                Spacer().frame(height: 25)
+                Section {
+                    Button {
+                        viewModel.signOut()
+                    } label: {
+                        ProfileRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red, showChevron: false)
+                    }
+                }
+                
                 Spacer()
-                
-                VStack(alignment: .leading) {
-                    Section {
-                        NavigationLink {
-                            ChangeNameView()
-                            //print("Change Name")
-                        }label: {
-                            ProfileRowView(imageName: "person.fill", title: "Change Name", tintColor: .blue, showChevron: true)
-                        }
-                    }
-                    
-                    Spacer().frame(height: 25)
-                    
-//                    Section {
-//                        NavigationLink {
-//                            ChangeEmailView()
-//                        }label: {
-//                            ProfileRowView(imageName: "envelope.fill", title: "Change Email", tintColor: .blue, showChevron: true)
-//                        }
-//                    }
-                    
-                    Spacer().frame(height: 25)
-                    
-                    Section {
-                        NavigationLink {
-                            ChangeNumberView()
-                        }label: {
-                            ProfileRowView(imageName: "phone.fill", title: "Change Mobile Number", tintColor: .blue, showChevron: true)
-                        }
-                    }
-                    
-                    Spacer().frame(height: 25)
-                    
-                    Section {
-                        NavigationLink {
-                            ChangePasswordView()
-                        }label: {
-                            ProfileRowView(imageName: "lock.fill", title: "Change Password", tintColor: .blue, showChevron: true)
-                        }
-                    }
-                    
-                    Spacer().frame(height: 25)
-                    Section {
-                        Button {
-                            viewModel.signOut()
-                        } label: {
-                            ProfileRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red, showChevron: false)
-                        }
-                    }
-                    
-                    Spacer()
-                }
             }
         }
-    
     }
+    
+}
 
              
     
