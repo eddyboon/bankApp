@@ -14,13 +14,14 @@ struct ProfileView: View {
     
     @EnvironmentObject var viewModel: AuthViewModel
     
-    
-    @State private var showEditProfile = false
     @StateObject var profileViewModel = ProfileViewModel()
+    @State private var isProfileSaved = false
+    //@State private var isProfileUpdated = false
+    
     
     var body: some View {
         VStack {
-            if let user = viewModel.currentUser {
+            // (viewModel.isLoggedIn) {
                 // Profile circle
                 VStack {
                     ZStack(alignment: .topTrailing) {
@@ -33,7 +34,7 @@ struct ProfileView: View {
                                     .frame(width:120, height: 120)
                                     .clipShape(Circle())
                             } else {
-                                CircularProfileImageView(user: user)
+                                CircularProfileImageView(user: viewModel.currentUser)
                                     .background (
                                         Circle()
                                             .fill(Color(.systemGray6))
@@ -42,16 +43,6 @@ struct ProfileView: View {
                                     )
                             }
                         }
-                        .navigationBarItems(trailing:
-                            Button(action: {
-                            Task {
-                                try await profileViewModel.updateUserData()
-                            }
-                            }) {
-                                Text("Done")
-                            }
-                        )
-                       
                         
                         Image(systemName: "pencil")
                             .imageScale(.small)
@@ -65,8 +56,27 @@ struct ProfileView: View {
                     }
                     .padding()
                     
+                    if profileViewModel.shouldShowUpdateButton() {
+                        Button(action: {
+                            Task {
+                                try await profileViewModel.updateUserData()
+                                //isProfileUpdated = true
+                            }
+                        }) {
+                            Text("Save profile picture")
+                                .foregroundColor(.blue)
+                                .font(.subheadline)
+                        }
+                    }
+                    
+//                    if isProfileSaved {
+//                        Text("Successfully saved")
+//                            .foregroundColor(.green)
+//                    }
+
+                    
                     // Name
-                    Text(user.name)
+                    Text(viewModel.currentUser?.name ?? "")
                         .font(.headline)
                         .fontWeight(.semibold)
                     
@@ -89,13 +99,13 @@ struct ProfileView: View {
                     
                     Spacer().frame(height: 25)
                     
-                    Section {
-                        NavigationLink {
-                            ChangeEmailView()
-                        }label: {
-                            ProfileRowView(imageName: "envelope.fill", title: "Change Email", tintColor: .blue, showChevron: true)
-                        }
-                    }
+//                    Section {
+//                        NavigationLink {
+//                            ChangeEmailView()
+//                        }label: {
+//                            ProfileRowView(imageName: "envelope.fill", title: "Change Email", tintColor: .blue, showChevron: true)
+//                        }
+//                    }
                     
                     Spacer().frame(height: 25)
                     
@@ -130,12 +140,14 @@ struct ProfileView: View {
                 }
             }
         }
+    
     }
-}
+
              
     
     
 #Preview {
     ProfileView()
 }
+
 

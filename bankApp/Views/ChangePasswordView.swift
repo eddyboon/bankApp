@@ -130,9 +130,6 @@ struct ChangePasswordView: View {
                        .padding(.bottom)
                }
                     
-        
-        
-        
                 //}
                 Spacer()
                 
