@@ -33,6 +33,13 @@ struct TransferView: View {
                 .onChange(of: viewModel.recipientNumber) {
                     viewModel.ensureNumberFormat()
                 }
+            Button {
+                
+            } label: {
+                Text("Check")
+            }
+
+            
             Text("Amount to transfer")
                 .padding(.top)
             HStack {
