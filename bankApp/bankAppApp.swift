@@ -29,6 +29,8 @@ struct bankAppApp: App {
                         case .dashboard:
                             DashboardView()
                                 .navigationBarBackButtonHidden(true)
+                        case .profile:
+                            ProfileView()
                         default:
                             LoginView()
                         }

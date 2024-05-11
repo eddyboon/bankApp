@@ -12,9 +12,9 @@ struct User: Identifiable, Codable {
     var name: String
     var email: String
     var phoneNumber: String
-    var balance: Double
-    var birthday: Date
-    var profileImageUrl: String
+    var balance: Decimal
+    // var birthday: Date
+    var profileImageUrl: String?
 
     func displayBalance() -> String {
         let formatter = NumberFormatter()
@@ -30,7 +30,7 @@ struct User: Identifiable, Codable {
 }
 
 extension User {
-    static var MOCK_USER = User(id: NSUUID().uuidString, name: "Edward Ong", email: "test@gmail.com", phoneNumber: "0483214561", balance: 0.00, birthday: Date(), profileImageUrl: "")
+    static var MOCK_USER = User(id: NSUUID().uuidString, name: "Edward Ong", email: "test@gmail.com", phoneNumber: "0483214561", balance: 0.00)
 }
 
 

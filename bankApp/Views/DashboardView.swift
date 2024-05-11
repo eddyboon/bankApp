@@ -37,7 +37,7 @@ struct DashboardView: View {
                 
                 Menu {
                     Button("Profile") {
-                        
+                        navigationController.path.append(NavigationController.AppScreen.profile)
                     }
                     
                     Button("Signout") {

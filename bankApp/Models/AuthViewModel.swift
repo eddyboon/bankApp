@@ -55,7 +55,7 @@ class AuthViewModel: ObservableObject {
                 let emailQuerySnapshot = try await Firestore.firestore().collection("users").whereField("email", isEqualTo: email).getDocuments()
                 if (emailQuerySnapshot.isEmpty) {
                     let result = try await Auth.auth().createUser(withEmail: email, password: password)
-                    let user = User(id: result.user.uid, name: name, email: email, phoneNumber: phoneNumber, balance: 0.00, birthday: Date(), profileImageUrl: "")
+                    let user = User(id: result.user.uid, name: name, email: email, phoneNumber: phoneNumber, balance: 0.00)
                     let encodedUser = try Firestore.Encoder().encode(user)
                     try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
                     await fetchUser()
