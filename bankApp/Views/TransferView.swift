@@ -30,31 +30,31 @@ struct TransferView: View {
                 .frame(width: 250, height: 50)
                 .multilineTextAlignment(.center)
                 .keyboardType(.numberPad)
-                /*.onChange(of: $viewModel.recipientNumber) { newValue in
-                    Task {
-                        await viewModel.validateRecipient()
-                    }
-                    
-                } */
+                .onChange(of: viewModel.recipientNumber) {
+                    viewModel.ensureNumberFormat()
+                }
             Text("Amount to transfer")
                 .padding(.top)
             HStack {
                 Text("$")
+                    .padding(.trailing, 5)
+                    
                 TextField("", value: $viewModel.transferAmount, format: .number)
-                    .padding(.horizontal)
+                    .padding(.trailing, 10)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 250, height: 50)
                     .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
-                    .onChange(of: viewModel.transferAmountString) {
+                    .onChange(of: viewModel.transferAmount) {
                         
                         viewModel.validateAmount()
                     }
             }
+            // Value Suggestions
             HStack(spacing: 20) {
                 ForEach(viewModel.transferSuggestions, id: \.self) { suggestion in
                     Button(action: {
-                        viewModel.transferAmountString = String(suggestion)
+                        viewModel.transferAmount = Decimal(suggestion)
                     }) {
                         Text("\(suggestion)")
                             .fontWeight(.semibold)

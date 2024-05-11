@@ -94,10 +94,7 @@ class TransferViewModel: ObservableObject {
     }
     
     func validateRecipient() async {
-        if !recipientNumber.hasPrefix("04") {
-            recipientNumber = "04"
-            return
-        }
+       
         if recipientNumber.count > 10 {
             recipientNumber = String(recipientNumber.prefix(10))
             return
@@ -125,6 +122,12 @@ class TransferViewModel: ObservableObject {
             validAmount = true
         } else {
             validAmount = false
+        }
+    }
+    
+    func ensureNumberFormat() {
+        if !recipientNumber.hasPrefix("04") {
+            recipientNumber = "04"
         }
     }
     
