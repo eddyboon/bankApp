@@ -12,9 +12,10 @@ import PhotosUI
 
 struct ProfileView: View {
     
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var navigationController: NavigationController
     
-    @StateObject var profileViewModel = ProfileViewModel()
+    @StateObject var viewModel = ProfileViewModel()
     @Environment(\.dismiss) var dismiss
     @State private var showAlert = false
    
@@ -24,8 +25,8 @@ struct ProfileView: View {
             VStack {
                 ZStack(alignment: .topTrailing) {
                     
-                    PhotosPicker(selection: $profileViewModel.selectedItem) {
-                        if let image = profileViewModel.profileImage {
+                    PhotosPicker(selection: $viewModel.selectedItem) {
+                        if let image = viewModel.profileImage {
                             image
                                 .resizable()
                                 .scaledToFill()
@@ -33,7 +34,7 @@ struct ProfileView: View {
                                 .clipShape(Circle())
                                 .shadow(radius: 10)
                         } else {
-                            CircularProfileImageView(user: viewModel.currentUser)
+                            CircularProfileImageView(user: authViewModel.currentUser)
                                 .background (
                                     Circle()
                                         .fill(Color(.systemGray6))
@@ -42,7 +43,7 @@ struct ProfileView: View {
                                 )
                         }
                     }
-                    .onChange(of: profileViewModel.profileImage) {
+                    .onChange(of: viewModel.profileImage) {
                         showAlert = true
                     }
                     
@@ -59,7 +60,7 @@ struct ProfileView: View {
                 .padding()
  
                 // Name
-                Text(viewModel.currentUser?.name ?? "")
+                Text(authViewModel.currentUser?.name ?? "")
                     .font(.headline)
                     .fontWeight(.semibold)
                 
@@ -69,7 +70,7 @@ struct ProfileView: View {
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Image Selected"), message: Text("Do you want to save this profile picture?"), primaryButton: .default(Text("Save")) {
                     Task {
-                        try await profileViewModel.updateUserData()
+                        try await viewModel.updateUserData()
                     }
                 }, secondaryButton: .cancel())
             }
@@ -120,7 +121,9 @@ struct ProfileView: View {
                 Spacer().frame(height: 25)
                 Section {
                     Button {
-                        viewModel.signOut()
+                        authViewModel.signOut()
+                        viewModel.popToRootView(navigationController: navigationController)
+                        
                     } label: {
                         ProfileRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red, showChevron: false)
                     }

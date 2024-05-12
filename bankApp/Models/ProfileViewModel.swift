@@ -40,5 +40,10 @@ class ProfileViewModel: ObservableObject {
         try await UserService.shared.updateUserProfileImage(withImageUrl: imageUrl)
     }
     
+    func popToRootView(navigationController: NavigationController) {
+        while(navigationController.path.count > 0) {
+            navigationController.path.removeLast()
+        }
+    }
     
 }
