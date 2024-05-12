@@ -31,10 +31,29 @@ class TransactionsViewModel: ObservableObject {
     }
     
     private func isMatch(_ transaction: Transaction, searchText: String) -> Bool {
-            // Filter transactions by name, value, or date
-            let searchTextLowercased = searchText.lowercased()
-            return transaction.name.lowercased().contains(searchTextLowercased) ||
-                   "\(transaction.amount)".contains(searchTextLowercased) ||
-                   transaction.date.formatted(date: .numeric, time: .omitted).contains(searchTextLowercased)
+        let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss" 
+        
+        // Filter transactions by name, value, or date
+        let searchTextLowercased = searchText.lowercased()
+        return transaction.name.lowercased().contains(searchTextLowercased) ||
+               "\(transaction.amount)".contains(searchTextLowercased) ||
+                dateFormatter.string(from: transaction.date).contains(searchTextLowercased)
+    }
+    
+    @MainActor
+    func refreshTransactions(authViewModel: AuthViewModel) async {
+        
+        guard let currentUser = authViewModel.currentUser else {
+            print("Critical error - unauthorised user")
+            return
         }
+        
+        do {
+            transactions = try await FirestoreManager.shared.fetchTransactions(userId: currentUser.id)
+        }
+        catch {
+            print("Unable to fetch users.")
+        }
+    }
 }

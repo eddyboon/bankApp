@@ -11,6 +11,8 @@ struct DashboardView: View {
     
     @StateObject var viewModel: DashboardViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var navigationController: NavigationController
+    @Environment(\.dismiss) var dismiss
     
     init() {
         _viewModel = StateObject(wrappedValue: DashboardViewModel())
@@ -21,19 +23,26 @@ struct DashboardView: View {
             
             HStack {
                 
+                Image("eth-logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 36, height: 36)
+                    .onTapGesture {
+                        navigationController.currentTab = NavigationController.Tab.home
+                    }
+                Text("Ether-Bank")
+                    .font(.headline)
+                
                 Spacer()
                 
                 Menu {
                     Button("Profile") {
-                        
+                        navigationController.path.append(NavigationController.AppScreen.profile)
                     }
                     
-                    NavigationLink {
-                        LoginView().onAppear(perform: {
-                            authViewModel.signOut()
-                        }).navigationBarBackButtonHidden(true)
-                    } label: {
-                        Text("Sign Out")
+                    Button("Signout") {
+                        authViewModel.signOut()
+                        dismiss()
                     }
 
 
@@ -48,15 +57,17 @@ struct DashboardView: View {
             
             
             
-            TabView() {
+            TabView(selection: $navigationController.currentTab) {
                 HomeView()
                     .tabItem {
                         Label("Home", systemImage: "house")
                     }
+                    .tag(NavigationController.Tab.home)
                 PayView()
                     .tabItem {
                         Label("Pay", systemImage: "dollarsign.circle.fill")
                     }
+                    .tag(NavigationController.Tab.pay)
                 
             }
         }
@@ -67,5 +78,6 @@ struct DashboardView: View {
     NavigationStack {
         DashboardView()
             .environmentObject(AuthViewModel())
+            .environmentObject(NavigationController())
     }
 }

@@ -13,15 +13,13 @@ struct HomeView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var viewModel: HomeViewModel
     
-    let transactions: [Transaction] = Transaction.Mock_Transactions
-    
     init() {
         _viewModel = StateObject(wrappedValue: HomeViewModel())
     }
   
     var body: some View {
         VStack(alignment: .leading) {
-            if let userName = viewModel.user?.name {
+            if let userName = authViewModel.currentUser?.name {
                 Text("Welcome \(userName),")
                     .font(.title)
                     .padding()
@@ -78,8 +76,8 @@ struct HomeView: View {
                                Text("No transactions to show")
                            } else {
                                // Force unwrap, change later
-                               // Show only 6 most recent transactions. User can navigate to dedicated page to view all.
-                               ForEach(viewModel.transactions.prefix(8)) { transaction in
+                               // Show only 7 most recent transactions. User can navigate to dedicated page to view all.
+                               ForEach(viewModel.transactions.prefix(6)) { transaction in
                                    TransactionRowView(transactionModel: transaction)
                                }
                            }
@@ -98,21 +96,11 @@ struct HomeView: View {
             
             // Push everything to top
             Spacer()
-            
-            Button {
-                DispatchQueue.main.async {
-                    viewModel.addTestTransaction()
-                }
-            } label: {
-                Text("Add transaction test")
-            }
-            .padding(.horizontal)
 
         } // End of root vstack
         .onAppear {
             Task {
-                viewModel.setUser(user: authViewModel.currentUser ?? nil)
-                await viewModel.fetchTransactions()
+                await viewModel.fetchTransactions(authViewModel: authViewModel)
             }
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)

@@ -14,7 +14,7 @@ struct TransactionRowView: View {
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        formatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
         return formatter
     }
     
@@ -32,11 +32,20 @@ struct TransactionRowView: View {
                     .foregroundColor(.gray)
             }
             Spacer()
-            Text("- $\(transactionModel.amount)")
-                .font(.footnote)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
-        }.padding(.horizontal)
+            if(transactionModel.type == "credit") {
+                Text("+ $\(transactionModel.amount)")
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+            }
+            else {
+                Text("- $\(transactionModel.amount)")
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+            }
+        }
+        .padding(.horizontal)
         
     }
 }

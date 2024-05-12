@@ -1,16 +1,10 @@
-//
-//  bankAppApp.swift
-//  bankApp
-//
-//  Created by Edward Ong on 30/4/24.
-//
-
 import SwiftUI
 import Firebase
 
 @main
 struct bankAppApp: App {
     @StateObject var authViewModel = AuthViewModel()
+    @StateObject var navigationController = NavigationController()
     
     init() {
         FirebaseApp.configure()
@@ -18,8 +12,25 @@ struct bankAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            LoginView()
-                .environmentObject(authViewModel)
+            NavigationStack(path: $navigationController.path) {
+                LoginView()
+                    .navigationDestination(for: NavigationController.AppScreen.self) { screen in
+                        switch screen {
+                        case .login:
+                            LoginView()
+                        case .dashboard:
+                            DashboardView()
+                                .navigationBarBackButtonHidden(true)
+                        case .profile:
+                            ProfileView()
+                        default:
+                            LoginView()
+                        }
+                        
+                    }
+            }
+            .environmentObject(authViewModel)
+            .environmentObject(navigationController)
         }
     }
 }
