@@ -35,8 +35,10 @@ struct TransactionsView: View {
 
             
             ScrollView {
-                if(viewModel.transactions.count == 0) {
-                    Text("No transactions to show")
+                if(viewModel.filteredTransactions.count == 0) {
+                    Text("No transactions match filter requirements.")
+                        .font(.headline)
+                        .padding()
                 } else {
                     // Force unwrap, change later
                     ForEach(viewModel.filteredTransactions) { transaction in
