@@ -110,4 +110,19 @@ class FirestoreManager {
         return true
         
     }
+    
+    func fetchTransactions(userId: String) async throws -> [Transaction] {
+        
+        var transactions: [Transaction]
+        
+        let transactionsRef = db.collection("users").document(userId).collection("Transactions")
+        
+        let querySnapshot = try await transactionsRef.getDocuments()
+        transactions = querySnapshot.documents.compactMap { try? $0.data(as: Transaction.self) }
+        transactions.sort {$0.date > $1.date } // Sort in descending order
+        
+        return transactions
+
+       
+    }
 }

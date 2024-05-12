@@ -11,6 +11,7 @@ import SwiftUI
 
 struct TransactionsView: View {
     
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var viewModel: TransactionsViewModel
     
     init(transactions: [Transaction]) {
@@ -36,15 +37,18 @@ struct TransactionsView: View {
             
             ScrollView {
                 if(viewModel.filteredTransactions.count == 0) {
-                    Text("No transactions match filter requirements.")
+                    Text("No transactions match filter criteria.")
                         .font(.headline)
                         .padding()
                 } else {
-                    // Force unwrap, change later
                     ForEach(viewModel.filteredTransactions) { transaction in
                         TransactionRowView(transactionModel: transaction)
                     }
                 }
+            }
+            .refreshable {
+                viewModel.filterText = ""
+                await viewModel.refreshTransactions(authViewModel: authViewModel)
             }
         }
         .padding()

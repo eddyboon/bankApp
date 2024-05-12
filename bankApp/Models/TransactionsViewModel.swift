@@ -40,4 +40,20 @@ class TransactionsViewModel: ObservableObject {
                "\(transaction.amount)".contains(searchTextLowercased) ||
                 dateFormatter.string(from: transaction.date).contains(searchTextLowercased)
     }
+    
+    @MainActor
+    func refreshTransactions(authViewModel: AuthViewModel) async {
+        
+        guard let currentUser = authViewModel.currentUser else {
+            print("Critical error - unauthorised user")
+            return
+        }
+        
+        do {
+            transactions = try await FirestoreManager.shared.fetchTransactions(userId: currentUser.id)
+        }
+        catch {
+            print("Unable to fetch users.")
+        }
+    }
 }
