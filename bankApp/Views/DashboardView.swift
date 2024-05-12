@@ -28,7 +28,7 @@ struct DashboardView: View {
                     .scaledToFit()
                     .frame(width: 36, height: 36)
                     .onTapGesture {
-                        navigationController.currentTab = NavigationController.Tab.dashboard
+                        navigationController.currentTab = NavigationController.Tab.home
                     }
                 Text("Ether-Bank")
                     .font(.headline)
@@ -62,7 +62,7 @@ struct DashboardView: View {
                     .tabItem {
                         Label("Home", systemImage: "house")
                     }
-                    .tag(NavigationController.Tab.dashboard)
+                    .tag(NavigationController.Tab.home)
                 PayView()
                     .tabItem {
                         Label("Pay", systemImage: "dollarsign.circle.fill")

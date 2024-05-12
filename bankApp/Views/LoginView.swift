@@ -11,6 +11,7 @@ struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var navigationController: NavigationController
     
     var body: some View {
         VStack {
@@ -49,6 +50,8 @@ struct LoginView: View {
                             // Clear both fields
                             email = ""
                             password = ""
+                            // Navigate to dashboard
+                            navigationController.path.append(NavigationController.AppScreen.dashboard)
                         } else {
                             // Only clear the password field
                             password = ""

@@ -120,7 +120,7 @@ struct TransferView: View {
         }
         .onReceive(viewModel.$transactionDismissed) { isDismissed in
             if isDismissed {
-                navigationController.currentTab = NavigationController.Tab.dashboard
+                navigationController.currentTab = NavigationController.Tab.home
                 dismiss()
             }
         }

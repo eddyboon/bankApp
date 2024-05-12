@@ -14,14 +14,6 @@ struct bankAppApp: App {
         WindowGroup {
             NavigationStack(path: $navigationController.path) {
                 LoginView()
-                    .onChange(of: authViewModel.isLoggedIn) { isLoggedIn in
-                        if isLoggedIn {
-                            navigationController.path.append(NavigationController.AppScreen.dashboard)
-                        }
-                        else {
-                            navigationController.path.removeLast()
-                        }
-                    }
                     .navigationDestination(for: NavigationController.AppScreen.self) { screen in
                         switch screen {
                         case .login:
