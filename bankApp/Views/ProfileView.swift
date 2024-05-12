@@ -89,15 +89,15 @@ struct ProfileView: View {
                 
                 Spacer().frame(height: 25)
                 
-                //                    Section {
-                //                        NavigationLink {
-                //                            ChangeEmailView()
-                //                        }label: {
-                //                            ProfileRowView(imageName: "envelope.fill", title: "Change Email", tintColor: .blue, showChevron: true)
-                //                        }
-                //                    }
+                                    Section {
+                                        NavigationLink {
+                                            ChangeEmailView()
+                                        }label: {
+                                            ProfileRowView(imageName: "envelope.fill", title: "Change Email", tintColor: .blue, showChevron: true)
+                                        }
+                                    }
                 
-                //Spacer().frame(height: 25)
+                Spacer().frame(height: 25)
                 
                 Section {
                     NavigationLink {
