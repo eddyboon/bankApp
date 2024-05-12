@@ -88,6 +88,7 @@ class AuthViewModel: ObservableObject {
                 print("Error updating name: \(error)")
             } else {
                 print("Name successfully updated")
+                self.currentUser?.name = newName
             }
         }
     }

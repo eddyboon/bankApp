@@ -64,6 +64,7 @@ struct ProfileView: View {
                     .fontWeight(.semibold)
                 
             }
+            
             .padding(.top, 10) // Add padding to move the profile circle to the top
             .padding(.bottom, 30)
             .alert(isPresented: $showAlert) {
@@ -88,14 +89,13 @@ struct ProfileView: View {
                 }
                 
                 Spacer().frame(height: 25)
-                
-                                    Section {
-                                        NavigationLink {
-                                            ChangeEmailView()
-                                        }label: {
-                                            ProfileRowView(imageName: "envelope.fill", title: "Change Email", tintColor: .blue, showChevron: true)
-                                        }
-                                    }
+                    Section {
+                        NavigationLink {
+                            ChangeEmailView()
+                        }label: {
+                            ProfileRowView(imageName: "envelope.fill", title: "Change Email", tintColor: .blue, showChevron: true)
+                        }
+                    }
                 
                 Spacer().frame(height: 25)
                 
