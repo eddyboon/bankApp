@@ -14,9 +14,9 @@
             filePath = "bankApp/Models/AuthViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
-            landmarkName = "updatePassword(newPassword:)"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "verifyPassword(password:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

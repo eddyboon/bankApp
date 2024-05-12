@@ -67,7 +67,6 @@ class AuthViewModel: ObservableObject {
                 numberAlreadyExist = true
             }
             signupLoading = false
-            
         } catch {
             print("Failed to create user")
             failedSignup = true
@@ -114,115 +113,29 @@ class AuthViewModel: ObservableObject {
                 print("Error updating name: \(error)")
             } else {
                 print("Name successfully updated")
+                self.currentUser?.name = newName
             }
         }
     }
 
     
-    // Update user email
-//    func updateEmail(newEmail: String) async throws {
-//        do {
-//            guard let user = Auth.auth().currentUser else {
-//                print("User not authenticated")
-//                return
-//            }
-//            
-//            // Update email in Firestore
-//            let db = Firestore.firestore()
-//            let userRef = db.collection("users").document(user.uid)
-//            try await userRef.setData(["email": newEmail], merge: true)
-//            
-//            // Update email
-//            try await user.updateEmail(to: newEmail)
-//            
-//            print("Email updated successfully")
-//        } catch {
-//            // Handle errors
-//            print("Failed to update email: \(error.localizedDescription)")
-//            throw error
-//        }
-//    }
-    
-    // Update user email after reauthentication
-//    func updateEmail(newEmail: String, currentPassword: String) async throws {
-//        do {
-//            guard let user = Auth.auth().currentUser else {
-//                print("User not authenticated")
-//                return
-//            }
-//            
-//            // Reauthenticate user
-//            let credential = EmailAuthProvider.credential(withEmail: user.email!, password: currentPassword)
-//            try await user.reauthenticate(with: credential)
-//            
-//            // Update email in Firestore
-//            let db = Firestore.firestore()
-//            let userRef = db.collection("users").document(user.uid)
-//            try await userRef.setData(["email": newEmail], merge: true)
-//            
-//            // Update email
-//            try await user.updateEmail(to: newEmail)
-//            
-//            print("Email updated successfully")
-//        } catch {
-//            // Handle errors
-//            print("Failed to update email: \(error.localizedDescription)")
-//            throw error
-//        }
-//    }
-    
-    
-    func updateEmail(newEmail: String, currentPassword: String) async throws {
+     //Update user email
+    func updateEmail(newEmail: String) async throws {
         do {
-            guard let currentUser = Auth.auth().currentUser else {
+            guard let user = Auth.auth().currentUser else {
                 print("User not authenticated")
                 return
             }
             
-            
-            //create a new user use ed method(), save new user in result, go into db
-            
-            //get older user, get old user data store it
-            
-            //copy data into new user .setdata, snapshot.data (fetch into snapshot)
-            
-            //jump to new user ref, instead of uid, .document.result.user.uid
-            //setdata.snapshot.data
-            
-            // Reauthenticate user
-            let credential = EmailAuthProvider.credential(withEmail: currentUser.email!, password: currentPassword)
-            try await currentUser.reauthenticate(with: credential)
-
-            // Create a new user with the new email
-            let result = try await Auth.auth().createUser(withEmail: newEmail, password: currentPassword) //save this in a variable, will get new UID for user -> store UID
-
-            // Fetch user data from Firestore
-            let uid = currentUser.uid
-            guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {
-                print("Failed to fetch user data")
-                return
-            }
-            guard let userData = try? snapshot.data(as: User.self) else {
-                print("Failed to parse user data")
-                return
-            }
-
-            // Print a message to indicate that the current user has been deleted
-            print("Current user deleted successfully")
-
-            // Update email in Firestore for the new user
+            // Update email in Firestore
             let db = Firestore.firestore()
-            let newUserRef = db.collection("users").document(result.user.uid)
-            //try await newUserRef.setData(["email": newEmail], merge: true)
-
-            // Transfer user data to the new user
-            try await newUserRef.setData(from: userData)
-
+            let userRef = db.collection("users").document(user.uid)
+            try await userRef.setData(["email": newEmail], merge: true)
+            
+            // Send email verification
+            try await user.sendEmailVerification(beforeUpdatingEmail: newEmail)
+            
             print("Email updated successfully")
-            
-            try await currentUser.delete()
-            
-            
         } catch {
             // Handle errors
             print("Failed to update email: \(error.localizedDescription)")
@@ -230,9 +143,7 @@ class AuthViewModel: ObservableObject {
         }
     }
 
-
-
-
+    
 
 
     
@@ -305,18 +216,5 @@ class AuthViewModel: ObservableObject {
             throw error
         }
     }
-
-    
-   
-  
-
-
-
-
-
-
-
-    
-
     
 }
