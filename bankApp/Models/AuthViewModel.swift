@@ -126,16 +126,22 @@ class AuthViewModel: ObservableObject {
                 print("User not authenticated")
                 return
             }
+            //check if email exists in db
+            let emailQuerySnapshot = try await Firestore.firestore().collection("users").whereField("email", isEqualTo: newEmail).getDocuments()
             
-            // Update email in Firestore
-            let db = Firestore.firestore()
-            let userRef = db.collection("users").document(user.uid)
-            try await userRef.setData(["email": newEmail], merge: true)
-            
-            // Send email verification
-            try await user.sendEmailVerification(beforeUpdatingEmail: newEmail)
-            
-            print("Email updated successfully")
+            if (emailQuerySnapshot.isEmpty) {
+                // Update email in Firestore
+                let db = Firestore.firestore()
+                let userRef = db.collection("users").document(user.uid)
+                try await userRef.setData(["email": newEmail, "id": user.uid], merge: true)
+                
+                // Send email verification
+                try await user.sendEmailVerification(beforeUpdatingEmail: newEmail)
+                
+                print("Email updated successfully")
+            } else {
+                emailAlreadyExist = true
+            }
         } catch {
             // Handle errors
             print("Failed to update email: \(error.localizedDescription)")

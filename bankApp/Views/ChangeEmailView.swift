@@ -124,17 +124,21 @@ struct ChangeEmailView: View {
                     Task {
                         //to do: UpdateEmail
                         try await viewModel.updateEmail(newEmail: emailAddress)
-                        updateSuccessMessage = "Verify new email for secure update."
-                        //dismiss()
+                        if !viewModel.emailAlreadyExist {
+                            updateSuccessMessage = "Verify new email for secure update."
                         }
-                    
+                    }
                 }
                 .padding()
                 .foregroundColor(.white)
                 .background(Color.blue)
                 .cornerRadius(8)
                 .padding()
-            //}
+                .alert("Failed to Signup. Email already exists.", isPresented: $viewModel.emailAlreadyExist) {
+                    Button("Ok", role: .cancel) {
+                        viewModel.emailAlreadyExist = false
+                    }
+                }
             Spacer()
             
         }
