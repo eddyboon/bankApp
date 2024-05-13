@@ -15,6 +15,7 @@ struct User: Identifiable, Codable {
     var balance: Decimal
     // var birthday: Date
     var profileImageUrl: String?
+    
 
     func displayBalance() -> String {
         let formatter = NumberFormatter()

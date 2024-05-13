@@ -216,7 +216,7 @@ class AuthViewModel: ObservableObject {
             //try await newUserRef.setData(["email": newEmail], merge: true)
 
             // Transfer user data to the new user
-            try await newUserRef.setData(from: userData)
+            try newUserRef.setData(from: userData)
 
             print("Email updated successfully")
             

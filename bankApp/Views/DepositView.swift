@@ -17,21 +17,23 @@ struct DepositView: View {
                 .font(.largeTitle)
                 .bold()
                 .padding(60)
-            Text("Amount to add")
+            Text("Amount to deposit ($)")
                 .padding(.top)
             HStack {
-                Text("$")
-                TextField("", value: $viewModel.depositAmount, format: .number)
-                    .padding(.horizontal)
+                TextField("", text: $viewModel.depositAmountString)
+                    .padding(.horizontal, 50)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 250, height: 50)
                     .multilineTextAlignment(.center)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.decimalPad)
+                    .onChange(of: viewModel.depositAmountString) {
+                        viewModel.validateInput()
+                    }
+                
             }
             HStack(spacing: 20) {
                 ForEach(viewModel.depositSuggestions, id: \.self) { suggestion in
                     Button(action: {
-                        viewModel.depositAmount = suggestion
+                        viewModel.depositAmountString = String(suggestion)
                     }) {
                         Text("\(suggestion)")
                             .fontWeight(.semibold)
@@ -47,7 +49,7 @@ struct DepositView: View {
             else {
                 Button(action: {
                     Task {
-                        await viewModel.depositMoney(depositAmount: viewModel.depositAmount, authViewModel: authViewModel)
+                        await viewModel.depositMoney(depositAmountString: viewModel.depositAmountString, authViewModel: authViewModel)
                     }
                     
                 }) {
@@ -60,6 +62,8 @@ struct DepositView: View {
                         .padding()
                         .foregroundColor(.white)
                 }
+                .opacity(viewModel.validAmount ? 1.0 : 0.5)
+                .disabled(!viewModel.validAmount)
             }
             
         }

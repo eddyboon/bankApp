@@ -18,6 +18,18 @@ struct TransactionRowView: View {
         return formatter
     }
     
+    func displayBalance(amount: Decimal) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "en_US")
+        
+        guard let formattedBalance = formatter.string(from: amount as NSDecimalNumber) else {
+            return "Invalid balance"
+        }
+        
+        return formattedBalance
+    }
+    
     var body: some View {
         HStack(spacing: 5) {
             VStack(alignment: .leading, spacing: 4){
@@ -33,7 +45,7 @@ struct TransactionRowView: View {
             }
             Spacer()
             if(transactionModel.type == "credit") {
-                Text("+ $\(transactionModel.amount)")
+                Text("+ $\(displayBalance(amount: transactionModel.amount))")
                     .font(.footnote)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
