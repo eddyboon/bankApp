@@ -45,13 +45,13 @@ struct TransactionRowView: View {
             }
             Spacer()
             if(transactionModel.type == "credit") {
-                Text("+ $\(displayBalance(amount: transactionModel.amount))")
+                Text("+ \(displayBalance(amount: transactionModel.amount))")
                     .font(.footnote)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
             }
             else {
-                Text("- $\(transactionModel.amount)")
+                Text("- \(displayBalance(amount: transactionModel.amount))")
                     .font(.footnote)
                     .fontWeight(.bold)
                     .foregroundColor(.black)

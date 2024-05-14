@@ -60,6 +60,13 @@ class DepositViewModel: ObservableObject {
             return
         }
         
+        if (self.depositAmount != Decimal(string: depositAmountString)) {
+            validAmount = false
+            return
+        }
+        
+        
+        
         if(depositAmountString.contains(".")) {
             let decimalCount = depositAmountString.filter {$0 == "."}.count
             
