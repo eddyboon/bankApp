@@ -53,39 +53,26 @@ class DepositViewModel: ObservableObject {
         }
     }
     
-    func validateInput() {
-        if(depositAmountString == "" || depositAmountString == "0") {
-            depositAmountString = ""
+    func validateAmount() {
+        if depositAmountString.count > 7 {
+            depositAmountString = String(depositAmountString.prefix(7))
+            depositAmount = Decimal(string: depositAmountString) ?? 0
+        }
+        if let actualAmount = Decimal(string: depositAmountString), actualAmount > 0 && depositAmountString.count < 8 && isValidMoneyAmount(amountString: depositAmountString) {
+            validAmount = true
+            depositAmount = Decimal(string: depositAmountString) ?? 0
+        }
+        else {
             validAmount = false
-            return
         }
-        
-        if (self.depositAmount != Decimal(string: depositAmountString)) {
-            validAmount = false
-            return
+    }
+    
+    func isValidMoneyAmount(amountString: String) -> Bool {
+        let pattern = #"^\d+(\.\d{1,2})?$"# // Regular expression pattern to match valid money amounts
+        guard let regex = try? NSRegularExpression(pattern: pattern) else { // Create a regular expression object
+            return false
         }
-        
-        
-        
-        if(depositAmountString.contains(".")) {
-            let decimalCount = depositAmountString.filter {$0 == "."}.count
-            
-            if decimalCount > 1 {
-                if let lastDecimalIndex = depositAmountString.lastIndex(of: ".") {
-                    depositAmountString = String(depositAmountString.prefix(upTo: lastDecimalIndex))
-                }
-            }
-            
-            let numberSplit = depositAmountString.split(separator: ".")
-            
-            // Check if there are more than two decimal places after the decimal point
-            if numberSplit.count > 1 && numberSplit[1].count > 2 {
-                // If more than two decimal places, truncate to two decimal places
-                let truncatedDecimal = numberSplit[1].prefix(2)
-                depositAmountString = "\(numberSplit[0]).\(truncatedDecimal)"
-            }
-        }
-        
-        validAmount = true
+        let range = NSRange(location: 0, length: amountString.utf16.count)
+        return regex.firstMatch(in: amountString, options: [], range: range) != nil
     }
 }
