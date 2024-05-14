@@ -31,8 +31,6 @@ class TransferViewModel: ObservableObject {
     
     let db = Firestore.firestore()
     
-    
-    @MainActor
     func transferMoney(authViewModel: AuthViewModel) async {
         
         print("ValidRecipient value: \(validRecipient)")
@@ -105,32 +103,9 @@ class TransferViewModel: ObservableObject {
     
     func validateAmount(authViewModel: AuthViewModel) {
         
-        if(transferAmountString == "") {
+        if(!isValidMoneyAmount(amountString: transferAmountString)) {
             validAmount = false
             return
-        }
-        
-        if(transferAmountString == "-") {
-            transferAmountString = ""
-            return
-        }
-        else if(transferAmountString.contains(".")) {
-            let decimalCount = transferAmountString.filter {$0 == "."}.count
-            
-            if decimalCount > 1 {
-                if let lastDecimalIndex = transferAmountString.lastIndex(of: ".") {
-                    transferAmountString = String(transferAmountString.prefix(upTo: lastDecimalIndex))
-                }
-            }
-            
-            let numberSplit = transferAmountString.split(separator: ".")
-            
-            // Check if there are more than two decimal places after the decimal point
-            if numberSplit.count > 1 && numberSplit[1].count > 2 {
-                // If more than two decimal places, truncate to two decimal places
-                let truncatedDecimal = numberSplit[1].prefix(2)
-                transferAmountString = "\(numberSplit[0]).\(truncatedDecimal)"
-            }
         }
         
         // Input must be a number if this is true.
@@ -180,6 +155,15 @@ class TransferViewModel: ObservableObject {
             validRecipient = false
             checkButtonPressed = false
         }
+    }
+    
+    func isValidMoneyAmount(amountString: String) -> Bool {
+        let pattern = #"^\d+(\.\d{1,2})?$"# // Regular expression pattern to match valid money amounts
+        guard let regex = try? NSRegularExpression(pattern: pattern) else { // Create a regular expression object
+            return false
+        }
+        let range = NSRange(location: 0, length: amountString.utf16.count)
+        return regex.firstMatch(in: amountString, options: [], range: range) != nil
     }
     
 }
