@@ -26,7 +26,7 @@ struct DepositView: View {
                     .multilineTextAlignment(.center)
                     .keyboardType(.decimalPad)
                     .onChange(of: viewModel.depositAmountString) {
-                        viewModel.validateInput()
+                        viewModel.validateAmount()
                     }
                 
             }
