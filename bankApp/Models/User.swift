@@ -13,7 +13,6 @@ struct User: Identifiable, Codable {
     var email: String
     var phoneNumber: String
     var balance: Decimal
-    // var birthday: Date
     var profileImageUrl: String?
     
 
@@ -31,6 +30,7 @@ struct User: Identifiable, Codable {
 }
 
 extension User {
+    // Allow us to use mock user to test out fields without touching database
     static var MOCK_USER = User(id: NSUUID().uuidString, name: "Edward Ong", email: "test@gmail.com", phoneNumber: "0483214561", balance: 0.00)
 }
 

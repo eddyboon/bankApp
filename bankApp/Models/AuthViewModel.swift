@@ -31,10 +31,12 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    // Handle sign in
     func signIn(withEmail email: String, password: String) async throws {
         do {
             signinLoading = true
             _ = try await Auth.auth().signIn(withEmail: email, password: password)
+            // Populate user after successful sign in
             await fetchUser()
             isLoggedIn = true
             signinLoading = false
@@ -54,6 +56,7 @@ class AuthViewModel: ObservableObject {
                 // Check if email is already in use
                 let emailQuerySnapshot = try await Firestore.firestore().collection("users").whereField("email", isEqualTo: email).getDocuments()
                 if (emailQuerySnapshot.isEmpty) {
+                    // Create user and popoulate User fields
                     let result = try await Auth.auth().createUser(withEmail: email, password: password)
                     let user = User(id: result.user.uid, name: name, email: email, phoneNumber: phoneNumber, balance: 0.00)
                     let encodedUser = try Firestore.Encoder().encode(user)
@@ -79,9 +82,11 @@ class AuthViewModel: ObservableObject {
     func fetchUser() async {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
+        // Populate user fields based on snapshot from db
         self.currentUser = try? snapshot.data(as: User.self)
     }
     
+    // Handle checking if string is a number -> used for phone number validation
     func checkString(string: String) -> Bool {
         let digits = CharacterSet.decimalDigits
         let stringSet = CharacterSet(charactersIn: string)

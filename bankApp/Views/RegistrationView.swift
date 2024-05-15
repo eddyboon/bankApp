@@ -182,6 +182,7 @@ struct RegistrationView: View {
             
             Spacer()
             
+            // Footer: if user wants to login instead of sign up
             Button {
                 dismiss()
             } label: {
