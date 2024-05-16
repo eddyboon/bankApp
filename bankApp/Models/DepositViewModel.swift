@@ -14,6 +14,8 @@ class DepositViewModel: ObservableObject {
     @Published var transactionDismissed: Bool = false
     @Published var requestInProgress: Bool = false
     @Published var validAmount: Bool = false
+    @Published var errorMessage: String = ""
+    @Published var showErrorMessage: Bool = false
     
     let depositSuggestions = [10, 50, 100]
     
@@ -52,7 +54,20 @@ class DepositViewModel: ObservableObject {
     
     
     func validateAmount() {
+        
+        depositAmount = Decimal(string: depositAmountString) ?? Decimal()
+        
+        if(depositAmount > 10000000) {
+            showErrorMessage = true
+            errorMessage = "Dude, you've got way too much money. Deposit limit is 1,000,000! 😬"
+            validAmount = false
+            return
+        }
+        
         validAmount = InputValidation.isValidMoneyAmount(depositAmountString)
+        
+        errorMessage = ""
+        showErrorMessage = false
     }
     
     

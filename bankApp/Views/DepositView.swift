@@ -68,6 +68,11 @@ struct DepositView: View {
                 .opacity(viewModel.validAmount ? 1.0 : 0.5)
                 .disabled(!viewModel.validAmount)
             }
+            if(viewModel.showErrorMessage) {
+                Text(viewModel.errorMessage)
+                    .padding()
+                    .fontWeight(.semibold)
+            }
             
         }
         .fullScreenCover(isPresented: $viewModel.showDepositConfirmationView) {
