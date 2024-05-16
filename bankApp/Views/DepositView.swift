@@ -44,6 +44,11 @@ struct DepositView: View {
                     }
                 }
             }
+            if(viewModel.showErrorMessage) {
+                Text(viewModel.errorMessage)
+                    .padding()
+                    .fontWeight(.semibold)
+            }
             if(viewModel.requestInProgress) {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
@@ -67,11 +72,6 @@ struct DepositView: View {
                 }
                 .opacity(viewModel.validAmount ? 1.0 : 0.5)
                 .disabled(!viewModel.validAmount)
-            }
-            if(viewModel.showErrorMessage) {
-                Text(viewModel.errorMessage)
-                    .padding()
-                    .fontWeight(.semibold)
             }
             
         }
