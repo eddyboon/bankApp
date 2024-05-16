@@ -32,7 +32,7 @@ struct TransferView: View {
             }
             // Error status message if phone number is invalid
             if(!viewModel.validRecipient && !viewModel.userFetching && viewModel.checkButtonPressed) {
-                Text("Recipient not found ❌")
+                Text(viewModel.numberErrorMessage)
                     .fontWeight(.bold)
             }
             Text("Recipient's phone number")
@@ -52,7 +52,7 @@ struct TransferView: View {
                     viewModel.userFetching = true
                     viewModel.checkButtonPressed = true
                     Task {
-                        await viewModel.getRecipient(phoneNumber: viewModel.recipientNumber)
+                        await viewModel.getRecipient(phoneNumber: viewModel.recipientNumber, senderPhoneNumber: authViewModel.currentUser?.phoneNumber ?? "0")
                     }
                 } label: {
                     Text("Check")

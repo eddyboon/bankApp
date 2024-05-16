@@ -21,9 +21,12 @@ class TransferViewModel: ObservableObject {
     @Published var validNumberInput: Bool = false
     @Published var validAmount: Bool = false
     @Published var errorMessage: String = ""
+    @Published var numberErrorMessage: String = ""
     @Published var undergoingNetworkRequests = false
     
     let transferSuggestions = [10, 50, 100]
+    
+    let numberErrorMessages = ["Recipient not found ❌", "Cannot send money to yourself ❌"]
 
     func transferMoney(authViewModel: AuthViewModel) async {
         
@@ -72,7 +75,14 @@ class TransferViewModel: ObservableObject {
     }
     
     // Gets the recipient from the database
-    func getRecipient(phoneNumber: String) async {
+    func getRecipient(phoneNumber: String, senderPhoneNumber: String) async {
+        
+        if(phoneNumber == senderPhoneNumber) {
+            numberErrorMessage = numberErrorMessages[1]
+            userFetching = false
+            validRecipient = false
+            return
+        }
         
         do {
             // Initiate request using Firestore Manager
@@ -81,8 +91,10 @@ class TransferViewModel: ObservableObject {
             if(transferRecipient != nil) {
                 validRecipient = true
                 userFetching = false
+                numberErrorMessage = numberErrorMessages[0]
             }
             else {
+                numberErrorMessage = ""
                 userFetching = false
                 validRecipient = false
             }
