@@ -6,10 +6,7 @@
 //
 
 import Foundation
-import Firebase
-import FirebaseFirestoreSwift
 
-@MainActor
 class DepositViewModel: ObservableObject {
     @Published var depositAmountString: String = ""
     @Published var depositAmount: Decimal = 0
@@ -20,8 +17,8 @@ class DepositViewModel: ObservableObject {
     
     let depositSuggestions = [10, 50, 100]
     
-    let db = Firestore.firestore()
     
+    @MainActor
     func depositMoney(depositAmountString: String, authViewModel: AuthViewModel) async {
         requestInProgress = true
         
@@ -53,26 +50,10 @@ class DepositViewModel: ObservableObject {
         }
     }
     
+    
     func validateAmount() {
-        if depositAmountString.count > 7 {
-            depositAmountString = String(depositAmountString.prefix(7))
-            depositAmount = Decimal(string: depositAmountString) ?? 0
-        }
-        if let actualAmount = Decimal(string: depositAmountString), actualAmount > 0 && depositAmountString.count < 8 && isValidMoneyAmount(amountString: depositAmountString) {
-            validAmount = true
-            depositAmount = Decimal(string: depositAmountString) ?? 0
-        }
-        else {
-            validAmount = false
-        }
+        validAmount = InputValidation.isValidMoneyAmount(depositAmountString)
     }
     
-    func isValidMoneyAmount(amountString: String) -> Bool {
-        let pattern = #"^\d+(\.\d{1,2})?$"# // Regular expression pattern to match valid money amounts
-        guard let regex = try? NSRegularExpression(pattern: pattern) else { // Create a regular expression object
-            return false
-        }
-        let range = NSRange(location: 0, length: amountString.utf16.count)
-        return regex.firstMatch(in: amountString, options: [], range: range) != nil
-    }
+    
 }

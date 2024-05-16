@@ -13,12 +13,15 @@ struct DepositView: View {
     
     var body: some View {
         VStack {
+            // Title
             Text("Deposit")
                 .font(.largeTitle)
                 .bold()
                 .padding(60)
+            // Label for textfield
             Text("Amount to deposit ($)")
                 .padding(.top)
+            // Deposit amount textfield
             HStack {
                 TextField("", text: $viewModel.depositAmountString)
                     .padding(.horizontal, 50)

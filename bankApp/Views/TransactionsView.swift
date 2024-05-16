@@ -20,10 +20,11 @@ struct TransactionsView: View {
     
     var body: some View {
         VStack {
+            // Headinh
             Text("All Transactions")
                 .font(.title)
                 .padding()
-            
+            // Search field
             HStack {
                 Text("Search:")
                     .padding(.trailing, 10)
@@ -34,18 +35,20 @@ struct TransactionsView: View {
             .padding()
            
 
-            
+            // Displays list of transactions
             ScrollView {
                 if(viewModel.filteredTransactions.count == 0) {
-                    Text("No transactions match filter criteria.")
+                    Text("No transactions to show.")
                         .font(.headline)
                         .padding()
                 } else {
+                    // Loop through the filtered transaction list utilising the TransactionRowView component
                     ForEach(viewModel.filteredTransactions) { transaction in
                         TransactionRowView(transactionModel: transaction)
                     }
                 }
             }
+            // Refresh transactions of Scrollview pull down action
             .refreshable {
                 viewModel.filterText = ""
                 await viewModel.refreshTransactions(authViewModel: authViewModel)

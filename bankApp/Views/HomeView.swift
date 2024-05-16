@@ -19,17 +19,21 @@ struct HomeView: View {
   
     var body: some View {
         VStack(alignment: .leading) {
+            // Display name of user
             if let userName = authViewModel.currentUser?.name {
                 Text("Welcome \(userName),")
                     .font(.title)
                     .padding()
             }
             else {
+                // If not logged in, displsy uuauthorised
+                // In theory this code should never be read
                 Text("Welcome {unauthorised},")
                     .font(.title)
                     .padding()
             }
             HStack {
+                //  Display user balance
                 Text("Balance: ")
                     .font(.title2)
                     .padding()
@@ -37,11 +41,13 @@ struct HomeView: View {
                     Text(balance)
                 }
                 else {
+                    // If user resolves to nil, show unauthorised
                     Text("Unauthorised, no balance to show.")
                 }
                 
             }
             
+            // Recent transactions card
             VStack{
                    HStack{
                        Text("Latest Transactions")
@@ -52,6 +58,7 @@ struct HomeView: View {
                        Button(action: {
                            
                        }) {
+                           // All transactions button
                            NavigationLink(destination: TransactionsView(transactions: viewModel.transactions)) {
                                Image(systemName: "arrow.up.right")
                                    .resizable()
@@ -66,6 +73,7 @@ struct HomeView: View {
                    .padding(.top, 30)
                    
                    LazyVStack (spacing: 25){
+                       // Show loading circle if fetch is in process
                        if(viewModel.isLoadingTransactions) {
                            ProgressView()
                                .progressViewStyle(CircularProgressViewStyle())
@@ -75,8 +83,7 @@ struct HomeView: View {
                            if(viewModel.transactions.count == 0) {
                                Text("No transactions to show")
                            } else {
-                               // Force unwrap, change later
-                               // Show only 7 most recent transactions. User can navigate to dedicated page to view all.
+                               // Show only 7 most recent transactions.
                                ForEach(viewModel.transactions.prefix(6)) { transaction in
                                    TransactionRowView(transactionModel: transaction)
                                }
@@ -88,7 +95,7 @@ struct HomeView: View {
                    }
                    .padding(.vertical,10)
                    .background(Color.white)
-               } // End of embedded vstack
+               } 
             .background(.white)
             .cornerRadius(15)
             .padding()
@@ -98,6 +105,7 @@ struct HomeView: View {
             Spacer()
 
         } // End of root vstack
+        // Fetch transactions when view is initialised
         .onAppear {
             Task {
                 await viewModel.fetchTransactions(authViewModel: authViewModel)

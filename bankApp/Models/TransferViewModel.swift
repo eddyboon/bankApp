@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import Firebase
-import FirebaseFirestoreSwift
 
 @MainActor
 class TransferViewModel: ObservableObject {
@@ -19,42 +17,38 @@ class TransferViewModel: ObservableObject {
     @Published var transferAmountString: String = ""
     @Published var checkButtonPressed: Bool = false
     @Published var userFetching: Bool = false
-    let transferSuggestions = [10, 50, 100]
     @Published var validRecipient: Bool = false
     @Published var validNumberInput: Bool = false
     @Published var validAmount: Bool = false
     @Published var errorMessage: String = ""
     @Published var undergoingNetworkRequests = false
+    
+    let transferSuggestions = [10, 50, 100]
 
-    
-    var screenSize: CGSize? = nil
-    
-    let db = Firestore.firestore()
-    
     func transferMoney(authViewModel: AuthViewModel) async {
         
-        print("ValidRecipient value: \(validRecipient)")
-        
+        // Set flag to indicate pending network request
         undergoingNetworkRequests = true
         
+        // Convert string into decimal value. Force unwrapped as input validation ensures value can be converted to a decimal.
         transferAmount = Decimal(string: transferAmountString)!
         
-        // Ensure current user is not nil
+        // Ensure current user exists
         guard let currentUser = authViewModel.currentUser else {
             print("Current user ID is nil")
             undergoingNetworkRequests = false
             return
         }
         
-        // Ensure the transfer recipient
+        // Ensure the transfer recipient exists
         guard let transferRecipient = self.transferRecipient else {
             print("Transfer recipient is nil")
             undergoingNetworkRequests = false
             return
         }
         
-        let newBalance = currentUser.balance - transferAmount
-        let newRecipientBalance = transferRecipient.balance + transferAmount
+        let newBalance = currentUser.balance - transferAmount // The new balance of the sender
+        let newRecipientBalance = transferRecipient.balance + transferAmount // The new balance of the recipient
         
         // Check that sender has sufficient funds.
         if(newBalance < 0) {
@@ -73,62 +67,55 @@ class TransferViewModel: ObservableObject {
         }
         else {
             undergoingNetworkRequests = false
-            errorMessage = "Network error. Please try again."
+            errorMessage = "Error. Please try again."
         }
     }
     
+    // Gets the recipient from the database
     func getRecipient(phoneNumber: String) async {
         
-        let usersRef = db.collection("users")
-        
-        let field = "phoneNumber"
-        let value = phoneNumber
-        
         do {
-            let querySnapshot = try await usersRef.whereField(field, isEqualTo: value).getDocuments()
-            if let document = querySnapshot.documents.first {
-                transferRecipient = try document.data(as: User.self)
+            // Initiate request using Firestore Manager
+            transferRecipient = try await FirestoreManager.shared.getRecipient(phoneNumber: phoneNumber)
+            // If non nil value returned, a valid recipient exists
+            if(transferRecipient != nil) {
                 validRecipient = true
-                userFetching = false
-            } else {
-                print("No user found matching phone number")
-                userFetching = false
+            }
+            else {
+                validRecipient = false
             }
         }
         catch {
-            userFetching = false
-            print("Error fetching recipient name")
+            print("Network error: \(error)")
         }
     }
     
     func validateAmount(authViewModel: AuthViewModel) {
         
-        if(!isValidMoneyAmount(amountString: transferAmountString)) {
+        // Use inputvalidation regex to ensure correct number format
+        if(!InputValidation.isValidMoneyAmount(transferAmountString)) {
             validAmount = false
             return
         }
         
-        // Input must be a number if this is true.
+        // Unwrap the string to a decimal
         if let transferAmountDec = Decimal(string: transferAmountString) {
             // This should always be true.
             if let currentUser = authViewModel.currentUser {
-                if(transferAmountDec >= 100000) {
-                    errorMessage = "Your transfer limit is $100,000 ❌"
-                    validAmount = false
-                    return
-                }
-                else if(currentUser.balance - transferAmountDec < 0) {
+                
+                // Check the user has enough funds available
+                if(currentUser.balance - transferAmountDec < 0) {
                     errorMessage = "Your balance is too low ($\(currentUser.balance)) ❌"
                     validAmount = false
                     return
                 }
-                
+                // Prevent an input beginning with zero
                 if(transferAmountDec == 0) {
                     transferAmountString = ""
                 }
             }
         }
-        
+        // All checks passed
         errorMessage = ""
         validAmount = true
         
@@ -137,33 +124,24 @@ class TransferViewModel: ObservableObject {
     
     func ensurePhoneNumberFormat() {
     
-        
+        // Ensure number begins in 04
         if !recipientNumber.hasPrefix("04") {
             recipientNumber = "04"
         }
-        
+        // Ensure number doesn't exceed 10 digits
         if(recipientNumber.count > 10) {
             recipientNumber = String(recipientNumber.prefix(10))
         }
-        
-        
+        // Valid input if and only if digit count is 10
         if recipientNumber.count == 10 {
             validNumberInput = true
         }
+        // Otherwise false
         else {
             validNumberInput = false
             validRecipient = false
             checkButtonPressed = false
         }
-    }
-    
-    func isValidMoneyAmount(amountString: String) -> Bool {
-        let pattern = #"^\d+(\.\d{1,2})?$"# // Regular expression pattern to match valid money amounts
-        guard let regex = try? NSRegularExpression(pattern: pattern) else { // Create a regular expression object
-            return false
-        }
-        let range = NSRange(location: 0, length: amountString.utf16.count)
-        return regex.firstMatch(in: amountString, options: [], range: range) != nil
     }
     
 }

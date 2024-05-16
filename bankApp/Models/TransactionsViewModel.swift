@@ -32,7 +32,7 @@ class TransactionsViewModel: ObservableObject {
     
     private func isMatch(_ transaction: Transaction, searchText: String) -> Bool {
         let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss" 
+            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss" // Specifying the specific format for date input filtering
         
         // Filter transactions by name, value, or date
         let searchTextLowercased = searchText.lowercased()
@@ -41,7 +41,7 @@ class TransactionsViewModel: ObservableObject {
                 dateFormatter.string(from: transaction.date).contains(searchTextLowercased)
     }
     
-    @MainActor
+    @MainActor // Fetches an up to date transaction list
     func refreshTransactions(authViewModel: AuthViewModel) async {
         
         guard let currentUser = authViewModel.currentUser else {

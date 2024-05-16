@@ -12,7 +12,7 @@ struct bankAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $navigationController.path) {
+            NavigationStack(path: $navigationController.path) { // NavigationStack for managing navigation
                 LoginView()
                     .navigationDestination(for: NavigationController.AppScreen.self) { screen in
                         switch screen {
@@ -29,8 +29,8 @@ struct bankAppApp: App {
                         
                     }
             }
-            .environmentObject(authViewModel)
-            .environmentObject(navigationController)
+            .environmentObject(authViewModel) // Pass authentication view model to child views
+            .environmentObject(navigationController) // Pass navigation controller to child views
         }
     }
 }

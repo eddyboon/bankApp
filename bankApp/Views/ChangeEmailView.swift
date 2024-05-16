@@ -10,17 +10,14 @@ import SwiftUI
 
 struct ChangeEmailView: View {
     
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @StateObject var viewModel: ChangeEmailViewModel
     
-    @State private var emailAddress = ""
-    @State private var password = ""
-    @State private var confirmNewEmail = ""
-    @State private var presentPasswordVerification = false
-    @State private var passwordAlert = ""
-    @State private var isPasswordIncorrect = false
-    @State private var presentIncorrectPasswordAlert = false
-    @State private var updateSuccessMessage = ""
     @Environment(\.dismiss) var dismiss
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: ChangeEmailViewModel())
+    }
     
     var body: some View {
         //header
@@ -46,13 +43,13 @@ struct ChangeEmailView: View {
             VStack (spacing: 24) {
                 // Email Field
                 ZStack(alignment: .trailing) {
-                    InputView(text: $emailAddress, title: "New Email Address", placeholder: "Enter new email")
+                    InputView(text: $viewModel.emailAddress, title: "New Email Address", placeholder: "Enter new email")
                         .textInputAutocapitalization(.never)
                         .keyboardType(.emailAddress)
                     
-                    if (!emailAddress.isEmpty) {
+                    if (!viewModel.emailAddress.isEmpty) {
                         // check for constraints
-                        if (!emailAddress.isEmpty && emailAddress.contains(".com") && emailAddress.contains("@")) {
+                        if (!viewModel.emailAddress.isEmpty && viewModel.emailAddress.contains(".com") && viewModel.emailAddress.contains("@")) {
                             Image(systemName: "checkmark.circle.fill")
                                 .imageScale(.large)
                                 .fontWeight(.bold)
@@ -73,17 +70,17 @@ struct ChangeEmailView: View {
         
         //alert
         .onAppear() {
-            presentPasswordVerification = true
-        }.alert("Enter Your Password", isPresented: $presentPasswordVerification, actions: {
-            SecureField("Password", text: $passwordAlert)
+            viewModel.presentPasswordVerification = true
+        }.alert("Enter Your Password", isPresented: $viewModel.presentPasswordVerification, actions: {
+            SecureField("Password", text: $viewModel.passwordAlert)
             Button("Done", action: {
                 Task {
                     do {
-                        try await viewModel.verifyPassword(password: passwordAlert)
+                        try await authViewModel.verifyPassword(password: viewModel.passwordAlert)
                     }catch {
                         // Password incorrect, show the incorrect password alert
-                        presentPasswordVerification = false // Dismiss the first alert
-                        presentIncorrectPasswordAlert = true
+                        viewModel.presentPasswordVerification = false // Dismiss the first alert
+                        viewModel.presentIncorrectPasswordAlert = true
                     }
                 }
             })
@@ -93,39 +90,33 @@ struct ChangeEmailView: View {
             }, message: {
                 Text("To ensure the security of your account, please enter your current password to proceed with making changes")
         })
-        .alert("Incorrect Password, Please Try Again", isPresented: $presentIncorrectPasswordAlert, actions: {
+        .alert("Incorrect Password, Please Try Again", isPresented: $viewModel.presentIncorrectPasswordAlert, actions: {
                     Button("OK", action: {
                         // Dismiss the incorrect password alert and reset variables
-                        presentIncorrectPasswordAlert = false
-                        isPasswordIncorrect = false
-                        passwordAlert = ""
+                        viewModel.presentIncorrectPasswordAlert = false
+                        viewModel.isPasswordIncorrect = false
+                        viewModel.passwordAlert = ""
                         // Show the password verification alert again
-                        presentPasswordVerification = true
+                        viewModel.presentPasswordVerification = true
                     })
                 })
         //end of alert
         
         //success message
-        if !updateSuccessMessage.isEmpty {
-                   Text(updateSuccessMessage)
+        if !viewModel.updateSuccessMessage.isEmpty {
+            Text(viewModel.updateSuccessMessage)
                        .foregroundColor(.green)
                        .bold()
                        .padding(.bottom)
                }
-
-                    
-                    
-        
-                    
-                //}
                 Spacer()
                 
                 Button("Save") {
                     Task {
                         //to do: UpdateEmail
-                        try await viewModel.updateEmail(newEmail: emailAddress)
-                        if !viewModel.emailAlreadyExist {
-                            updateSuccessMessage = "Verify new email for secure update."
+                        try await authViewModel.updateEmail(newEmail: viewModel.emailAddress)
+                        if !authViewModel.emailAlreadyExist {
+                            viewModel.updateSuccessMessage = "Verify new email for secure update."
                         }
                     }
                 }
@@ -134,9 +125,9 @@ struct ChangeEmailView: View {
                 .background(Color.blue)
                 .cornerRadius(8)
                 .padding()
-                .alert("Failed to Signup. Email already exists.", isPresented: $viewModel.emailAlreadyExist) {
+                .alert("Failed to Signup. Email already exists.", isPresented: $authViewModel.emailAlreadyExist) {
                     Button("Ok", role: .cancel) {
-                        viewModel.emailAlreadyExist = false
+                        authViewModel.emailAlreadyExist = false
                     }
                 }
             Spacer()
@@ -150,6 +141,7 @@ struct ChangeEmailView: View {
 
 #Preview {
     ChangeEmailView()
+        .environmentObject(AuthViewModel())
 }
 
 

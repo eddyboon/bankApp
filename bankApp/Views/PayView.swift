@@ -22,6 +22,7 @@ struct PayView: View {
             VStack(spacing: 20) {
                     Text("Would you like to")
                         .font(.title)
+                // Deposit button
                 NavigationLink(
                     destination: DepositView(),
                     label: {
@@ -36,6 +37,7 @@ struct PayView: View {
                     })
                 Text("or")
                     .font(.title)
+                // Transfer button
                 NavigationLink(
                     destination: TransferView(),
                     label: {

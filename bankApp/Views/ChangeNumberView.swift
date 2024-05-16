@@ -10,15 +10,14 @@ import SwiftUI
 
 struct ChangeNumberView: View {
     
-    @EnvironmentObject var viewModel: AuthViewModel
-    
-    @State private var phoneNumber = ""
-    @State private var updateSuccessMessage = ""
-    @State private var presentPasswordVerification = false
-    @State private var passwordAlert = ""
-    @State private var isPasswordIncorrect = false
-    @State private var presentIncorrectPasswordAlert = false
+    @EnvironmentObject var authViewModel: AuthViewModel
     @Environment(\.dismiss) var dismiss
+    
+    @StateObject var viewModel: ChangeNumberViewModel
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: ChangeNumberViewModel())
+    }
     
     var body: some View {
         //header
@@ -44,12 +43,12 @@ struct ChangeNumberView: View {
             VStack (spacing: 24) {
                 // Number Field
                 ZStack(alignment: .trailing) {
-                    InputView(text: $phoneNumber, title: "Phone Number", placeholder: "Enter your phone number")
+                    InputView(text: $viewModel.phoneNumber, title: "Phone Number", placeholder: "Enter your phone number")
                         .keyboardType(.numberPad)
                     
-                    if (!phoneNumber.isEmpty) {
+                    if (!viewModel.phoneNumber.isEmpty) {
                         // check for constraints
-                        if (phoneNumber.prefix(2) == "04" && phoneNumber.count == 10 && viewModel.checkString(string: phoneNumber) == true) {
+                        if (viewModel.phoneNumber.prefix(2) == "04" && viewModel.phoneNumber.count == 10 && authViewModel.checkString(string: viewModel.phoneNumber) == true) {
                             Image(systemName: "checkmark.circle.fill")
                                 .imageScale(.large)
                                 .fontWeight(.bold)
@@ -69,17 +68,17 @@ struct ChangeNumberView: View {
         
         //alert
         .onAppear() {
-            presentPasswordVerification = true
-        }.alert("Enter Your Password", isPresented: $presentPasswordVerification, actions: {
-            SecureField("Password", text: $passwordAlert)
+            viewModel.presentPasswordVerification = true
+        }.alert("Enter Your Password", isPresented: $viewModel.presentPasswordVerification, actions: {
+            SecureField("Password", text: $viewModel.passwordAlert)
             Button("Done", action: {
                 Task {
                     do {
-                        try await viewModel.verifyPassword(password: passwordAlert)
+                        try await authViewModel.verifyPassword(password: viewModel.passwordAlert)
                     }catch {
                         // Password incorrect, show the incorrect password alert
-                        presentPasswordVerification = false // Dismiss the first alert
-                        presentIncorrectPasswordAlert = true
+                        viewModel.presentPasswordVerification = false // Dismiss the first alert
+                        viewModel.presentIncorrectPasswordAlert = true
                     }
                 }
             })
@@ -89,20 +88,20 @@ struct ChangeNumberView: View {
             }, message: {
                 Text("To ensure the security of your account, please enter your current password to proceed with making changes")
         })
-        .alert("Incorrect Password, Please Try Again", isPresented: $presentIncorrectPasswordAlert, actions: {
+        .alert("Incorrect Password, Please Try Again", isPresented: $viewModel.presentIncorrectPasswordAlert, actions: {
                     Button("OK", action: {
                         // Dismiss the incorrect password alert and reset variables
-                        presentIncorrectPasswordAlert = false
-                        isPasswordIncorrect = false
-                        passwordAlert = ""
+                        viewModel.presentIncorrectPasswordAlert = false
+                        viewModel.isPasswordIncorrect = false
+                        viewModel.passwordAlert = ""
                         // Show the password verification alert again
-                        presentPasswordVerification = true
+                        viewModel.presentPasswordVerification = true
                     })
                 })
         //end of alert
 
-        if !updateSuccessMessage.isEmpty {
-                   Text(updateSuccessMessage)
+        if !viewModel.updateSuccessMessage.isEmpty {
+            Text(viewModel.updateSuccessMessage)
                        .foregroundColor(.green)
                        .bold()
                        .padding(.bottom)
@@ -112,9 +111,9 @@ struct ChangeNumberView: View {
                 
                 Button("Save") {
                     Task {
-                        viewModel.updatePhoneNumber(phoneNumber)
-                        updateSuccessMessage = "Your phone number has been successfully updated."
-                        }
+                        authViewModel.updatePhoneNumber(viewModel.phoneNumber)
+                        viewModel.updateSuccessMessage = "Your phone number has been successfully updated."
+                    }
                     
                 }
                 .padding()
@@ -122,7 +121,7 @@ struct ChangeNumberView: View {
                 .background(Color.blue)
                 .cornerRadius(8)
                 .padding()
-            //}
+        
             Spacer()
             
         }
@@ -134,6 +133,7 @@ struct ChangeNumberView: View {
 
 #Preview {
     ChangeNumberView()
+        .environmentObject(AuthViewModel())
 }
 
 

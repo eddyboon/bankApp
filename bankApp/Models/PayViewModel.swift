@@ -7,16 +7,8 @@
 
 import Foundation
 
+// Unused 
 class PayViewModel: ObservableObject {
-    @Published var decimalSpecifier: String = "%.2f"
     
-    func getDecimalSpecifier(decimal: Decimal) -> String {
-        let roundedValue = NSDecimalNumber(decimal: decimal).rounding(accordingToBehavior: NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)).decimalValue
-        
-        if decimal == roundedValue {
-            return "%.0f"
-        }
-        return "%.2f"
-    }
 }
 

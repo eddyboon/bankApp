@@ -19,30 +19,34 @@ struct TransferView: View {
     
     var body: some View {
         VStack {
-            Spacer()
+            Spacer() // Push down
+            // Title
             Text("Transfer")
                 .font(.largeTitle)
                 .bold()
                 .padding(60)
-            
+            // Success status message if phone number is valid
             if(viewModel.validRecipient && !viewModel.userFetching && viewModel.checkButtonPressed) {
                 Text("Transferring to \(viewModel.transferRecipient?.name ?? "undefined") ✅")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
             }
+            // Error status message if phone number is invalid
             if(!viewModel.validRecipient && !viewModel.userFetching && viewModel.checkButtonPressed) {
                 Text("Recipient not found ❌")
                     .fontWeight(.bold)
             }
             Text("Recipient's phone number")
                 .padding(.top)
+            // Recipient phone number textfield
             TextField("", text: $viewModel.recipientNumber)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .multilineTextAlignment(.center)
                 .keyboardType(.numberPad)
                 .onChange(of: viewModel.recipientNumber) {
-                    viewModel.ensurePhoneNumberFormat()
+                    viewModel.ensurePhoneNumberFormat() // Verifies correct phone number format
                 }
                 .padding(.horizontal, 50)
+            // Flag for showing check button or progress view
             if(!viewModel.userFetching) {
                 Button {
                     viewModel.userFetching = true
@@ -53,6 +57,7 @@ struct TransferView: View {
                 } label: {
                     Text("Check")
                 }
+                // Disa
                 .disabled(!viewModel.validNumberInput || viewModel.validRecipient)
                 .padding(.vertical, 5)
             }
@@ -64,13 +69,13 @@ struct TransferView: View {
             
             Text("Amount to transfer ($)")
                 .padding(.top)
-                    
+            // Transfer amount field
             TextField("", text: $viewModel.transferAmountString)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .multilineTextAlignment(.center)
                 .keyboardType(.decimalPad)
                 .onChange(of: viewModel.transferAmountString) {
-                    
+                    // Validates correct currency number format
                     viewModel.validateAmount(authViewModel: authViewModel)
                 }
                 .padding(.horizontal, 50)
@@ -86,11 +91,13 @@ struct TransferView: View {
                     }
                 }
             }
+            // Display error message depending on flag state
             if(!viewModel.errorMessage.isEmpty) {
                 Text(viewModel.errorMessage)
                     .fontWeight(.semibold)
                     .padding()
             }
+            // Show button or progress view depending on network request flag
             if(!viewModel.undergoingNetworkRequests) {
                 Button(action: {
                     Task {
@@ -115,9 +122,11 @@ struct TransferView: View {
             }
             Spacer()
         }
+        // If transfer submission successful, show confirmation using fullscreen cover
         .fullScreenCover(isPresented: $viewModel.showTransferConfirmationView) {
             TransferConfirmationView(transferAmount: viewModel.transferAmount, transferRecipientName: viewModel.transferRecipient?.name ?? "{Unknown recipient}", transactionDismissed: $viewModel.transactionDismissed, showFullscreenCover: $viewModel.showTransferConfirmationView)
         }
+        // If confirmation is dismissed, return to dashboard
         .onReceive(viewModel.$transactionDismissed) { isDismissed in
             if isDismissed {
                 navigationController.currentTab = NavigationController.Tab.home

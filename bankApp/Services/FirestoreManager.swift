@@ -13,7 +13,7 @@ class FirestoreManager {
     static let shared = FirestoreManager()
     private let db = Firestore.firestore()
     
-    
+    // Adds a new transaction to the user's transaction list
     func addTransaction(userId: String, transaction: Transaction) throws {
         
         let transactionsRef = db.collection("users").document(userId).collection("Transactions")
@@ -31,6 +31,7 @@ class FirestoreManager {
                 }
     }
     
+    // Updates user balance and adds the deposit to the transaction list
     func depositMoney(userId: String, senderName: String, newBalance: Decimal, depositAmount: Decimal) async -> Bool {
             let depositRef = db.collection("users").document(userId)
 
@@ -56,6 +57,7 @@ class FirestoreManager {
             }
     }
     
+    // Deducts funds from the sender and adds funds to the recipient. Adds the relevant transaction to both users
     func transferMoney(sender: User, recipient: User, newSenderBalance: Decimal, newRecipientBalance: Decimal, amount: Decimal) async -> Bool {
         
         let senderRef = db.collection("users").document(sender.id)
@@ -124,5 +126,36 @@ class FirestoreManager {
         return transactions
 
        
+    }
+    // Gets the recipient using a phone number
+    func getRecipient(phoneNumber: String) async throws -> User? {
+        
+        let usersRef = db.collection("users")
+        let field = "phoneNumber"
+        let value = phoneNumber
+        
+        do {
+            let querySnapshot = try await usersRef.whereField(field, isEqualTo: value).getDocuments()
+            if let document = querySnapshot.documents.first {
+                let transferRecipient = try document.data(as: User.self)
+                return transferRecipient
+            } else {
+                // No user found
+                return nil
+            }
+        }
+        catch {
+            throw error
+        }
+    }
+    
+    func updateUserProfileImage(withImageUrl imageUrl: String) async throws -> String {
+        
+        guard let currentUid = Auth.auth().currentUser?.uid else { return "" }
+        try await Firestore.firestore().collection("users").document(currentUid).updateData([
+            "profileImageUrl" : imageUrl
+        ])
+        return imageUrl
+        
     }
 }

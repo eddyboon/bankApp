@@ -21,6 +21,7 @@ struct DashboardView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
+            // Header logo
             HStack {
                 
                 Image("eth-logo")
@@ -35,6 +36,7 @@ struct DashboardView: View {
                 
                 Spacer()
                 
+                // Profile menu
                 Menu {
                     Button("Profile") {
                         navigationController.path.append(NavigationController.AppScreen.profile)
@@ -44,8 +46,6 @@ struct DashboardView: View {
                         authViewModel.signOut()
                         dismiss()
                     }
-
-
                 } label: {
                     Image(systemName: "person.crop.circle")
                         .resizable()
@@ -56,7 +56,7 @@ struct DashboardView: View {
             .padding()
             
             
-            
+            // Tabview to transition between homeview and payview screens
             TabView(selection: $navigationController.currentTab) {
                 HomeView()
                     .tabItem {

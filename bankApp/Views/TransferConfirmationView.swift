@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TransferConfirmationView: View {
     
-    @Binding var showFullscreenCover: Bool
+    @Binding var showFullscreenCover: Bool // Flag that notifies previous when fullscreen cover should be dismissed
     @Binding var transactionDismissed: Bool
     @StateObject var viewModel: TransferConfirmationViewModel
     

@@ -10,16 +10,15 @@ import SwiftUI
 
 struct ChangePasswordView: View {
     
-    @EnvironmentObject var viewModel: AuthViewModel
-
-    @State private var password = ""
-    @State private var confirmPassword = ""
-    @State private var presentPasswordVerification = false
-    @State private var passwordAlert = ""
-    @State private var isPasswordIncorrect = false
-    @State private var presentIncorrectPasswordAlert = false
-    @State private var updateSuccessMessage = ""
+    @EnvironmentObject var authViewModel: AuthViewModel
     @Environment(\.dismiss) var dismiss
+    
+    @StateObject var viewModel: ChangePasswordViewModel
+
+    init() {
+    _viewModel = StateObject(wrappedValue: ChangePasswordViewModel())
+        
+    }
     
     var body: some View {
         //header
@@ -46,11 +45,11 @@ struct ChangePasswordView: View {
                 
                 //new password
                 ZStack(alignment: .trailing) {
-                    InputView(text: $password, title: "New Password", placeholder: "Enter new password", isSecuredField: true)
+                    InputView(text: $viewModel.password, title: "New Password", placeholder: "Enter new password", isSecuredField: true)
                     
-                    if (!password.isEmpty) {
+                    if (!viewModel.password.isEmpty) {
                         // check for constraints
-                        if (password.count > 5) {
+                        if (viewModel.password.count > 5) {
                             Image(systemName: "checkmark.circle.fill")
                                 .imageScale(.large)
                                 .fontWeight(.bold)
@@ -66,10 +65,10 @@ struct ChangePasswordView: View {
                 
                 // Confirm new password field
                 ZStack(alignment: .trailing) {
-                    InputView(text: $confirmPassword, title: "Confirm New Password", placeholder: "Re-Enter your new password", isSecuredField: true)
-                    if (!password.isEmpty && !confirmPassword.isEmpty) {
+                    InputView(text: $viewModel.confirmPassword, title: "Confirm New Password", placeholder: "Re-Enter your new password", isSecuredField: true)
+                    if (!viewModel.password.isEmpty && !viewModel.confirmPassword.isEmpty) {
                         // check for constraints
-                        if (password == confirmPassword) {
+                        if (viewModel.password == viewModel.confirmPassword) {
                             Image(systemName: "checkmark.circle.fill")
                                 .imageScale(.large)
                                 .fontWeight(.bold)
@@ -91,17 +90,17 @@ struct ChangePasswordView: View {
 
         //alert
         .onAppear() {
-            presentPasswordVerification = true
-        }.alert("Enter Your Password", isPresented: $presentPasswordVerification, actions: {
-            SecureField("Password", text: $passwordAlert)
+            viewModel.presentPasswordVerification = true
+        }.alert("Enter Your Password", isPresented: $viewModel.presentPasswordVerification, actions: {
+            SecureField("Password", text: $viewModel.passwordAlert)
             Button("Done", action: {
                 Task {
                     do {
-                        try await viewModel.verifyPassword(password: passwordAlert)
+                        try await authViewModel.verifyPassword(password: viewModel.passwordAlert)
                     }catch {
                         // Password incorrect, show the incorrect password alert
-                        presentPasswordVerification = false // Dismiss the first alert
-                        presentIncorrectPasswordAlert = true
+                        viewModel.presentPasswordVerification = false // Dismiss the first alert
+                        viewModel.presentIncorrectPasswordAlert = true
                     }
                 }
             })
@@ -111,20 +110,20 @@ struct ChangePasswordView: View {
             }, message: {
                 Text("To ensure the security of your account, please enter your current password to proceed with making changes")
         })
-        .alert("Incorrect Password, Please Try Again", isPresented: $presentIncorrectPasswordAlert, actions: {
+        .alert("Incorrect Password, Please Try Again", isPresented: $viewModel.presentIncorrectPasswordAlert, actions: {
                     Button("OK", action: {
                         // Dismiss the incorrect password alert and reset variables
-                        presentIncorrectPasswordAlert = false
-                        isPasswordIncorrect = false
-                        passwordAlert = ""
+                        viewModel.presentIncorrectPasswordAlert = false
+                        viewModel.isPasswordIncorrect = false
+                        viewModel.passwordAlert = ""
                         // Show the password verification alert again
-                        presentPasswordVerification = true
+                        viewModel.presentPasswordVerification = true
                     })
                 })
         //end of alert
 
-        if !updateSuccessMessage.isEmpty {
-                   Text(updateSuccessMessage)
+        if !viewModel.updateSuccessMessage.isEmpty {
+            Text(viewModel.updateSuccessMessage)
                        .foregroundColor(.green)
                        .bold()
                        .padding(.bottom)
@@ -135,8 +134,8 @@ struct ChangePasswordView: View {
                 
                 Button("Save") {
                     Task {
-                        try await viewModel.updatePassword(newPassword: password)
-                        updateSuccessMessage = "Your password has been successfully updated."
+                        try await authViewModel.updatePassword(newPassword: viewModel.password)
+                        viewModel.updateSuccessMessage = "Your password has been successfully updated."
                     }
                     
                 }

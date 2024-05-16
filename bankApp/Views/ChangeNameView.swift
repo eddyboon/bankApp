@@ -10,15 +10,14 @@ import SwiftUI
 
 struct ChangeNameView: View {
     
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @StateObject var viewModel: ChangeNameViewModel
     
-    @State private var name = ""
-    @State private var presentPasswordVerification = false
-    @State private var passwordAlert = ""
-    @State private var isPasswordIncorrect = false
-    @State private var presentIncorrectPasswordAlert = false
-    @State private var updateSuccessMessage = ""
     @Environment(\.dismiss) var dismiss
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: ChangeNameViewModel())
+    }
 
 
     var body: some View {
@@ -47,10 +46,10 @@ struct ChangeNameView: View {
                 // name Field
                 ZStack(alignment: .trailing) {
                     ZStack(alignment: .trailing) {
-                        InputView(text: $name, title: "Name", placeholder: "Enter new name")
+                        InputView(text: $viewModel.name, title: "Name", placeholder: "Enter new name")
                             .textInputAutocapitalization(.sentences)
                         
-                        if (!name.isEmpty) {
+                        if (!viewModel.name.isEmpty) {
                             // check for constraints
                             Image(systemName: "checkmark.circle.fill")
                                 .imageScale(.large)
@@ -68,17 +67,17 @@ struct ChangeNameView: View {
         
         //alert
         .onAppear() {
-            presentPasswordVerification = true
-        }.alert("Enter Your Password", isPresented: $presentPasswordVerification, actions: {
-            SecureField("Password", text: $passwordAlert)
+            viewModel.presentPasswordVerification = true
+        }.alert("Enter Your Password", isPresented: $viewModel.presentPasswordVerification, actions: {
+            SecureField("Password", text: $viewModel.passwordAlert)
             Button("Done", action: {
                 Task {
                     do {
-                        try await viewModel.verifyPassword(password: passwordAlert)
+                        try await authViewModel.verifyPassword(password: viewModel.passwordAlert)
                     }catch {
                         // Password incorrect, show the incorrect password alert
-                        presentPasswordVerification = false // Dismiss the first alert
-                        presentIncorrectPasswordAlert = true
+                        viewModel.presentPasswordVerification = false // Dismiss the first alert
+                        viewModel.presentIncorrectPasswordAlert = true
                     }
                 }
             })
@@ -88,21 +87,21 @@ struct ChangeNameView: View {
             }, message: {
                 Text("To ensure the security of your account, please enter your current password to proceed with making changes")
         })
-        .alert("Incorrect Password, Please Try Again", isPresented: $presentIncorrectPasswordAlert, actions: {
+        .alert("Incorrect Password, Please Try Again", isPresented: $viewModel.presentIncorrectPasswordAlert, actions: {
                     Button("OK", action: {
                         // Dismiss the incorrect password alert and reset variables
-                        presentIncorrectPasswordAlert = false
-                        isPasswordIncorrect = false
-                        passwordAlert = ""
+                        viewModel.presentIncorrectPasswordAlert = false
+                        viewModel.isPasswordIncorrect = false
+                        viewModel.passwordAlert = ""
                         // Show the password verification alert again
-                        presentPasswordVerification = true
+                        viewModel.presentPasswordVerification = true
                     })
                 })
         //end of alert
         
         //success message
-        if !updateSuccessMessage.isEmpty {
-                   Text(updateSuccessMessage)
+        if !viewModel.updateSuccessMessage.isEmpty {
+            Text(viewModel.updateSuccessMessage)
                        .foregroundColor(.green)
                        .bold()
                        .padding(.bottom)
@@ -111,8 +110,8 @@ struct ChangeNameView: View {
             
         Button("Save") {
             Task {
-                viewModel.updateName(name)
-                updateSuccessMessage = "Your name has been successfully updated."
+                authViewModel.updateName(viewModel.name)
+                viewModel.updateSuccessMessage = "Your name has been successfully updated."
             }
         }
         .padding()

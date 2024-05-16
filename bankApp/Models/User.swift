@@ -15,7 +15,8 @@ struct User: Identifiable, Codable {
     var balance: Decimal
     var profileImageUrl: String?
     
-
+    
+    // Converts string into decimal using currency format
     func displayBalance() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
