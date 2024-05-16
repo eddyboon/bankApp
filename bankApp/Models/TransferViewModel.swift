@@ -83,6 +83,7 @@ class TransferViewModel: ObservableObject {
                 userFetching = false
             }
             else {
+                userFetching = false
                 validRecipient = false
             }
         }
@@ -133,15 +134,13 @@ class TransferViewModel: ObservableObject {
         if(recipientNumber.count > 10) {
             recipientNumber = String(recipientNumber.prefix(10))
         }
-        // Valid input if and only if digit count is 10
-        if recipientNumber.count == 10 {
+        // Valid input if and only if digit count is 10 and is a number
+        if(recipientNumber.count == 10 && recipientNumber.allSatisfy(\.isNumber)) {
             validNumberInput = true
         }
         // Otherwise false
         else {
             validNumberInput = false
-            validRecipient = false
-            checkButtonPressed = false
         }
     }
     
