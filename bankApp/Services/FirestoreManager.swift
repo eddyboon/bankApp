@@ -138,9 +138,11 @@ class FirestoreManager {
             let querySnapshot = try await usersRef.whereField(field, isEqualTo: value).getDocuments()
             if let document = querySnapshot.documents.first {
                 let transferRecipient = try document.data(as: User.self)
+                print("User found")
                 return transferRecipient
             } else {
                 // No user found
+                print("No user found")
                 return nil
             }
         }

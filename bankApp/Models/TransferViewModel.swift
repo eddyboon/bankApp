@@ -80,6 +80,7 @@ class TransferViewModel: ObservableObject {
             // If non nil value returned, a valid recipient exists
             if(transferRecipient != nil) {
                 validRecipient = true
+                userFetching = false
             }
             else {
                 validRecipient = false
