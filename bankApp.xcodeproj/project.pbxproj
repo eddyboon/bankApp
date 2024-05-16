@@ -201,12 +201,12 @@
 				C134266F2BEC64FC007C27AE /* TransferConfirmationViewModel.swift */,
 				C13426702BEC64FC007C27AE /* TransferViewModel.swift */,
 				805FE5C02BEDC1AC009E83BB /* ProfileViewModel.swift */,
-				C62C3E702BE27F6E00F0B800 /* User.swift */,
-				C18370AA2BE3427300614F94 /* Transaction.swift */,
 				C11DC3922BF5BE0900DB4406 /* ChangeNameViewModel.swift */,
 				C11DC3942BF5C0B500DB4406 /* ChangeEmailViewModel.swift */,
 				C11DC3962BF5C1ED00DB4406 /* ChangeNumberViewModel.swift */,
 				C11DC3982BF5C46000DB4406 /* ChangePasswordViewModel.swift */,
+				C62C3E702BE27F6E00F0B800 /* User.swift */,
+				C18370AA2BE3427300614F94 /* Transaction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
