@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		805581952BEDCE9A00C35551 /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581942BEDCE9A00C35551 /* ImageUploader.swift */; };
-		805581972BEDD1FA00C35551 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581962BEDD1FA00C35551 /* UserService.swift */; };
 		805581992BEE0B7000C35551 /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581982BEE0B7000C35551 /* ChangeNameView.swift */; };
 		805581A12BEE433600C35551 /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581A02BEE433600C35551 /* ChangeEmailView.swift */; };
 		805581A32BEE434400C35551 /* ChangeNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805581A22BEE434400C35551 /* ChangeNumberView.swift */; };
@@ -62,7 +61,6 @@
 
 /* Begin PBXFileReference section */
 		805581942BEDCE9A00C35551 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
-		805581962BEDD1FA00C35551 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		805581982BEE0B7000C35551 /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
 		805581A02BEE433600C35551 /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
 		805581A22BEE434400C35551 /* ChangeNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNumberView.swift; sourceTree = "<group>"; };
@@ -133,7 +131,6 @@
 				C11DC3902BF5ABA200DB4406 /* InputValidation.swift */,
 				C1EF69FC2BED9FC200826F84 /* FirestoreManager.swift */,
 				805581942BEDCE9A00C35551 /* ImageUploader.swift */,
-				805581962BEDD1FA00C35551 /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -335,7 +332,6 @@
 				C11DC3912BF5ABA200DB4406 /* InputValidation.swift in Sources */,
 				C13426772BEC64FC007C27AE /* DepositConfirmationViewModel.swift in Sources */,
 				C18370A72BE33F3C00614F94 /* HomeViewModel.swift in Sources */,
-				805581972BEDD1FA00C35551 /* UserService.swift in Sources */,
 				805FE5C12BEDC1AC009E83BB /* ProfileViewModel.swift in Sources */,
 				806B31AA2BECD8BA00BB816B /* ProfileView.swift in Sources */,
 				805FE5BF2BEDBF21009E83BB /* CircularProfileImageView.swift in Sources */,

@@ -71,7 +71,7 @@ struct ProfileView: View {
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Image Selected"), message: Text("Do you want to save this profile picture?"), primaryButton: .default(Text("Save")) {
                     Task {
-                        try await viewModel.updateUserData()
+                        await viewModel.updateProfileImage(authViewModel: authViewModel)
                     }
                 }, secondaryButton: .cancel())
             }
@@ -141,6 +141,7 @@ struct ProfileView: View {
     
 #Preview {
     ProfileView()
+        .environmentObject(AuthViewModel())
 }
 
 
