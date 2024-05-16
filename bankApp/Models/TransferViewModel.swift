@@ -142,6 +142,7 @@ class TransferViewModel: ObservableObject {
         else {
             validNumberInput = false
             validRecipient = false
+            checkButtonPressed = false
         }
     }
     
