@@ -127,6 +127,11 @@ class TransferViewModel: ObservableObject {
                 if(transferAmountDec == 0) {
                     transferAmountString = ""
                 }
+                if (transferAmountDec >= 1000000) {
+                    errorMessage = "The transfer limit is less than 1 Million. #TooRich4Me"
+                    validAmount = false
+                    return
+                }
             }
         }
         // All checks passed
