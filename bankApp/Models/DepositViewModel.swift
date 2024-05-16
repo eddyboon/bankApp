@@ -57,7 +57,7 @@ class DepositViewModel: ObservableObject {
         
         depositAmount = Decimal(string: depositAmountString) ?? Decimal()
         
-        if(depositAmount > 10000000) {
+        if(depositAmount > 1000000) {
             showErrorMessage = true
             errorMessage = "Dude, you've got way too much money. Deposit limit is 1,000,000! 😬"
             validAmount = false
