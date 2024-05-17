@@ -44,6 +44,9 @@ struct TransferView: View {
                 .keyboardType(.numberPad)
                 .onChange(of: viewModel.recipientNumber) {
                     viewModel.ensurePhoneNumberFormat() // Verifies correct phone number format
+                    if(viewModel.recipientNumber.count < 10) {
+                        viewModel.checkButtonPressed = false
+                    }
                 }
                 .padding(.horizontal, 50)
             // Flag for showing check button or progress view
@@ -58,7 +61,7 @@ struct TransferView: View {
                     Text("Check")
                 }
                 // Disable button if input invalid or recipient invalid
-                .disabled(!viewModel.validNumberInput || viewModel.validRecipient)
+                .disabled(!viewModel.validNumberInput || viewModel.validRecipient || viewModel.checkButtonPressed)
                 .padding(.vertical, 5)
             }
             else {
