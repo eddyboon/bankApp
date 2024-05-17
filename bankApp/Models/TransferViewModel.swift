@@ -91,10 +91,9 @@ class TransferViewModel: ObservableObject {
             if(transferRecipient != nil) {
                 validRecipient = true
                 userFetching = false
-                numberErrorMessage = numberErrorMessages[0]
             }
             else {
-                numberErrorMessage = ""
+                numberErrorMessage = numberErrorMessages[0]
                 userFetching = false
                 validRecipient = false
             }
