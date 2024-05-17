@@ -57,7 +57,7 @@ struct TransferView: View {
                 } label: {
                     Text("Check")
                 }
-                // Disa
+                // Disable button if input invalid or recipient invalid
                 .disabled(!viewModel.validNumberInput || viewModel.validRecipient)
                 .padding(.vertical, 5)
             }

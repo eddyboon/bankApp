@@ -81,6 +81,7 @@ class TransferViewModel: ObservableObject {
             numberErrorMessage = numberErrorMessages[1]
             userFetching = false
             validRecipient = false
+            validNumberInput = false
             return
         }
         
@@ -96,6 +97,7 @@ class TransferViewModel: ObservableObject {
                 numberErrorMessage = numberErrorMessages[0]
                 userFetching = false
                 validRecipient = false
+                validNumberInput = false
             }
         }
         catch {
